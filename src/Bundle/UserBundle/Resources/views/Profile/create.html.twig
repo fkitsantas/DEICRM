@@ -1,0 +1,322 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'mycrm_settings' %}
+{% block javascripts_bottom %} 
+    {{ parent() }}
+    <script src="{{ asset('..//bundles/crm/plugins/forms_editors_wysihtml5/js/wysihtml5-0.3.0_rc2.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_editors_wysihtml5/js/bootstrap-wysihtml5-0.0.2.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_editors_wysihtml5/wysihtml5.init.js?v=v2.0.0-rc1') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_wizards/jquery.bootstrap.wizard.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_wizards/frm-user.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_elements_bootstrap-datepicker/js/bootstrap-datepicker.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_bootstrap-datepicker/bootstrap-datepicker.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_fuelux-radio/fuelux-radio.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_fuelux-checkbox/fuelux-checkbox.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_elements_select2/js/select2.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_select2/select2.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_elements_inputmask/jquery.inputmask.bundle.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_inputmask/inputmask.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/admin_notifications_notyfy/notyfy.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}"
+    type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/notifications_notyfy/js/jquery.notyfy.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}"
+    type="text/javascript"></script>
+{% endblock %} 
+
+{% block body %} 
+    <!-- row -->
+    <div class="row row-app margin-none">
+
+        <!-- col -->
+        <div class="col-md-12">
+
+            <!-- col-separator -->
+            <div class="col-separator col-separator-first box">
+                <h4 class="innerAll bg-white margin-none border-bottom">Create A Contact Profile</h4>
+
+                <div class="col-separator-h box"></div>
+                <div class="widget-body">
+                    <div class="tab-content">
+
+                        <!-- Tab content -->
+                        <div id="tabAccount" class="tab-pane active widget-body-regular padding-none border-none reset-components">
+                            <!-- Widget -->
+                            <div class="wizard">
+                                <div class="widget widget-tabs border-bottom-none">
+
+                                    <!-- Widget heading -->
+                                    <div class="widget-head">
+                                        <ul>
+                                            <li class="active"><a class="glyphicons edit" href="#account-details" data-toggle="tab"><i></i>Account details</a></li>
+                                            <li><a class="glyphicons settings" href="#access-settings" data-toggle="tab"><i></i>Access settings</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- // Widget heading END -->
+
+                                    <div class="widget-body">
+                                        <form action="{{ path('CRMUserBundle_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal" id="frmcreateuser">
+                                            <div class="tab-content">
+
+                                                <!-- Tab content -->
+                                                <div class="tab-pane active" id="account-details">
+                                                    <h3>General<span>  Fill up general information.</span></h3>
+
+                                                    <!-- Row -->
+                                                    <div class="row">
+
+                                                        <!-- Column -->
+                                                        <div class="col-md-6">
+
+                                                            <!-- Group -->
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label">Full name</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        {{ form_widget(form.fullname, { 'attr': {'class': 'form-control'} }) }}
+                                                                        <span class="input-group-addon" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="First name is mandatory"><i class="fa fa-question-circle"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- // Group END -->
+ 
+
+                                                        </div>
+                                                        <!-- // Column END -->
+
+                                                        <!-- Column -->
+                                                        <div class="col-md-6">  
+
+                                                            <!-- Group -->
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label">Position / Title</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        {{ form_widget(form.position, { 'attr': {'class': 'form-control'} }) }}
+                                                                        <span class="input-group-addon" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="First name is mandatory"><i class="fa fa-question-circle"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- // Group END -->
+
+                                                            <!-- Group -->
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label">Date of birth</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        {{ form_widget(form.birthdate, { 'attr': {'class': 'form-control', 'placeholder':'yyyy-mm-dd', 'readonly':'true'} }) }}
+                                                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- // Group END -->
+                                                        </div>
+                                                        <!-- // Column END -->
+
+                                                    </div>
+                                                    <!-- // Row END -->
+                                                    <div class="separator line bottom"></div>
+                                                    <h3>Contact<span>  Fill up general information.</span></h3> 
+
+                                                    <div class="row">
+                                                        <div class="col-md-6"> 
+
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label" for="inputPhone">Phone</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                                            {{ form_widget(form.phone, { 'attr': {'class': 'form-control '} }) }}
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label" for="inputPhone">Mobile</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
+                                                                            {{ form_widget(form.mobile, { 'attr': {'class': 'form-control'} }) }}
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label" for="inputEmail">E-mail</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                                            {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}
+                                                                    </div>
+                                                                </div>  
+                                                            </div> 
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label" for="inputFacebook">Facebook</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                                                            {{ form_widget(form.facebook, { 'attr': {'class': 'form-control', 'id':'inputFacebook'} }) }} 
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label" for="inputTwitter">Twitter</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                                                            {{ form_widget(form.twitter, { 'attr': {'class': 'form-control', 'id':'inputTwitter'} }) }} 
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+
+                                                            <div class="form-group margin-none innerB">
+                                                                <label class="col-md-3 control-label" for="inputSkype">Skype ID</label>
+                                                                <div class="col-md-9">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                                                            {{ form_widget(form.skype, { 'attr': {'class': 'form-control', 'id':'inputSkype'} }) }} 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div> 
+                                                    <!-- // Column END -->
+
+                                                    <!-- // Row END --> 
+                                                    <div class="separator line bottom"></div>
+                                                    <h3>Description<span>  Write short description.</span></h3> 
+
+                                                    {{ form_widget(form.shortdesc, { 'attr': {'class': 'wysihtml5 form-control', 'id':'mustHaveId'} }) }}     
+
+
+                                                </div>
+                                                <!-- // Tab content END --> 
+
+                                                <!-- Tab content -->
+                                                <div class="tab-pane" id="access-settings">
+
+                                                    <!-- Row -->
+                                                    <div class="row">
+
+                                                        <!-- Column -->
+                                                        <div class="col-md-3">
+                                                            <strong>Change password</strong>
+                                                            <p class="muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                        </div>
+                                                        <!-- // Column END -->
+
+                                                        <!-- Column -->
+                                                        <div class="col-md-9"> 
+
+                                                            <label for="inputPasswordNew">Create password</label>
+
+                                                            {{ form_widget(form.password, { 'attr': {'class': 'form-control','id':'inputPasswordNew'} }) }}
+                                                            <div class="separator bottom"></div>
+
+                                                            <label for="inputPasswordNew2">Repeat  password</label> 
+                                                            <input type="password" id="inputPasswordNew2" class="form-control" value="" placeholder="Leave empty for no change" />
+                                                            <div class="separator bottom"></div>
+                                                            <label for="inputPasswordNew2">Enabled Access</label> 
+                                                            {{ form_widget(form.enabled, { 'attr': {'class': 'form-control', 'style': 'width:20%'} }) }} 
+                                                            <div class="separator bottom"></div>
+                                                        </div>
+                                                        <!-- // Column END -->
+
+                                                    </div>
+                                                    <!-- // Row END -->
+
+                                                    <div class="separator line bottom"></div>
+
+                                                    <!-- Row -->
+                                                    <div class="row">
+
+                                                        <!-- Column -->
+                                                        <div class="col-md-3">
+                                                            <strong>Access details</strong>
+                                                            <p class="muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                                        </div>
+                                                        <!-- // Column END -->
+
+                                                        <!-- Column -->
+                                                        <div class="col-md-9">
+                                                            <div class="separator line bottom"></div>
+
+                                                            <!-- Row -->
+                                                            <div class="bg-gray innerAll inner-2x">
+                                                                <div class="row"> 
+
+                                                                    <!-- Column -->
+                                                                    <div class="col-md-10">
+                                                                        <div> 
+
+
+                                                                            {% for choice in form.roles %}  
+                                                                                <div class="checkbox">
+                                                                                    <label for="topic_fuzz" class="checkbox-custom">
+                                                                                        <i class="fa fa-fw fa-square-o"></i> 
+                                                                                        {{ form_widget(choice) }} {{ form_label(choice) }}
+                                                                                    </label>
+                                                                                </div>
+
+                                                                            {% endfor %}
+                                                                            <!--
+                                                                            <div class="checkbox">
+                                                                                <label for="topic_digester" class="checkbox-custom">
+                                                                                    <i class="fa fa-fw fa-square-o"></i>
+                                                                                    <input type="checkbox" id="topic_digester" value="digester" name="topic" />
+                                                                                    Mailing list digester
+                                                                                </label>
+                                                                            </div>-->
+
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- // Column END -->
+
+                                                                </div>
+                                                                <!-- // Row END -->	
+                                                            </div>
+                                                        </div>
+                                                        <!-- // Column END -->
+
+                                                    </div>
+                                                    <!-- // Row END -->  
+
+                                                </div>
+                                                <!-- // Tab content END -->
+                                                <!-- Wizard pagination controls -->
+                                                <ul class="pagination margin-bottom-none pull-left">
+                                                    <li class="primary previous first"><a href="#" class="no-ajaxify">First</a></li>
+                                                    <li class="last primary"><a href="#" class="no-ajaxify">Last</a></li>
+                                                </ul>
+                                                <ul class="pagination margin-bottom-none pull-right">
+                                                    <li class="primary previous"><a href="#" class="no-ajaxify">Previous</a></li>
+                                                    <li class="next primary"><a href="#" class="no-ajaxify">Next</a></li>
+                                                    <li class="next finish primary" style="display:none;"><input type="submit" class="btn btn-primary no-ajaxify finish" style="margin-left: 10px;" value="Finish & Save User"></li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                                <!-- // Wizard pagination controls END -->
+                                            </div>
+                                            {{ form_rest(form) }}
+                                        </form>
+                                    </div>
+
+                                </div>
+                                <!-- // Widget END -->
+
+                            </div>
+
+                        </div>
+                        <!-- // Tab content END --> 
+
+                    </div>
+                </div>
+
+                <!-- // END col-separator -->
+
+            </div>
+            <!-- // END col -->
+
+        </div>
+        <!-- // END row-app -->
+
+    {% endblock %}

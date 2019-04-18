@@ -7,6 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+  * @ORM\Table(name="dei_user")
  */
 class User implements UserInterface
 {
@@ -56,6 +57,12 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $username;
+
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $status;
 
     public function getId(): ?int
@@ -75,6 +82,13 @@ class User implements UserInterface
         return $this;
     }
 
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
     /**
      * A visual identifier that represents this user.
      *
@@ -82,7 +96,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string) $this->username;
     }
 
     /**

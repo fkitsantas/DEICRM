@@ -1,0 +1,178 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'sales_manager' %}
+{% block javascripts_bottom %} 
+    {{ parent() }}
+    <script src="{{ asset('..//bundles/crm/components/form_search_filter/search_filter.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/tables_datatables/js/jquery.dataTables.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/tables_datatables/extras/TableTools/media/js/TableTools.min.js?v=v2.0.0-rc1') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/tables_datatables/extras/ColVis/media/js/ColVis.min.js?v=v2.0.0-rc1') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('..//bundles/crm/components/tables_datatables/js/DT_bootstrap.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/tables_datatables/js/datatables.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/admin_notifications_notyfy/notyfy.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}"
+    type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/notifications_notyfy/js/jquery.notyfy.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}"
+    type="text/javascript"></script> 
+{% endblock %} 
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('notice_error') %}  
+         <script type="text/javascript">
+            $(document).ready(function () {
+                notyfy({
+                    text: 'Something is wrong.. It seems we can\'t display your data. Please try again or contact support',
+                    layout: 'center',
+                    type: 'error',
+                });
+            });
+        </script>   
+    {% endfor %} 
+    <!-- row-app -->
+    <div class="row row-app">
+
+        <!-- col -->
+        <div class="col-sm-3">
+
+            <!-- col-separator -->
+            <div class="col-separator col-separator-first box col-unscrollable">
+
+                <!-- col-table -->
+                <div class="col-table">
+
+                    <div class="heading-buttons innerLR border-bottom">
+                        <h4 class="margin-none innerTB pull-left">Manage</h4>
+                        <a href="{{ path('CRMContactBundle_create') }}" class="btn btn-primary btn-xs pull-right"><i class="fa fa-plus"></i> Add Contact</a>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <ul class="list-group list-group-1 borders-none">
+                        {% for category in categories %} 
+                            <li class="list-group-item"><a href=""><span class="badge badge-primary pull-right">{{ category.total_contact }} </span>{{ category.name }}</a></li>
+                            {% else %}
+                            <p>There are no categories entries. We recommend to create.</p>
+                        {% endfor %}
+
+                    </ul>
+                    <div class="col-separator-h box"></div>
+
+                    <h5 class="innerAll border-bottom margin-none">Recent Contacts</h5>
+
+                    <!-- col-table-row -->
+                    <div class="col-table-row">
+
+                        <!-- col-app -->
+                        <div class="col-app col-unscrollable">
+
+                            <!-- col-app -->
+                            <div class="col-app">
+                                 {% for contact_recent in contacts_recent %} 
+                                    <div class="media contact">
+
+                                        <div class="media-body">
+                                            <h5 class="media-heading strong"><a href="{{path('CRMContactBundle_profile', {'id':contact_recent.id})}}">{{ contact_recent.firstname }} {{ contact_recent.lastname }}</a></h5>
+                                            <i class="fa fa-phone"></i> {{ contact_recent.phone1 | default(contact_recent.phone2) | default(contact_recent.mobile) }}
+                                        </div>
+                                    </div> 
+                                {% else %}
+                                    <p>There are no contact entries you. We recommend to create.</p>
+                                {% endfor %}
+
+                            </div>
+                            <!-- // END col-app -->
+
+                        </div>
+                        <!-- // END col-app -->
+
+                    </div>
+                    <!-- // END col-table-row -->
+
+                </div>
+                <!-- // END col-table -->
+
+            </div>
+            <!-- // END col-separator.box -->
+
+        </div>
+        <!-- // END col -->
+
+        <!-- col -->
+        <div class="col-sm-9">
+
+            <!-- col-separator.box -->
+            <div class="col-separator col-unscrollable box">
+
+                <!-- col-table -->
+                <div class="col-table">
+
+                    <h4 class="margin-none innerAll border-bottom">Viewing All Contacts</h4>
+
+                    <!-- col-table-row -->
+                    <div class="col-table-row">
+
+                        <!-- col-app -->
+                        <div class="col-app col-unscrollable">
+
+                            <!-- col-app -->
+                            <div class="col-app">
+
+                                <!-- Widget -->
+                                <div class="widget">
+                                    <div class="widget-body innerAll inner-2x">
+                                        <!-- Table -->
+                                        <table class="dynamicTable tableTools table table-striped scrollVertical colVis">
+                                            <!-- Table heading -->
+                                            <thead>
+                                                <tr> 
+                                                    <th>Name</th> 
+                                                    <th>Email</th>
+                                                    <th>Primary Contact</th> 
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <!-- // Table heading END -->
+
+                                            <!-- Table body -->
+                                            <tbody>
+                                                {% for contact in contacts %} 
+                                                    <!-- Table row -->
+                                                    <tr class="gradeX"> 
+                                                        <td><a href="{{path('CRMContactBundle_profile', {'id':contact.id})}}">{{ contact.firstname }} {{ contact.lastname }}</a></td> 
+                                                        <td>{{ contact.email }}</td>
+                                                        <td class="center">{{ contact.phone1 }}</td> 
+                                                        <td>
+                                                            <button class="btn btn-stroke btn-circle btn-inverse" onclick="location.href = '{{path('CRMContactBundle_profile', {'id':contact.id})}}'"><i class="fa fa-user"></i></button>
+                                                           
+                                                            <button class="btn btn-stroke btn-circle btn-inverse" onclick="location.href = '{{path('CRMContactBundle_edit', {'id':contact.id})}}'"><i class="fa fa-pencil"></i></button>
+                                                           
+                                                    </tr>
+                                                    <!-- // Table row END --> 
+                                                {% endfor %}
+                                            </tbody>
+                                            <!-- // Table body END -->
+
+                                        </table>
+                                        <!-- // Table END -->
+
+                                    </div></div>
+
+                            </div>
+                            <!-- // END col-app -->
+
+                        </div>
+                        <!-- // END col-app.col-unscrollable -->
+
+                    </div>
+                    <!-- // END col-table-row -->
+
+                </div>
+                <!-- // END col-table -->
+
+            </div>
+            <!-- // END col-separator.box -->
+
+        </div>
+        <!-- // END col -->
+
+    </div>
+    <!-- // END row-app -->
+
+{% endblock %}

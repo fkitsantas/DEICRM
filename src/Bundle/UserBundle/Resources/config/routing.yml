@@ -1,0 +1,175 @@
+CRMUserBundle_base_data_shippings:
+    pattern:  /user/base/shipping
+    defaults: { _controller: CRMUserBundle:BaseData:shipping }
+    requirements:
+        _method:  GET|POST 
+
+CRMUserBundle_base_data_shippings_delete:
+    pattern:  /user/base/shipping/{id}/delete
+    defaults: { _controller: CRMUserBundle:BaseData:shipdelete }
+    requirements:
+        _method:  GET|POST 
+        
+CRMUserBundle_base_data_units:
+    pattern:  /user/base/units
+    defaults: { _controller: CRMUserBundle:BaseData:units }
+    requirements:
+        _method:  GET|POST 
+
+CRMUserBundle_base_data_units_delete:
+    pattern:  /user/base/units/{id}/delete
+    defaults: { _controller: CRMUserBundle:BaseData:unitsdelete }
+    requirements:
+        _method:  GET|POST  
+
+CRMUserBundle_company_profile:
+    pattern:  /user/workspace/company/profile
+    defaults: { _controller: CRMUserBundle:Company:profile }
+    requirements:
+        _method:  GET|POST 
+        
+CRMUserBundle_company_edit:
+    pattern:  /user/workspace/company/{id}/edit
+    defaults: { _controller: CRMUserBundle:Company:edit }
+    requirements:
+        _method:  GET|POST 
+
+CRMUserBundle_company_update:
+    pattern:  /user/workspace/company/{id}/update
+    defaults: { _controller: CRMUserBundle:Company:edit }
+    requirements:
+        _method:  GET|POST 
+        
+CRMUserBundle_create:
+    pattern:  /user/create
+    defaults: { _controller: CRMUserBundle:Profile:create }
+    requirements:
+        _method:  GET|POST 
+        
+CRMUserBundle_profile:
+    pattern:  /user/{id}/show
+    defaults: { _controller: CRMUserBundle:Profile:profile }
+    requirements:
+        _method:  GET|POST
+
+CRMUserBundle_manage:
+    pattern:  /user/manage
+    defaults: { _controller: CRMUserBundle:Profile:manage }
+    requirements:
+        _method:  GET|POST 
+
+CRMUserBundle_search:
+    pattern:  /user/search
+    defaults: { _controller: CRMUserBundle:Profile:search }
+    requirements:
+        _method:  GET|POST
+        
+CRMUserBundle_edit:
+    pattern:  /user/{id}/edit
+    defaults: { _controller: CRMUserBundle:Profile:edit }
+    requirements:
+        _method:  GET|POST   
+        
+CRMUserBundle_update:
+    pattern:  /user/{id}/update
+    defaults: { _controller: CRMUserBundle:Profile:update }
+    requirements:
+        _method:  GET|POST       
+        
+CRMUserBundle_delete:
+    pattern:  /user/{id}/delete
+    defaults: { _controller: CRMUserBundle:Profile:delete }
+    requirements:
+        _method:  GET|POST  
+
+default_workspace_user:
+    pattern:   /user/workspace
+    defaults:  { _controller: CRMUserBundle:Workspace:index }
+
+CRMUserBundle_myprofile:
+    pattern: /user/workspace/{id}/my/profile
+    defaults: { _controller: CRMUserBundle:Workspace:myprofile }
+    requirements:
+        _method:  GET|POST
+
+CRMUserBundle_recent_activity:
+    pattern: /user/workspace/recent/{when}/activities/
+    defaults: { _controller: CRMUserBundle:Workspace:activity }
+    requirements:
+        _method:  GET|POST
+
+CRMUserBundle_recent_stat:
+    pattern: /user/workspace/statistics
+    defaults: { _controller: CRMUserBundle:Workspace:stat }
+    requirements:
+        _method:  GET|POST
+  
+CRMUserBundle_edit_setting_workspace:
+    pattern:  /user/workspace/setting/{id}/edit
+    defaults: { _controller: CRMUserBundle:Workspace:setting }
+    requirements:
+        _method:  GET|POST   
+
+CRMUserBundle_update_setting_workspace:
+    pattern:  /user/workspace/setting/{id}/update
+    defaults: { _controller: CRMUserBundle:Workspace:updatesetting }
+    requirements:
+        _method:  GET|POST           
+        
+CRMUserBundle_edit_workspace:
+    pattern:  /user/workspace/{id}/edit
+    defaults: { _controller: CRMUserBundle:Workspace:edit }
+    requirements:
+        _method:  GET|POST   
+        
+CRMUserBundle_update_workspace:
+    pattern:  /user/workspace/{id}/update
+    defaults: { _controller: CRMUserBundle:Workspace:update }
+    requirements:
+        _method:  GET|POST     
+        
+CRMUserBundle_knowledge_faq:
+    pattern: /user/knowledge/faq
+    defaults: { _controller: CRMUserBundle:Knowledge:faq }
+    requirements:
+        _method:  GET|POST
+        
+CRMUserBundle_settings_params_create:
+    pattern: /user/settings/parameters
+    defaults: { _controller: CRMUserBundle:Parameter:create }
+    requirements:
+        _method:  GET|POST        
+ 
+crm_search:
+    defaults: { _controller: CRMUserBundle:Workspace:search }
+    pattern: /user/workspace/search
+    requirements:
+        _method:  GET|POST 
+        
+fos_user_security_login:
+    defaults: { _controller: CRMUserBundle:Security:login }
+    pattern: /user/login
+
+fos_user_security_check:
+    pattern: /user/login_check
+    defaults: { _controller: CRMUserBundle:Security:check }
+
+fos_user_security_logout:
+    pattern: /user/logout
+    defaults: { _controller: CRMUserBundle:Security:logout }
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /user
+
+fos_user_register:
+    defaults: { _controller: CRMUserBundle:Security:login }
+    pattern: /user/register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /account
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /account

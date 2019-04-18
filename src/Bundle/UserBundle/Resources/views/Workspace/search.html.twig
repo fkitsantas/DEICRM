@@ -1,0 +1,134 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'workspace_page' %}
+{% block javascripts_bottom %}
+    
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    
+    {% if(result|length == 0) %} 
+          <script type="text/javascript">
+            $(document).ready(function () {
+                notyfy({
+                    text: 'You  have no result.',
+                    layout: 'center',
+                    type: 'information',
+                });
+            });
+        </script> 
+    {% endif %} 
+	<!-- row-app -->
+<div class="row row-app">
+
+	
+	<!-- col -->
+	<div class="col-md-12">
+
+		<!-- col-separator.box -->
+		<div class="col-separator bg-none col-unscrollable box col-separator-first">
+			
+			<!-- col-table -->
+			<div class="col-table">
+				
+				<h4 class="innerAll margin-none bg-white">Tables</h4>
+
+				<div class="col-separator-h"></div>
+
+				<!-- col-table-row -->
+				<div class="col-table-row">
+
+					<!-- col-app -->
+					<div class="col-app col-unscrollable">
+
+						<!-- col-app -->
+						<div class="col-app">
+ 
+							<!-- Widget -->
+							<div class="widget">
+								<div class="widget-body innerAll inner-2x">
+									<!-- Table -->
+<table class="dynamicTable tableTools table table-striped checkboxs">
+
+	<!-- Table heading -->
+	<thead>
+		<tr>
+			<th class="text-center">
+				<div class="checkbox checkbox-single margin-none">
+	                <label class="checkbox-custom">
+	                    <i class="fa fa-fw fa-square-o"></i>
+	                    <input type="checkbox">
+	                </label>
+	            </div>
+			</th>
+			<th>Rendering eng.</th>
+			<th>Browser</th>
+			<th>Platform(s)</th>
+			<th>Eng. vers.</th>
+			<th>CSS grade</th>
+		</tr>
+	</thead>
+	<!-- // Table heading END -->
+	
+	<!-- Table body -->
+	<tbody>
+	{% for s in result %}
+		<!-- Table row -->
+		<tr class="gradeX">
+			<td class="text-center">
+				<div class="checkbox checkbox-single margin-none">
+	                <label class="checkbox-custom">
+	                    <i class="fa fa-fw fa-square-o"></i>
+	                    <input type="checkbox" checked="checked">
+	                </label>
+	            </div>
+			</td>
+			<td>{{s.firstname}} {{s.lastname}}</td>
+			<td>Internet Explorer 4.0</td>
+			<td>Win 95+</td>
+			<td class="center">4</td>
+			<td class="center">X</td>
+		</tr>
+		<!-- // Table row END -->
+	  
+	{% endfor %}	
+	</tbody>
+	<!-- // Table body END -->
+	
+</table>
+<!-- // Table END -->
+
+
+
+
+
+
+								</div>
+							</div>
+							<!-- // Widget END -->
+ 
+  
+
+
+
+						</div>
+						<!-- // END col-app -->
+
+					</div>
+					<!-- // END col-app.col-unscrollable -->
+
+				</div>
+				<!-- // END col-table-row -->
+			
+			</div>
+			<!-- // END col-table -->
+			
+		</div>
+		<!-- // END col-separator.box -->
+
+	</div>
+	<!-- // END col -->
+
+</div>
+<!-- // END row-app -->
+  
+{% endblock %}

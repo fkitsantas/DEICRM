@@ -1,0 +1,331 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'contact_manager' %}
+{% block javascripts_bottom %} 
+    {{ parent() }}
+    <script src="{{ asset('..//bundles/crm/plugins/forms_editors_wysihtml5/js/wysihtml5-0.3.0_rc2.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_editors_wysihtml5/js/bootstrap-wysihtml5-0.0.2.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_editors_wysihtml5/wysihtml5.init.js?v=v2.0.0-rc1') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_wizards/jquery.bootstrap.wizard.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_wizards/frm-account.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_elements_bootstrap-datepicker/js/bootstrap-datepicker.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_bootstrap-datepicker/bootstrap-datepicker.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_fuelux-radio/fuelux-radio.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_fuelux-checkbox/fuelux-checkbox.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+{% endblock %} 
+
+{% block body %}
+    <div class="row row-app margin-none">
+
+        <!-- col -->
+        <div class="col-md-12">
+
+            <!-- col-separator -->
+            <div class="col-separator col-separator-first box">
+                <h4 class="innerAll bg-white margin-none border-bottom">Create A Contact Profile</h4>
+
+                <div class="col-separator-h"></div>  
+                <!-- Tabs -->
+                <div class="widget widget-tabs widget-tabs-social-account widget-tabs-responsive"> 
+
+                    <div class="widget-body">
+
+                        <!-- Tab content -->
+                        <div id="tabAccount" class="tab-pane active widget-body-regular padding-none border-none reset-components">
+                            <!-- Widget -->
+                            <div class="widget widget-tabs border-bottom-none">
+                                <div class="wizard">
+                                    <div class="widget widget-tabs widget-wizard-pills widget-tabs-responsive">
+
+                                        <!-- Widget heading -->
+                                        <div class="widget-head">
+                                            <ul>
+                                                <li class="status"><span class="r">Step <span class="step-current">2</span> of <span class="steps-total">5</span></span><span class="r text-primary">Completed: <span class="steps-complete">1</span></span></li>
+                                                <li class="active no-padding"><a href="#tab1-3" data-toggle="tab">1</a></li>
+                                                <li><a href="#tab2-3" data-toggle="tab">2</a></li>
+                                                <li><a href="#tab3-3" data-toggle="tab">3</a></li> 
+                                            </ul>
+                                        </div>
+                                        <!-- // Widget heading END -->
+                                        <form action="{{ path('CRMContactBundle_update_account', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }} class="form-horizontal" id="frmcreateaccount">
+                                            <div class="widget-body">
+                                                <div class="tab-content">
+
+                                                    <div class="tab-pane active" id="tab1-3">
+                                                        <h3>General Information<span>  Fill up basic information.</span></h3>
+                                                        <div class="row">
+                                                            <div class="col-sm-9">
+
+                                                                <div class="widget">
+                                                                    <div class="widget-body innerAll inner-2x">
+
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-3 control-label">Account Title</label>
+                                                                            <div class="col-sm-9 padding-top-none">
+                                                                                {{ form_widget(edit_form.name, { 'attr': {'class': 'form-control'} }) }}
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-3 control-label">Account Type</label>
+                                                                            <div class="col-sm-9">
+                                                                                {{ form_widget(edit_form.accounttype, { 'attr': {'class': 'selectpicker'} }) }} 
+                                                                            </div>
+                                                                        </div>  
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-3 control-label">Account Manager </label>
+                                                                            <div class="col-sm-9 padding-top-none">
+                                                                                {{ form_widget(edit_form.manager, { 'attr': {'class': 'form-control'} }) }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="col-sm-3 control-label">Short Description</label>
+                                                                            <div class="col-xs-12 col-sm-9 padding-top-none">
+                                                                                {{ form_widget(edit_form.shortdesc, { 'attr': {'class': 'form-control'} }) }}		
+                                                                                <div class="innerTB text-muted">
+                                                                                    <i class="icon-note-pad fa fa-fw"></i> 
+                                                                                    2 Characters Left
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>  
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-sm-3">
+                                                                <div class="widget">
+
+                                                                    <h4 class="innerAll margin-bottom-none border-bottom bg-primary"><i class="icon-phone fa fa-fw"></i> Primary Contact</h4>
+
+                                                                    <div class="widget-body bg-gray innerAll inner-2x">
+
+                                                                        <div class="form-group">
+                                                                            <label>Name</label>
+                                                                            {{ form_widget(edit_form.primaryname, { 'attr': {'class': 'form-control'} }) }}
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Email address</label>
+                                                                            {{ form_widget(edit_form.primaryemail, { 'attr': {'class': 'form-control'} }) }}
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label>Phone</label>
+                                                                            {{ form_widget(edit_form.primaryphone, { 'attr': {'class': 'form-control'} }) }}
+                                                                        </div> 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="tab-pane" id="tab2-3">
+                                                        <h3>Additional Address<span>  Fill up address information.</span></h3>
+                                                        <div class="row">
+                                                            <div class="col-sm-12">
+
+                                                                <div class="widget">
+                                                                    <div class="widget-body innerAll inner-2x">
+
+                                                                        <div class="separator line bottom"></div>
+                                                                        <div class="row">
+
+                                                                            <!-- Column -->
+                                                                            <div class="col-md-6">
+                                                                                <!-- Group -->
+
+                                                                                <!-- Group -->
+                                                                                <div class="form-group margin-none innerB">
+                                                                                    <label class="col-md-3 control-label">Street</label>
+                                                                                    <div class="col-md-9">
+                                                                                        <div class="input-group">
+                                                                                            {{ form_widget(edit_form.addstreet, { 'attr': {'class': 'form-control'} }) }}
+                                                                                            <span class="input-group-addon" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Street is mandatory"><i class="fa fa-info-circle"></i></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- // Group END -->
+
+                                                                                <!-- Group -->
+                                                                                <div class="form-group margin-none innerB">
+                                                                                    <label class="col-md-3 control-label">State</label>
+                                                                                    <div class="col-md-9">
+                                                                                        <div class="input-group">
+                                                                                            {{ form_widget(edit_form.addstate, { 'attr': {'class': 'form-control'} }) }}
+                                                                                            <span class="input-group-addon" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="State is mandatory"><i class="fa fa-info-circle"></i></span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- // Group END -->
+
+                                                                            </div>
+                                                                            <!-- // Column END -->
+
+                                                                            <!-- Column -->
+                                                                            <div class="col-md-6">
+
+                                                                                <!-- Group -->
+                                                                                <div class="form-group margin-none innerB">
+                                                                                    <label class="col-md-3 control-label">City</label>
+                                                                                    <div class="input-group">
+                                                                                        {{ form_widget(edit_form.addcity, { 'attr': {'class': 'form-control'} }) }}
+                                                                                        <span class="input-group-addon" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="City is mandatory"><i class="fa fa-info-circle"></i></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- // Group END -->
+
+                                                                                <!-- Group -->
+                                                                                <div class="form-group margin-none innerB">
+                                                                                    <label class="col-md-3 control-label">Country</label>
+                                                                                    <div class="input-group">
+                                                                                        {{ form_widget(edit_form.addcountry, { 'attr': {'class': 'form-control'} }) }}
+                                                                                        <span class="input-group-addon" data-toggle="tooltip" data-container="body" data-placement="top" data-original-title="Countryis mandatory"><i class="fa fa-info-circle"></i></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- // Group END --> 
+                                                                            </div>
+                                                                            <!-- // Column END -->
+
+                                                                        </div>
+                                                                        <!-- // Row END -->
+
+                                                                        <div class="separator line bottom"></div> 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <h3>Additional Contact<span>  Fill up address information.</span></h3>
+                                                            <div class="col-sm-12">
+
+                                                                <div class="widget">
+                                                                    <div class="widget-body innerAll inner-2x">
+
+                                                                        <div class="separator line bottom"></div>
+                                                                        <div class="row">
+
+                                                                            <!-- Column -->
+                                                                            <div class="col-md-6">
+                                                                                <label class="col-md-3 control-label" for="inputPhone">Phone 1</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span> 
+                                                                                        {{ form_widget(edit_form.addphone1, { 'attr': {'class': 'form-control'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+                                                                                <label class="col-md-3 control-label" for="inputPhone">Mobile</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-mobile-phone"></i></span>
+                                                                                        {{ form_widget(edit_form.addmobile, { 'attr': {'class': 'form-control'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+
+                                                                                <label class="col-md-3 control-label" for="inputEmail">Fax</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-fax"></i></span>
+                                                                                        {{ form_widget(edit_form.addfax, { 'attr': {'class': 'form-control'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+
+                                                                                <label class="col-md-3 control-label" for="inputEmail">E-mail</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                                                        {{ form_widget(edit_form.addemail, { 'attr': {'class': 'form-control', 'placeholder':'name@email.com'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+
+                                                                                <label class="col-md-3 control-label" for="inputWebsite">Website</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                                                                                        {{ form_widget(edit_form.addwebsite, { 'attr': {'class': 'form-control'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+                                                                            </div>
+                                                                            <!-- // Column END -->
+
+                                                                            <!-- // Column END -->
+                                                                            <div class="col-md-6">
+                                                                                <label for="inputFacebook">Linkedin</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-linkedin"></i></span>
+                                                                                    {{ form_widget(edit_form.linkedin, { 'attr': {'class': 'form-control'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+                                                                                <label for="inputFacebook">Facebook</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-facebook"></i></span>
+                                                                                    {{ form_widget(edit_form.facebook, { 'attr': {'class': 'form-control', 'placeholder':'http://www.facebook.com/candysoftware'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+
+                                                                                <label for="inputTwitter">Twitter</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-twitter"></i></span>
+                                                                                    {{ form_widget(edit_form.twitter, { 'attr': {'class': 'form-control','placeholder':'http://www.twiter.com/candysoftware'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+
+                                                                                <label for="inputSkype">Skype ID</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-skype"></i></span>
+                                                                                    {{ form_widget(edit_form.skype, { 'attr': {'class': 'form-control','placeholder':'candysoftware'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+
+                                                                                <label for="inputgplus">Google</label>
+                                                                                <div class="input-group">
+                                                                                    <span class="input-group-addon"><i class="fa fa-google-plus"></i></span>
+                                                                                    {{ form_widget(edit_form.googleid, { 'attr': {'class': 'form-control','id':'inputgplus'} }) }}
+                                                                                </div>
+                                                                                <div class="separator bottom"></div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- // Row END -->
+
+                                                                        <div class="separator line bottom"></div> 
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <!-- // Step 3 END -->
+
+                                                    <!-- Step 4 -->
+                                                    <div class="tab-pane" id="tab3-3">
+                                                        <h3>Additional Notes & Information<span>  Fill up additional information.</span></h3>
+                                                        <div class="separator line bottom"></div>
+                                                        {{ form_widget(edit_form.addnotes, { 'attr': {'class': 'wysihtml5 form-control', 'id':'mustHaveId'} }) }}
+
+
+                                                    </div>
+                                                    <!-- // Step 4 END -->
+
+                                                </div>
+
+                                                <!-- Wizard pagination controls -->
+                                                <ul class="pagination margin-bottom-none pull-left">
+                                                    <li class="primary previous first"><a href="#" class="no-ajaxify">First</a></li>
+                                                    <li class="last primary"><a href="#" class="no-ajaxify">Last</a></li>
+                                                </ul>
+                                                <ul class="pagination margin-bottom-none pull-right">
+                                                    <li class="primary previous"><a href="#" class="no-ajaxify">Previous</a></li>
+                                                    <li class="next primary"><a href="#" class="no-ajaxify">Next</a></li>
+                                                    <li class="next finish primary" style="display:none;"><input type="submit" class="btn btn-primary no-ajaxify finish" style="margin-left: 10px;" value="Finish & Save Account"></li>
+                                                </ul>
+                                                <div class="clearfix"></div>
+                                                <!-- // Wizard pagination controls END -->
+
+                                            </div>
+
+
+                                            {{ form_rest(edit_form) }}
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

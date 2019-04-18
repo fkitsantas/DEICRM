@@ -1,0 +1,226 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'contact_manager' %}
+{% block javascripts_bottom %}
+    {{ parent() }}
+    <script src="{{ asset('..//bundles/crm/components/form_search_filter/search_filter.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/tables_datatables/js/jquery.dataTables.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/tables_datatables/extras/TableTools/media/js/TableTools.min.js?v=v2.0.0-rc1') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/tables_datatables/extras/ColVis/media/js/ColVis.min.js?v=v2.0.0-rc1') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('..//bundles/crm/components/tables_datatables/js/DT_bootstrap.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/tables_datatables/js/datatables.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+
+    <script src="{{ asset('..//bundles/crm/plugins/ui_modals/bootbox.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}"
+    type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/ui_modals/modals.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}"
+    type="text/javascript"></script>
+{% endblock %}
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('notice_product_exists') %}  
+        <script type="text/javascript">
+            $(document).ready(function () {
+                notyfy({
+                    text: 'Something is wrong.. It seems we can\'t delete this category. This category contains contact(s). Please remove the contact(s) first.',
+                    layout: 'center',
+                    type: 'error',
+                });
+            });
+        </script>   
+    {% endfor %} 
+    {% for flashMessage in app.session.flashbag.get('notice_product_cat_delete') %}  
+        <script type="text/javascript">
+            $(document).ready(function () {
+                notyfy({
+                    text: 'Category deleted.',
+                    layout: 'center',
+                    type: 'success',
+                });
+            });
+        </script>   
+    {% endfor %} 
+    {% for flashMessage in app.session.flashbag.get('notice_duplicate') %}  
+        <script type="text/javascript">
+            $(document).ready(function () {
+                notyfy({
+                    text: 'Something is wrong.. It seems we can\'t add your data. You are maybe adding duplicate data',
+                    layout: 'center',
+                    type: 'error',
+                });
+            });
+        </script>   
+    {% endfor %} 
+    <div class="row row-app">
+        <div class="col-md-12">
+            <div class="col-separator box col-separator-first col-unscrollable">
+                <div class="col-table">
+
+                    <!-- Heading -->
+                    <div class="heading-buttons border-bottom innerLR">
+                        <div class="btn-group btn-group-xs pull-right">
+                            <a href="#modal-compose" data-toggle="modal"  class="btn btn-primary"><i class="fa fa-fw fa-plus-circle"></i> Add Category</a>
+                        </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal-compose">
+
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal heading -->
+                                    <!-- <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h3 class="modal-title">Login</h3>
+                                        </div> -->
+                                    <!-- // Modal heading END -->
+
+                                    <div class="innerAll border-bottom">
+                                        <div class="pull-left">
+                                            <a href="" class=" btn btn-default btn-sm"><i
+                                                    class="fa fa-fw fa-arrow-left"></i> back</a>
+                                        </div> 
+                                        <a href="" class="pull-right btn btn-primary btn-sm strong"><i
+                                                class="fa fa-fw icon-outbox-fill"></i> Cancel</a>
+
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <form action="{{ path('CRMContactBundle_category') }}"
+                                          method="post" {{ form_enctype(form) }} class="form-horizontal">
+                                        <!-- Modal body -->
+                                        <div class="modal-body padding-none">
+
+
+                                            <div class="bg-gray innerAll border-bottom">
+                                                <div class="innerLR"> 
+                                                    <div class="form-group">
+                                                        <label for="Bcc" class="col-sm-3 control-label">Category Name:</label>
+
+                                                        <div class="col-sm-5">
+                                                            {{ form_widget(form.name, { 'attr': {'class': 'form-control' } }) }}
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="clearfix"></div>
+                                                </div>
+                                            </div> 
+
+                                        </div>
+                                        <!-- // Modal body END -->
+
+                                        <div class="innerAll text-center border-top">
+                                            <a href="" class="btn btn-default"><i class="fa fa-fw icon-crossing"></i> Cancel</a>
+                                            <input type="submit" class="btn btn-primary no-ajaxify finish" style="margin-left: 10px;"
+                                                   value="Finish & Save Category">
+                                            </a>
+                                        </div>
+                                        {{ form_rest(form) }}
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- // Modal END -->
+                        <h4 class="margin-none innerTB">Manage Category</h4>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- // Heading END -->
+
+                    <div class="col-separator-h"></div>
+
+
+                    <div class="col-table-row">
+                        <div class="col-app col-unscrollable">
+                            <div class="col-app">
+
+                                <div class="col-table"> 
+                                    <div class="col-table-row">
+
+                                        <div class="col-app col-unscrollable">
+                                            <div class="col-app">
+                                                <div class="innerAll">
+                                                    <!-- Total products & Sort by options -->
+                                                    <div class="form-inline">
+                                                        <span class="pull-right">
+                                                            <label class="strong innerLR">Sort by:</label>
+                                                            <select class="selectpicker margin-none" data-style="btn-default btn-sm">
+                                                                <option>Option</option>
+                                                                <option>Option</option>
+                                                                <option>Option</option>
+                                                            </select>
+                                                        </span>
+                                                        <div class="innerAll half strong pull-left">
+                                                            Total products:  
+                                                        </div>
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                    <!-- // Total products & Sort by options END -->
+
+                                                    <div class="separator bottom"></div>
+                                                    <!-- Products table -->
+                                                    <table class="dynamicTable tableTools table table-striped scrollVertical colVis table table-bordered table-condensed table-striped table-primary table-vertical-center checkboxs js-table-sortable">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 1%;" class="uniformjs"><input type="checkbox" /></th>
+                                                                <th style="width: 10%;" class="center">ID</th> 
+                                                                <th class="center">Name</th> 
+                                                                <th>Contacts</th> 
+                                                                <th class="center" style="width: 100px;">Actions</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {% for category in categories %}
+                                                                <tr class="selectable">
+                                                                    <td class="center uniformjs"><input type="checkbox" /></td>
+                                                                    <td class="center">{{  category.id }}</td> 
+                                                                    <td class="center"> {{ category.name }}</td> 
+                                                                    <td class="center" style="width: 10%"> {{ category.catlist|length }}</td> 
+                                                                    <td class="center"> 
+                                                                        {% if (category.name != 'Lead') and (category.name != 'Opportunity') %}
+                                                                            <a href="{{path('CRMContactBundle_category_delete', {'id':category.id})}}" class="btn btn-sm btn-danger"><i class="fa fa-times"></i></a>
+                                                                            {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                            {% endfor %}
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- // Products table END -->
+
+                                                    <!-- Options -->
+                                                    <div class="">
+
+                                                        <!-- With selected actions -->
+                                                        <div class="pull-left checkboxs_actions" style="display: none;">
+                                                            <label>With selected:
+                                                                <select class="selectpicker margin-none dropup" data-style="btn-default btn-xs">
+                                                                    <option>Action</option>
+                                                                    <option>Action</option>
+                                                                    <option>Action</option>
+                                                                </select>
+                                                            </label>
+                                                        </div>
+                                                        <!-- // With selected actions END -->
+
+                                                        <div class="clearfix"></div>
+                                                        <!-- // Pagination END -->
+
+                                                    </div>
+                                                    <!-- // Options END -->
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

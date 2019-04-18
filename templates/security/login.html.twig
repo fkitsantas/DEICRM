@@ -3,34 +3,33 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+
+
+<br/><br/><p class="text-center">Welcome to <b>Deicrm</b>, Customer Relationship Manager</p><br/><br/>
 <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" value="{{ last_username }}" required autofocus>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+  </div>
 
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
+  <input type="hidden" name="_csrf_token"
+         value="{{ csrf_token('authenticate') }}">
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">&copy; DEICRM</span>
+      </div>
+    </footer>
+
+
 {% endblock %}

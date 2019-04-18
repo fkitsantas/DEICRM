@@ -1,0 +1,105 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'workspace_page' %}
+{% block javascripts_bottom %} 
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    {% if(count == 0) %}
+        <script type="text/javascript">
+            $(document).ready(function () {
+                notyfy({
+                    text: 'You  have no activity.',
+                    layout: 'center',
+                    type: 'information',
+                });
+            });
+        </script> 
+    {% endif %}  
+    <div class="row row-app">
+        <div class="col-md-12">
+            <div class="col-separator box col-separator-first col-unscrollable">
+                <div class="col-table">
+                    <h4 class="innerAll margin-none border-bottom">My Recent Activities</h4>
+                    <div class="col-table-row">
+                        <div class="col-app col-unscrollable">
+                            <div class="col-app">   
+
+                                {% if(count != 0) %}
+                                    <div class="row row-merge border-bottom border-top layout-timeline innerLR">
+                                        <div class="col-md-4">
+                                            <div class="innerAll">
+
+                                                <div class="row margin-none">
+                                                    <div class="col-md-7">
+                                                        <ul class="nav nav-pills nav-stacked nav-timeline">
+                                                            <li class="active"><a href="">Now</a></li>
+                                                            <li><a href="">Yesterday</a></li>
+                                                            <li><a href="">2 Weeks Ago</a></li> 
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="innerAll">
+
+                                                <ul class="timeline">
+                                                    {% for activity in activities %} 
+                                                        <li class="active">
+                                                            <div class="separator bottom">
+                                                                <br /> 
+                                                                <span class="date box-generic" style="width: 20%">
+                                                                    {% if(activity.dateAdded|date('m-d-Y')  == "now"|date("m-d-Y")) %}
+                                                                        Today  
+                                                                        {% set day = activity.dateAdded|date('H:i')%}
+                                                                    {% elseif activity.dateAdded|date("m-d-Y") > "-2 days"|date("m-d-Y")  %}
+                                                                        Yesterday 
+                                                                        {% set day = activity.dateAdded|date('H:i') %}
+                                                                    {% elseif activity.dateAdded|date("m-d-Y") > "-3 days"|date("m-d-Y")  %}
+                                                                        3 days ago
+                                                                        {%set day = activity.dateAdded|date('m-d-Y H:i') %} 
+                                                                    {% elseif activity.dateAdded|date("m-d-Y") > "-365 days"|date("m-d-Y")  %}
+                                                                        Last Year    
+                                                                        {%set day = activity.dateAdded|date('m-d-Y') %}
+                                                                    {% else   %}
+                                                                        {%set day = activity.dateAdded|date('m-d-Y') %}  
+                                                                        {{day    }}
+                                                                    {% endif %}
+
+                                                                </span><br />
+                                                                <span class="type glyphicons suitcase">{{ activity.module}} <i></i><span class="time">{{ day }}</span></span> 
+                                                            </div>
+                                                            <div class="widget widget-heading-simple widget-body-white margin-none">
+                                                                <div class="widget-body"> 
+                                                                    <div class="alert alert-gray">
+                                                                        <p class="glyphicons circle_info margin-none"><i></i>  
+                                                                                 
+
+                                                                            {% autoescape false %}{{ activity.activityDesc |replace({"creation_user": "<span class='text-primary'><strong>You</strong></span>" |raw }) }}{% endautoescape %}
+                                                                        </p>
+                                                                    </div>
+                                                                    <a class="glyphicons single pencil"><i></i></a>
+                                                                </div>
+                                                            </div>  
+                                                        </li>  
+                                                    {% endfor %}
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                {% endif %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

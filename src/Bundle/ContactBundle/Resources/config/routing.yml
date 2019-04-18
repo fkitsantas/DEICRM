@@ -1,0 +1,130 @@
+CRMContactBundle_homepage:
+    pattern:  /contact/
+    defaults: { _controller: CRMContactBundle:Profile:index }
+        
+CRMContactBundle_create:
+    pattern:  /contact/create
+    defaults: { _controller: CRMContactBundle:Profile:create }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_edit:
+    pattern:  /contact/{id}/edit
+    defaults: { _controller: CRMContactBundle:Profile:edit }
+    requirements:
+        _method:  GET|POST
+      
+CRMContactBundle_delete:
+    pattern:  /contact/{id}/delete
+    defaults: { _controller: CRMContactBundle:Profile:delete }
+    requirements:
+        _method:  GET|POST
+        
+CRMContactBundle_update:
+    pattern:  /contact/{id}/update
+    defaults: { _controller: CRMContactBundle:Profile:update }
+    requirements:
+        _method:  GET|POST
+      
+CRMContactBundle_profile:
+    pattern:  /contact/{id}/show
+    defaults: { _controller: CRMContactBundle:Profile:profile }
+    requirements:
+        _method:  GET|POST
+        
+CRMContactBundle_category:
+    pattern:  /contact/category
+    defaults: { _controller: CRMContactBundle:Profile:category }
+    requirements:
+        _method:  GET|POST
+        
+CRMContactBundle_category_delete:
+    pattern:  /user/category/{id}/delete
+    defaults: { _controller: CRMContactBundle:Profile:deletecat }
+    requirements:
+        _method:  GET|POST 
+        
+CRMContactBundle_update_note:
+    pattern:  /contact/note/{id}/update
+    defaults: { _controller: CRMContactBundle:Profile:note }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_manage:
+    pattern:  /contact/manage
+    defaults: { _controller: CRMContactBundle:Profile:manage }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_search:
+    pattern:  /contact/search
+    defaults: { _controller: CRMContactBundle:Profile:search }
+    requirements:
+        _method:  GET|POST
+     
+CRMContactBundle_mail:
+    pattern:  /contact/{id}/mail
+    defaults: { _controller: CRMContactBundle:Profile:mail }
+    requirements:
+        _method:  POST
+
+CRMContactBundle_create_account:
+    pattern:  /contact/account/create
+    defaults: { _controller: CRMContactBundle:Account:create }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_search_account:
+    pattern:  /sales/account/search
+    defaults: { _controller: CRMContactBundle:Account:search }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_manage_account:
+    pattern:  /contact/account/manage
+    defaults: { _controller: CRMContactBundle:Account:manage }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_profile_account:
+    pattern:  /contact/account/{id}/show
+    defaults: { _controller: CRMContactBundle:Account:profile }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_edit_account:
+    pattern:  /contact/account/{id}/edit
+    defaults: { _controller: CRMContactBundle:Account:edit }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_update_account:
+    pattern:  /contact/account/{id}/update
+    defaults: { _controller: CRMContactBundle:Account:update }
+    requirements:
+        _method:  GET|POST
+
+CRMContactBundle_delete_account:
+    pattern:  /contact/account/{id}/delete
+    defaults: { _controller: CRMContactBundle:Account:delete }
+    requirements:
+        _method:  GET|POST
+
+
+CRMContactBundle_account_mail:
+    pattern:  /contact/account/{id}/mail
+    defaults: { _controller: CRMContactBundle:Account:mail }
+    requirements:
+        _method:  POST
+
+CRMContactBundle_update_account_note:
+    pattern:  /contact/account/note/{id}/update
+    defaults: { _controller: CRMContactBundle:Account:note }
+    requirements:
+        _method:  GET|POST
+        
+CRMContactBundle_create_account_quote:
+    pattern:  /contact/account/create/quote/{id}
+    defaults: { _controller: CRMContactBundle:Account:createquote }
+    requirements:
+        _method:  GET|POST

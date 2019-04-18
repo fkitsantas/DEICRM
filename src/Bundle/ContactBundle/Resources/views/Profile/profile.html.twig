@@ -1,0 +1,573 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'contact_manager' %}
+{% block javascripts_bottom %} 
+    {{ parent() }}
+    <script src="{{ asset('..//bundles/crm/plugins/forms_editors_wysihtml5/js/wysihtml5-0.3.0_rc2.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_editors_wysihtml5/js/bootstrap-wysihtml5-0.0.2.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_editors_wysihtml5/wysihtml5.init.js?v=v2.0.0-rc1') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_wizards/jquery.bootstrap.wizard.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_elements_bootstrap-datepicker/js/bootstrap-datepicker.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+
+{% endblock %} 
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('notitce_create_success') %}  
+        <script type="text/javascript">
+            $(document).ready(function () {
+                notyfy({
+                    text: '{{ flashMessage }}',
+                    layout: 'center',
+                    type: 'success',
+                });
+            });
+        </script>   
+    {% endfor %} 
+    <!-- row -->
+    <div class="row row-app margin-none">
+
+
+        <!-- col -->
+        <div class="col-md-12">
+
+            <!-- col-separator -->
+            <div class="col-separator col-separator-first border-none"> 
+                <!-- col-table -->
+                <div class="col-table">
+
+                    <!-- col-table-row -->
+                    <div class="col-table-row">
+
+                        <!-- col-app -->
+                        <div class="col-app">
+
+                            <!-- row-app -->
+                            <div class="row row-app margin-none">
+
+                                <!-- col -->
+                                <div class="col-lg-10 col-md-9 col-sm-12">
+
+                                    <!-- col-separator -->
+                                    <div class="col-separator">
+
+                                        <!-- col-table -->
+                                        <div class="col-table">
+                                            <div class="innerAll">
+                                                <!-- PATIENT OVERVIEW START -->
+                                                <div class="media">
+                                                    <button class="pull-right btn btn-default btn-sm" onclick="location.href = '{{ path('CRMContactBundle_edit', {'id':profile.id}) }}'"><i class="fa fa-fw fa-edit"></i> Edit</button>
+                                                    <form action="{{ path('CRMContactBundle_delete', { 'id': profile.id }) }}" method="post" id="frmdeletecontact" >
+                                                        {{ form_widget(delete_form) }}
+                                                        <button type="submit" id="confirm-delete-contact" class="pull-right btn btn-danger btn-sm"><i class="fa fa-fw fa-trash-o"></i> Delete</button>
+                                                    </form>
+
+                                                    <div class="media-body innerAll half">
+                                                        <h4 class="media-heading text-large">{{ profile.firstname }} {{ profile.lastname }} </h4>
+
+                                                    </div>
+                                                </div>
+                                                <!-- // END PATIENT OVERVIEW --> 
+                                            </div>
+                                            <div class="col-separator-h box"></div>
+                                            <!-- box -->
+                                            <div class="row row-merge box margin-none">
+
+
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="media innerAll">
+                                                        <div class="media-body innerL half">
+                                                            <h4 class="margin-none"><a href="" class="text-primary">{{ profile.jobtitle | default("") }}</a>
+                                                            </h4>
+
+                                                            <p class="strong">{% if profile.company and profile.jobtitle %} at {% endif %}  {{ profile.company }}</p>
+
+                                                            <div class="bg-gray">
+                                                                <h5 class="innerAll border-bottom text-muted margin-none"><i
+                                                                        class="fa fa-fw icon-briefcase-2"></i>
+                                                                    {% if profile.status == "S" %}
+                                                                        STANDARD
+                                                                    {% elseif profile.status == "V" %}
+                                                                        VIP
+                                                                    {% elseif profile.status == "B" %}
+                                                                        BLACKLIST
+                                                                    {% else %}
+                                                                        STANDARD
+                                                                    {% endif %}
+
+                                                                </h5>
+
+                                                                <p class="margin-none innerAll">
+                                                                    {% for types in contact_types %}
+                                                                        {{ types.name }}
+                                                                        {% if not loop.last %},  {% endif %}
+                                                                    {% endfor %}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- col -->
+                                                <div class="col-md-6 col-sm-12 reset-components">
+
+                                                    <div class="widget widget-tabs widget-tabs-icons-only-2 widget-activity margin-none widget-activity-social">
+
+                                                        <!-- Tabs Heading -->
+                                                        <div class="widget-head">
+                                                            <ul>
+                                                                <li class="active"><a data-toggle="tab" href="#shareTab" class="glyphicons envelope"><i></i></a></li>
+                                                                <li><a data-toggle="tab" href="#webcamTab"><i class="fa fa-facebook"></i></a></li>
+                                                            </ul>
+                                                        </div>
+                                                        <!-- // Tabs Heading END -->
+
+                                                        <div class="widget-body padding-none">
+                                                            <div class="tab-content">
+
+                                                                <div class="tab-pane active" id="shareTab">
+                                                                    <div class="share">
+                                                                        <form action="{{ path('CRMContactBundle_account_mail', { 'id': profile.id }) }}"
+                                                                              method="post" {{ form_enctype(form) }}>
+                                                                            {{ form_widget(form.body, { 'attr': {'class': 'form-control','placeholder':'Send quick email...','rows':'2'} }) }}
+
+                                                                            <input type="submit" class="btn btn-primary btn-sm" value="Submit">
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane innerAll text-center" id="webcamTab">
+                                                                    <h4>Social Information</h4>
+
+                                                                    <p>Get in touch with your contact.</p>
+
+                                                                    <div class="innerAll">
+                                                                        {% if profile.googleid %}
+                                                                            <button class="btn btn-circle btn-danger" sr><i class="fa fa-google-plus"></i>
+                                                                            </button>{% endif %}
+                                                                            {% if profile.facebook %}
+                                                                                <button class="btn btn-circle btn-danger"><i class="fa fa-facebook"></i>
+                                                                                </button>{% endif %}
+                                                                                {% if profile.skype %}
+                                                                                    <button class="btn btn-circle btn-info"><i class="fa fa-skype"></i>
+                                                                                    </button>{% endif %}
+                                                                                    {% if profile.twitter %}
+                                                                                        <button class="btn btn-circle btn-success"><i class="fa fa-twitter"></i>
+                                                                                        </button>{% endif %}
+                                                                                        {% if profile.twitter %}
+                                                                                            <button class="btn btn-circle btn-warning"><i class="fa fa-linkedin"></i>
+                                                                                            </button>{% endif %}
+
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+
+
+                                                                    </div>
+                                                                    <!-- // END col -->
+
+
+                                                                </div>
+                                                                <!-- // END box -->
+
+                                                                <div class="col-separator-h "></div>
+
+                                                                <div class="relativeWrap" >
+                                                                    <div class="box-generic">
+
+                                                                        <!-- Tabs Heading -->
+                                                                        <div class="tabsbar tabsbar-2">
+                                                                            <ul class="row row-merge">
+                                                                                <li class="col-md-3 glyphicons phone_alt active"><a href="#tab1-4" data-toggle="tab"><i></i> Contact Information</a></li>
+                                                                                <li class="col-md-3 glyphicons cardio"><a href="#tab2-4" data-toggle="tab"><i></i> <span>Activities</span></a></li>
+                                                                                <li class="col-md-3 glyphicons headphones"><a href="#tab3-4" data-toggle="tab"><i></i> <span>Cases</span></a></li>
+                                                                                <li class="col-md-3 glyphicons notes"><a href="#tab4-4" data-toggle="tab"><i></i> <span>Notes</span></a></li>
+                                                                            </ul>
+                                                                        </div>
+                                                                        <!-- // Tabs Heading END -->
+
+                                                                        <div class="tab-content">
+
+                                                                            <!-- Tab content -->
+                                                                            <div class="tab-pane active" id="tab1-4">  
+                                                                                <div class="widget-body bg-gray innerAll inner-2x">
+                                                                                    <div class="separator line bottom"></div>
+                                                                                    <div class="row">
+
+                                                                                        <!-- Column -->
+                                                                                        <div class="col-md-6">
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">Email</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.email }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="City is mandatory"><i
+                                                                                                            class="fa fa-envelope"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- // Group END -->
+
+                                                                                        </div>
+                                                                                        <!-- // Column END -->
+
+                                                                                        <!-- Column -->
+                                                                                        <div class="col-md-6">
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">Website</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile. website }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="City is mandatory"><i
+                                                                                                            class="fa fa-globe"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- // Group END -->
+
+                                                                                        </div>
+                                                                                        <!-- // Column END -->
+
+                                                                                    </div>
+                                                                                    <div class="separator line bottom"></div>
+                                                                                    <div class="row">
+
+                                                                                        <!-- Column -->
+                                                                                        <div class="col-md-6">
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">Street</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.street }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="Street Name"><i
+                                                                                                            class="fa fa-info-circle"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- // Group END -->
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">State</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.state }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="State Information"><i
+                                                                                                            class="fa fa-info-circle"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <!-- // Column END -->
+
+                                                                                        <!-- Column -->
+                                                                                        <div class="col-md-6">
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">City</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.city }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="Showing City Information"><i
+                                                                                                            class="fa fa-info-circle"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- // Group END -->
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">Country</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.country }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="Showing Country"><i
+                                                                                                            class="fa fa-info-circle"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- // Group END -->
+                                                                                        </div>
+                                                                                        <!-- // Column END -->
+
+                                                                                    </div>
+
+                                                                                    <div class="separator line bottom"></div>
+                                                                                    <div class="row">
+
+                                                                                        <!-- Column -->
+                                                                                        <div class="col-md-6">
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">Phone 1</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.phone1 }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="Showing Primary Contact"><i
+                                                                                                            class="fa fa-phone"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- // Group END -->
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">Phone 2</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.phone2 }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="Showing Secondary Contact"><i
+                                                                                                            class="fa fa-phone"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <!-- // Column END -->
+
+                                                                                        <!-- Column -->
+                                                                                        <div class="col-md-6">
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">Mobile</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.mobile }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="Showing mobile information"><i
+                                                                                                            class="fa fa-mobile-phone"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- // Group END -->
+
+                                                                                            <!-- Group -->
+                                                                                            <div class="form-group margin-none innerB">
+                                                                                                <label class="col-md-3 control-label">Fax</label>
+
+                                                                                                <div class="input-group">
+                                                                                                    <input type="email" class="form-control" value="{{ profile.fax }}" readonly="true">
+                                                                                                    <span class="input-group-addon" data-toggle="tooltip" data-container="body"
+                                                                                                          data-placement="top" data-original-title="Showing fax information."><i
+                                                                                                            class="fa fa-fax"></i></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <!-- // Group END -->
+                                                                                        </div>
+                                                                                        <!-- // Column END -->
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- // Tab content END -->
+
+                                                                            <!-- Tab content -->
+                                                                            <div class="tab-pane" id="tab2-4">
+                                                                                <!-- col-app -->
+                                                                                <div class="col-app col-unscrollable">
+
+                                                                                    <!-- col-app -->
+                                                                                    <div class="col-app bg-primary-light">
+
+                                                                                        <ul class="timeline-activity list-unstyled">
+                                                                                            {% for recent_activity in recent_activities %}
+                                                                                                <li>
+                                                                                                    {% if "created" in recent_activity.activityDesc %}
+                                                                                                        <i class="list-icon fa fa-plus"></i>
+                                                                                                    {% elseif "delete" in recent_activity.activityDesc %}
+                                                                                                        <i class="list-icon fa fa-minus"></i>
+                                                                                                    {% elseif "update" in recent_activity.activityDesc %}
+                                                                                                        <i class="list-icon fa fa-edit"></i>
+                                                                                                    {% elseif "contact" in recent_activity.activityDesc %}
+                                                                                                        <i class="list-icon fa fa-user"></i>
+                                                                                                    {% else %}
+                                                                                                        <i class="list-icon fa fa-user"></i>
+                                                                                                    {% endif %}
+                                                                                                    <div class="block block-inline">
+                                                                                                        <div class="caret"></div>
+                                                                                                        <div class="box-generic">
+                                                                                                            <div class="timeline-top-info">
+                                                                                                                <i class="fa fa-user"></i>
+                                                                                                                {% if recent_activity.activityUser == app.user.email %}
+                                                                                                                    {% set you = "You" %}
+                                                                                                                {% else %}
+                                                                                                                    {% set you = recent_activity.activityUser %}
+                                                                                                                {% endif %}
+
+                                                                                                                {% autoescape false %}{{ recent_activity.activityDesc |replace({"creation_user": "<span class='text-primary'><strong>" ~ you ~ "</strong></span>", "this_contact": "This contact" |raw }) }}{% endautoescape %}
+
+
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="timeline-bottom">
+                                                                                                            <i class="fa fa-clock-o"></i> {{ recent_activity.dateAdded|date("H:i") }}
+                                                                                                            &nbsp;
+                                                                                                            <i class="fa fa-calendar"></i>  {{ recent_activity.dateAdded|date("d F Y") }}
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            {% endfor %}
+                                                                                        </ul>
+
+
+
+                                                                                    </div>
+                                                                                    <!-- // END col-app -->
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <!-- // Tab content END -->
+
+                                                                            <!-- Tab content -->
+                                                                            <div class="tab-pane" id="tab3-4">
+                                                                                <!-- tickets -->
+                                                                                {% for recent_case in recent_cases %}
+                                                                                    <div class="innerAll border-bottom tickets">
+                                                                                        <div class="row">
+
+                                                                                            <div class="col-sm-10">
+                                                                                                <ul class="media-list">
+                                                                                                    <li class="media">
+                                                                                                        <div class="media-body">
+                                                                                                            <a href="" class="media-heading">{{ recent_case.shortdesc }}</a><label
+                                                                                                                class="label label-default">#{{ recent_case.id }}</label>
+                                                                                                            <label class="label label-primary"><a href="" class="user-ticket-action "><i
+                                                                                                                        class="icon-reply-fill fw"></i></a> </label>
+                                                                                                                    {% if recent_case.status == "Open" or recent_case.status == "Re-Open" %}
+                                                                                                                <label class="label label-info"><a href="" class="user-ticket-action "><i
+                                                                                                                            class=" icon-refresh-6 fw"></i> {{ recent_case.status }}</a>
+                                                                                                                </label>
+                                                                                                            {% endif %}
+                                                                                                            <div class="clearfix"></div>
+                                                                                                            {{ recent_case.longdesc }}
+                                                                                                            <div class="clearfix"></div>
+                                                                                                            <small><i class="icon-time-clock fw"></i> on
+                                                                                                                : {{ recent_case.CreationDate|date('d M Y') }}</small>
+                                                                                                            <small><i class=" icon-life-raft innerL"></i> Created By: <a
+                                                                                                                    href="">{{ recent_case.creationUser }}</a></small>
+                                                                                                        </div>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                            <div class="col-sm-2">
+                                                                                                <div class="innerT pull-right">
+                                                                                                    {% if recent_case.status == "Close" %}
+                                                                                                        <a href="" class="btn btn-success btn-xs"><i class="fa fa-check"></i> Mark Solved</a>
+                                                                                                    {% endif %}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                {% endfor %}
+                                                                                <!-- // END tickets -->
+                                                                            </div>
+                                                                            <!-- // Tab content END -->
+
+                                                                            <!-- Tab content -->
+                                                                            <div class="tab-pane" id="tab4-4">
+                                                                                <h3>Additional Notes & Information<span>  Fill up additional information.</span></h3>
+                                                                                <div class="separator line bottom"></div>
+
+                                                                                <form action="{{ path('CRMContactBundle_update_note', { 'id': profile.id }) }}"
+                                                                                      method="post" {{ form_enctype(edit_form) }} class="form-horizontal" >
+                                                                                    {{ form_widget(edit_form.addnotes, { 'attr': {'class': 'form-control','rows':'5', 'value': profile.addnotes} }) }}
+
+                                                                                    <input type="submit" class="btn btn-primary btn-sm" style="margin-top:15x;" value="Submit">
+                                                                                </form>
+                                                                            </div>
+                                                                            <!-- // Tab content END -->
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <!-- // END col-table -->
+
+                                                        </div>
+                                                        <!-- // END col-separator -->
+
+                                                    </div> 
+                                                    <!-- // END col -->
+
+                                                    <!-- col -->
+                                                    <div class="col-sm-12 col-md-3 col-lg-2">
+
+                                                        <!-- col-separator -->
+                                                        <div class="col-separator col-unscrollable box col-separator-last reset-components">
+
+                                                            <!-- col-table -->
+                                                            <div class="col-table">
+                                                                <div class="col-separator-h box"></div>
+
+                                                                <!-- Stats Widget -->
+                                                                <a href="" class="widget-stats widget-stats-gray widget-stats-2">
+                                                                    <span class="count">10</span>
+                                                                    <span class="txt">Deals</span>
+                                                                </a>
+                                                                <!-- // Stats Widget END -->
+
+                                                                <div class="col-separator-h box"></div>
+
+                                                                <a href="" class="widget-stats widget-stats-gray widget-stats-2">
+                                                                    <span class="count">0</span>
+                                                                    <span class="txt">Won</span>
+                                                                </a>
+                                                                <!-- // Stats Widget END -->
+
+                                                                <div class="col-separator-h box"></div>
+                                                                <!-- Stats Widget -->
+                                                                <a href="" class="widget-stats widget-stats-gray widget-stats-2">
+                                                                    <span class="count">{{ count_ticket }}</span>
+                                                                    <span class="txt">New Cases</span>
+                                                                </a>
+                                                                <!-- // Stats Widget END -->
+                                                                <div class="col-separator-h box"></div>
+
+                                                                <div class="innerAll">
+                                                                    <a href="#" class="btn btn-block btn-primary"><i class="fa fa-plus"></i> Send Quote</a>
+                                                                </div>
+                                                                <div class="col-separator-h box"></div>
+
+                                                                <div class="innerAll">
+                                                                    <a href="#" class="btn btn-block btn-primary"><i class="fa fa-plus"></i> Add user</a>
+                                                                </div>
+                                                            </div>
+                                                            <!-- // END col-table -->
+
+                                                        </div>
+                                                        <!-- // END col-separator -->
+
+                                                    </div> 
+                                                    <!-- // END col -->
+
+                                                </div>
+                                                <!-- // END row -->
+
+                                            </div>
+                                            <!-- // END col-app -->
+
+                                        </div>
+                                        <!-- // END col-table-row -->
+
+                                    </div>
+                                    <!-- // END col-table -->
+
+                                </div>
+                                <!-- // END col-separator -->
+
+                            </div>
+                            <!-- // END col -->
+
+                        </div>
+                        <!-- // END row-app -->
+                        {% endblock %}

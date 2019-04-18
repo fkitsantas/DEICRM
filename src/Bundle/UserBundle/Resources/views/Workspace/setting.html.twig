@@ -1,0 +1,199 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'workspace_page' %}
+{% block javascripts_bottom %}
+    {{ parent() }}
+    <script src="{{ asset('..//bundles/crm/plugins/forms_editors_wysihtml5/js/wysihtml5-0.3.0_rc2.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_editors_wysihtml5/js/bootstrap-wysihtml5-0.0.2.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_editors_wysihtml5/wysihtml5.init.js?v=v2.0.0-rc1') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_wizards/jquery.bootstrap.wizard.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_elements_bootstrap-datepicker/js/bootstrap-datepicker.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_bootstrap-datepicker/bootstrap-datepicker.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_fuelux-radio/fuelux-radio.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_fuelux-checkbox/fuelux-checkbox.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/forms_elements_select2/js/select2.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/forms_elements_select2/select2.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/plugins/notifications_gritter/js/jquery.gritter.min.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+    <script src="{{ asset('..//bundles/crm/components/admin_notifications_gritter/gritter.init.js?v=v2.0.0-rc1&amp;sv=v0.0.1.2') }}" type="text/javascript"></script>
+
+
+{% endblock %}
+
+{% block body %}
+    <div class="row row-app">
+
+
+        <!-- col -->
+        <div class="col-md-12">
+
+            <!-- col-separator.box -->
+            <div class="col-separator bg-none col-unscrollable box col-separator-first">
+
+                <!-- col-table -->
+                <div class="col-table">
+
+                    <h4 class="innerAll bg-white margin-none border-bottom">Global Settings</h4>
+
+                    <div class="col-separator-h"></div>
+
+                    <!-- col-table-row -->
+                    <div class="col-table-row">
+
+                        <!-- col-app -->
+                        <div class="col-app col-unscrollable">
+
+                            <!-- col-app -->
+                            <div class="col-app">
+
+
+                                <!-- Row -->
+                                <div class="row">
+
+                                    <!-- Column -->
+                                    <div class="col-md-6">
+                                        <!-- Widget -->
+                                        <div class="widget">
+
+                                            <!-- Widget heading -->
+                                            <div class="widget-head">
+                                                <h4 class="heading">Global Currency</h4>
+                                            </div>
+                                            <!-- // Widget heading END -->
+                                            <form action="{{ path('CRMUserBundle_update_setting_workspace', { 'id': currency_entity.parameterId }) }}" method="post" {{ form_enctype(edit_form_currency) }} class="form-horizontal" id="frmcreatecontact">
+                                                <div class="widget-body"><div class="input-group">
+
+                                                        {{ form_widget(edit_form_currency.parameterValue, { 'attr': {'class': 'form-control','placeholder':'USD'} }) }}
+                                                        <div class="input-group-btn"><button class="btn btn-default" type="submit">Save</button></div>
+                                                    </div>
+                                                </div>
+                                                {{ form_rest(edit_form_currency) }}
+                                            </form>
+                                        </div>
+                                        <!-- // Widget END -->
+
+                                        <!-- Widget -->
+                                        <div class="widget">
+
+                                            <!-- Widget heading -->
+                                            <div class="widget-head">
+                                                <h4 class="heading">Invoice No. Prefix</h4>
+                                            </div>
+                                            <!-- // Widget heading END -->
+                                            <form action="{{ path('CRMUserBundle_update_setting_workspace', { 'id': invoice_entity.parameterId }) }}" method="post" {{ form_enctype(edit_form_invoice) }} class="form-horizontal" id="frmcreatecontact">
+                                                <div class="widget-body"><div class="input-group">
+
+                                                        {{ form_widget(edit_form_invoice.parameterValue, { 'attr': {'class': 'form-control','placeholder':'0000'} }) }}
+                                                        <div class="input-group-btn"><button class="btn btn-default" type="submit">Save</button></div>
+                                                    </div>
+                                                </div>
+                                                {{ form_rest(edit_form_invoice) }}
+                                            </form>
+                                        </div>
+                                        <!-- // Widget END -->
+
+
+                                        <!-- Widget -->
+                                        <div class="widget">
+
+                                            <!-- Widget heading -->
+                                            <div class="widget-head">
+                                                <h4 class="heading">Sales Order No. Prefix</h4>
+                                            </div>
+                                            <!-- // Widget heading END -->
+                                            <form action="{{ path('CRMUserBundle_update_setting_workspace', { 'id': order_entity.parameterId }) }}" method="post" {{ form_enctype(edit_form_order) }} class="form-horizontal" id="frmcreatecontact">
+                                                <div class="widget-body"><div class="input-group">
+
+                                                        {{ form_widget(edit_form_order.parameterValue, { 'attr': {'class': 'form-control','placeholder':'0000'} }) }}
+                                                        <div class="input-group-btn"><button class="btn btn-default" type="submit">Save</button></div>
+                                                    </div>
+                                                </div>
+                                                {{ form_rest(edit_form_order) }}
+                                            </form>
+                                        </div>
+                                        <!-- // Widget END -->
+
+
+
+                                    </div>
+                                    <!-- // Column END -->
+
+                                    <!-- Column -->
+                                    <div class="col-md-6">
+
+
+
+                                        <!-- Widget -->
+                                        <div class="widget">
+
+                                            <!-- Widget heading -->
+                                            <div class="widget-head">
+                                                <h4 class="heading">Deal ID Prefix</h4>
+                                            </div>
+                                            <!-- // Widget heading END -->
+
+                                            <form action="{{ path('CRMUserBundle_update_setting_workspace', { 'id': quote_entity.parameterId }) }}" method="post" {{ form_enctype(edit_form_quote) }} class="form-horizontal" id="frmcreatecontact">
+                                                <div class="widget-body"><div class="input-group">
+
+                                                        {{ form_widget(edit_form_quote.parameterValue, { 'attr': {'class': 'form-control','placeholder':'0000'} }) }}
+                                                        <div class="input-group-btn"><button class="btn btn-default" type="submit">Save</button></div>
+                                                    </div>
+                                                </div>
+                                                {{ form_rest(edit_form_quote) }}
+                                            </form>
+
+                                        </div>
+                                        <!-- // Widget END -->
+                                        <!-- Widget -->
+                                        <div class="widget">
+
+                                            <!-- Widget heading -->
+                                            <div class="widget-head">
+                                                <h4 class="heading">Customer No Prefix</h4>
+                                            </div>
+                                            <!-- // Widget heading END -->
+
+                                            <form action="{{ path('CRMUserBundle_update_setting_workspace', { 'id': cust_entity.parameterId }) }}" method="post" {{ form_enctype(edit_form_cust) }} class="form-horizontal" id="frmcreatecontact">
+                                                <div class="widget-body"><div class="input-group">
+
+                                                        {{ form_widget(edit_form_cust.parameterValue, { 'attr': {'class': 'form-control','placeholder':'0000'} }) }}
+                                                        <div class="input-group-btn"><button class="btn btn-default" type="submit">Save</button></div>
+                                                    </div>
+                                                </div>
+                                                {{ form_rest(edit_form_cust) }}
+                                            </form>
+
+                                        </div>
+                                        <!-- // Widget END -->
+
+
+
+
+
+
+                                    </div>
+                                    <!-- // Column END -->
+
+                                </div>
+                                <!-- // Row END --> 
+
+
+                            </div>
+                            <!-- // END col-app -->
+
+                        </div>
+                        <!-- // END col-app.col-unscrollable -->
+
+                    </div>
+                    <!-- // END col-table-row -->
+
+                </div>
+                <!-- // END col-table -->
+
+            </div>
+            <!-- // END col-separator.box -->
+
+        </div>
+        <!-- // END col -->
+
+    </div>
+
+{% endblock %}

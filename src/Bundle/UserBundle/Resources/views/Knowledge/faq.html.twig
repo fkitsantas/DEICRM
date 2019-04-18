@@ -1,0 +1,227 @@
+{% extends '::sidebar.html.twig' %}
+{% set selected = 'mycrm_settings' %}
+{% block javascripts_bottom %}
+
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+    <div class="row row-app">
+    <div class="col-md-6">
+        <div class="col-separator box col-separator-first col-unscrollable bg-gray">
+            <div class="col-table">
+                <h4 class="innerAll margin-none border-bottom bg-white"><i
+                            class="fa fa-question-circle text-primary pull-right"></i> FAQ</h4>
+
+                <div class="col-table-row">
+                    <div class="col-app col-unscrollable">
+                        <div class="col-app">
+
+                            <div class="innerAll"><!-- Widget -->
+                                <div class="widget widget-tabs widget-tabs-double-2">
+
+
+
+                                    <div class="widget-body">
+
+                                                <div class="panel-group accordion accordion-2" id="accordion">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title"><a
+                                                                        class="accordion-toggle glyphicons font"
+                                                                        data-toggle="collapse" data-parent="#accordion"
+                                                                        href="#collapse-1"><i></i>  What is Lorem
+                                                                    Ipsum?</a></h4>
+                                                        </div>
+                                                        <div id="collapse-1" class="panel-collapse collapse in">
+                                                            <div class="panel-body">
+                                                                <i class="fa fa-5x pull-left text-primary fa-question-circle"></i>
+                                                                Lorem Ipsum is simply dummy text of the printing and
+                                                                typesetting industry. Lorem Ipsum has been the
+                                                                industry's standard dummy text ever since the 1500s,
+                                                                when an unknown printer took a galley of type and
+                                                                scrambled it to make a type specimen book. It has
+                                                                survived not only five centuries, but also the leap into
+                                                                electronic typesetting, remaining essentially unchanged.
+                                                                It was popularised in the 1960s with the release of
+                                                                Letraset sheets containing Lorem Ipsum passages, and
+                                                                more recently with desktop publishing software like
+                                                                Aldus PageMaker including versions of Lorem Ipsum.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title"><a
+                                                                        class="accordion-toggle glyphicons circle_question_mark"
+                                                                        data-toggle="collapse" data-parent="#accordion"
+                                                                        href="#collapse-2"><i></i>  Why do we use it?</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse-2" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                It is a long established fact that a reader will be
+                                                                distracted by the readable content of a page when
+                                                                looking at its layout. The point of using Lorem Ipsum is
+                                                                that it has a more-or-less normal distribution of
+                                                                letters, as opposed to using 'Content here, content
+                                                                here', making it look like readable English. Many
+                                                                desktop publishing packages and web page editors now use
+                                                                Lorem Ipsum as their default model text, and a search
+                                                                for 'lorem ipsum' will uncover many web sites still in
+                                                                their infancy. Various versions have evolved over the
+                                                                years, sometimes by accident, sometimes on purpose
+                                                                (injected humour and the like).
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title"><a
+                                                                        class="accordion-toggle glyphicons flag"
+                                                                        data-toggle="collapse" data-parent="#accordion"
+                                                                        href="#collapse-3"><i></i>  Where does it come
+                                                                    from?</a></h4>
+                                                        </div>
+                                                        <div id="collapse-3" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                <p> Contrary to popular belief, Lorem Ipsum is not simply
+                                                                    random text. It has roots in a piece of classical
+                                                                    Latin literature from 45 BC, making it over 2000
+                                                                    years old. Richard McClintock, a Latin professor at
+                                                                    Hampden-Sydney College in Virginia, looked up one of
+                                                                    the more obscure Latin words, consectetur, from a
+                                                                    Lorem Ipsum passage, and going through the cites of
+                                                                    the word in classical literature, discovered the
+                                                                    undoubtable source. Lorem Ipsum comes from sections
+                                                                    1.10.32 and 1.10.33 of "de Finibus Bonorum et
+                                                                    Malorum" (The Extremes of Good and Evil) by Cicero,
+                                                                    written in 45 BC. This book is a treatise on the
+                                                                    theory of ethics, very popular during the
+                                                                    Renaissance. The first line of Lorem Ipsum, "Lorem
+                                                                    ipsum dolor sit amet..", comes from a line in
+                                                                    section 1.10.32.</p>
+
+                                                                <p>The standard chunk of Lorem Ipsum used since the
+                                                                    1500s is reproduced below for those interested.
+                                                                    Sections 1.10.32 and 1.10.33 from "de Finibus
+                                                                    Bonorum et Malorum" by Cicero are also reproduced in
+                                                                    their exact original form, accompanied by English
+                                                                    versions from the 1914 translation by H.
+                                                                    Rackham.</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h4 class="panel-title"><a
+                                                                        class="accordion-toggle glyphicons download_alt"
+                                                                        data-toggle="collapse" data-parent="#accordion"
+                                                                        href="#collapse-4"><i></i>  Where can I get some?</a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="collapse-4" class="panel-collapse collapse">
+                                                            <div class="panel-body">
+                                                                There are many variations of passages of Lorem Ipsum
+                                                                available, but the majority have suffered alteration in
+                                                                some form, by injected humour, or randomised words which
+                                                                don't look even slightly believable. If you are going to
+                                                                use a passage of Lorem Ipsum, you need to be sure there
+                                                                isn't anything embarrassing hidden in the middle of
+                                                                text. All the Lorem Ipsum generators on the Internet
+                                                                tend to repeat predefined chunks as necessary, making
+                                                                this the first true generator on the Internet. It uses a
+                                                                dictionary of over 200 Latin words, combined with a
+                                                                handful of model sentence structures, to generate Lorem
+                                                                Ipsum which looks reasonable. The generated Lorem Ipsum
+                                                                is therefore always free from repetition, injected
+                                                                humour, or non-characteristic words etc.
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+
+                                    </div>
+                                </div>
+                                <!-- // Widget END -->
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="col-separator box col-unscrollable">
+            <div class="col-table">
+                <h4 class="innerAll margin-none border-bottom"><i class="fa fa-envelope text-primary pull-right"></i>
+                    Contact us</h4>
+
+                <div class="col-table-row">
+                    <div class="col-app col-unscrollable">
+                        <div class="col-app">
+                            <div class="innerAll">
+                                <!-- CONTACT START -->
+                                <form class="margin-none">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="name" placeholder="YOUR NAME">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="phone" placeholder="PHONE">
+                                        </div>
+                                    </div>
+                                    <div class="separator bottom"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <textarea name="message" class="form-control" rows="5"
+                                                      placeholder="YOUR MESSAGE"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="separator bottom"></div>
+                                    <div class="right">
+                                        <button class="btn btn-primary"><i class="fa fa-fw fa-envelope"></i> Send
+                                            message
+                                        </button>
+                                    </div>
+                                </form>
+                                <!-- // END CONTACT -->
+
+
+                            </div>
+                            <div class="col-separator-h box"></div>
+                            <div class="innerAll">
+                                <!-- DETAILS START -->
+                                <div class="well bg-gray margin-none">
+                                    <address class="margin-none">
+                                        <h2>John Doe</h2>
+                                        <strong>Business manager</strong> at
+                                        <strong><a href="#">Business</a></strong><br>
+                                        <abbr title="Work email">e-mail:</abbr> <a
+                                                href="mailto:#">john.doe@mybiz.com</a><br/>
+                                        <abbr title="Work Phone">phone:</abbr> (012) 345-678-901<br/>
+                                        <abbr title="Work Fax">fax:</abbr> (012) 678-132-901
+                                        <div class="separator line"></div>
+                                        <p class="margin-none"><strong>You can also find us:</strong><br/>Lorem ipsum
+                                            dolor sit amet, consectetur adipiscing elit. Aenean tristique rutrum libero,
+                                            vel bibendum nunc consectetur sed.</p>
+                                    </address>
+                                </div>
+                                <!-- // END DETAILS -->
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+{% endblock %}

@@ -6,26 +6,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Seo\AuditBundle\Entity\User;
 
-class AccountController extends AbstractController
+class LeadController extends AbstractController
 {
     /**
-     * @Route("/accounts", name="account")
+     * @Route("/leads", name="lead")
      */
     public function index()
     {
-        return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
+        return $this->render('lead/index.html.twig', [
+            'controller_name' => 'leadController',
         ]);
     }
 
     /**
-     * @Route("/account/create", name="createAccount")
+     * @Route("/lead/create", name="createlead")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function createAccount(Request $request)
+    public function createlead(Request $request)
     {
-        $form = $this->createForm(AccountForm::class, $FormData);
+        $form = $this->createForm(leadForm::class, $FormData);
         $form->handleRequest($request);
         $FormData = new FormData();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -58,22 +58,22 @@ class AccountController extends AbstractController
             $User->persist($result);
             $User->flush();
 
-            $this->addFlash('success', 'Account Sucessfully Created');
+            $this->addFlash('success', 'lead Sucessfully Created');
 
-            return $this->render('Account/create.html.twig', array('form' => $form->createView()));
+            return $this->render('lead/create.html.twig', array('form' => $form->createView()));
         }
     }
 
 
 
     /**
-     * @Route("/account/search/{username}", name="searchAccount")
+     * @Route("/lead/search/{username}", name="searchlead")
      * @param                 $username
      * @return                Response
      */
-    public function searchAccount(Request $request)
+    public function searchlead(Request $request)
     {
-        $form = $this->createForm(AccountForm::class, $FormData);
+        $form = $this->createForm(leadForm::class, $FormData);
         $form->handleRequest($request);
         $FormData = new FormData();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,10 +87,10 @@ class AccountController extends AbstractController
             $res = $query->getResult();
 
             if (!$query) {
-                $this->addFlash('success', 'No Account was found, Try Searching Again');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
+                $this->addFlash('success', 'No lead was found, Try Searching Again');
+                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
             } else {
-                return $this->render('Account/search.html.twig', array('form' => $form->createView(), 'account' => $res));
+                return $this->render('lead/search.html.twig', array('form' => $form->createView(), 'lead' => $res));
             }
         }
     }
@@ -99,13 +99,13 @@ class AccountController extends AbstractController
 
 
     /**
-     * @Route("/account/edit/{username}", name="editAccount")
+     * @Route("/lead/edit/{username}", name="editlead")
      * @param                 $username
      * @return                Response
      */
-    public function editAccount(Request $request)
+    public function editlead(Request $request)
     {
-        $form = $this->createForm(AccountForm::class, $FormData);
+        $form = $this->createForm(leadForm::class, $FormData);
         $form->handleRequest($request);
         $FormData = new FormData();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -114,8 +114,8 @@ class AccountController extends AbstractController
             $result = $em->getRepository('deicrm')
       ->findOneBy(['dei_user' => $data->name]);
             if (!$result) {
-                $this->addFlash('success', 'This Account is Invalid');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
+                $this->addFlash('success', 'This lead is Invalid');
+                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
             } else {
                 $User->setEmail($data->Email);
                 $User->setUsername($data->Username);
@@ -143,28 +143,28 @@ class AccountController extends AbstractController
                 $User->persist($result);
                 $User->flush();
 
-                $this->addFlash('success', 'Account Sucessfully Created');
+                $this->addFlash('success', 'lead Sucessfully Created');
 
-                return $this->render('Account/edit.html.twig', array('form' => $form->createView()));
+                return $this->render('lead/edit.html.twig', array('form' => $form->createView()));
             }
         }
     }
 
     /**
-     * @Route("/account/all", name="getAllAccount")
+     * @Route("/lead/all", name="getAlllead")
      * @param                 $username
      * @return                Response
      */
-    public function getAllAccount()
+    public function getAlllead()
     {
         $em = $this->getDoctrine()->getManager();
         $result = $em->getRepository('deicrm:dei_user')
             ->findAll();
         if (!$result) {
-            $this->addFlash('success', 'There are no created account');
-            return $this->render('Account/all.html.twig', array('form' => $form->createView()));
+            $this->addFlash('success', 'There are no created lead');
+            return $this->render('lead/all.html.twig', array('form' => $form->createView()));
         } else {
-            return $this->render('Account/all.html.twig', array('form' => $form->createView(), 'account' => $result));
+            return $this->render('lead/all.html.twig', array('form' => $form->createView(), 'lead' => $result));
         }
     }
 
@@ -172,13 +172,13 @@ class AccountController extends AbstractController
 
 
     /**
-     * @Route("/account/{username}", name="getAccount")
+     * @Route("/lead/{username}", name="getlead")
      * @param                 $username
      * @return                Response
      */
-    public function getAccount(Request $request)
+    public function getlead(Request $request)
     {
-        $form = $this->createForm(AccountForm::class, $FormData);
+        $form = $this->createForm(leadForm::class, $FormData);
         $form->handleRequest($request);
         $FormData = new FormData();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -187,22 +187,22 @@ class AccountController extends AbstractController
             $result = $em->getRepository('deicrm')
       ->findOneBy(['dei_user' => $data->name]);
             if (!$result) {
-                $this->addFlash('success', 'This Account is Invalid');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
+                $this->addFlash('success', 'This lead is Invalid');
+                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
             } else {
-                return $this->render('Account/profile.html.twig', array('form' => $form->createView(), 'account' => $result));
+                return $this->render('lead/profile.html.twig', array('form' => $form->createView(), 'lead' => $result));
             }
         }
     }
 
     /**
-     * @Route("/account/del/{username}", name="delAccount")
+     * @Route("/lead/del/{username}", name="dellead")
      * @param                 $username
      * @return                Response
      */
-    public function delAccount(Request $request)
+    public function dellead(Request $request)
     {
-        $form = $this->createForm(AccountForm::class, $FormData);
+        $form = $this->createForm(leadForm::class, $FormData);
         $form->handleRequest($request);
         $FormData = new FormData();
         if ($form->isSubmitted() && $form->isValid()) {
@@ -211,13 +211,13 @@ class AccountController extends AbstractController
             $result = $em->getRepository('deicrm')
       ->findOneBy(['dei_user' => $data->name]);
             if (!$result) {
-                $this->addFlash('success', 'This Account is Invalid');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
+                $this->addFlash('success', 'This lead is Invalid');
+                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
             } else {
                 $em->remove($result);
                 $em->flush();
-                $this->addFlash('success', 'Account sucessfully deleted');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
+                $this->addFlash('success', 'lead sucessfully deleted');
+                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
             }
         }
     }

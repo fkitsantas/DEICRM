@@ -20,7 +20,8 @@
         "symfony/translation": "4.2.*",
         "symfony/twig-bundle": "4.2.*",
         "symfony/validator": "4.2.*",
-        "symfony/yaml": "4.2.*"
+        "symfony/yaml": "4.2.*",
+        "toiba/fullcalendar-bundle": "^6.2"
     },
     "config": {
         "preferred-install": {

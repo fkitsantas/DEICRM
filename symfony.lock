@@ -402,6 +402,18 @@
     "symfony/yaml": {
         "version": "v4.2.5"
     },
+    "toiba/fullcalendar-bundle": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "6.2",
+            "ref": "43c9033fa6f75f9325f9ac21787c8e8acb086934"
+        },
+        "files": [
+            "config/routes/fullcalendar.yaml"
+        ]
+    },
     "twig/twig": {
         "version": "v2.7.4"
     },

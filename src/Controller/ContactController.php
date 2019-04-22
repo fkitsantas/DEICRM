@@ -4,85 +4,28 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Seo\AuditBundle\Entity\User;
+use App\Entity\Contact;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Form\FormData;
+use App\Form\ContactForm;
 
 class ContactController extends AbstractController
 {
     /**
-     * @Route("/contacts", name="contact")
+     * @Route("/contact", name="contact")
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->render('contact/index.html.twig', [
-            'controller_name' => 'contactController',
-        ]);
-    }
-
-    /**
-     * @Route("/contact/create", name="createcontact")
-     * @param           Request $request
-     * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     */
-    public function createcontact(Request $request)
-    {
-        $form = $this->createForm(contactForm::class, $FormData);
-        $form->handleRequest($request);
-        $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $User = new User();
-            $User->setEmail($data->Email);
-            $User->setUsername($data->Username);
-            $User->setPassword($data->Password);
-            $User->setName($data->Name);
-            $User->setOfficePhone($data->OfficePhone);
-            $User->setBillingStreet($data->BillingStreet);
-            $User->setBillingCity($data->BillingCity);
-            $User->setBillingPostalCode($data->BillingPostalCode);
-            $User->setBillingCountry($data->BillingCountry);
-            $User->setShippingStreet($data->ShippingStreet);
-            $User->setShippingCity($data->ShippingCity);
-            $User->setShippingState($data->ShippingState);
-            $User->setShippingPostalCode($data->ShippingPostalCode);
-            $User->setShippingCountry($data->ShippingCountry);
-            $User->setDescription($data->Description);
-            $User->setType($data->Type);
-            $User->setAnnualRevenue($data->AnnualRevenue);
-            $User->setSICCode($data->SICCode);
-            $User->setIndustry($data->Industry);
-            $User->setEmployees($data->Employees);
-            $User->setTickerSymbol($data->TickerSymbol);
-            $User->setOwnership($data->Ownership);
-            $User->setRating($data->Rating);
-            $User->persist($result);
-            $User->flush();
-
-            $this->addFlash('success', 'contact Sucessfully Created');
-
-            return $this->render('contact/create.html.twig', array('form' => $form->createView()));
-        }
-    }
-
-
-
-    /**
-     * @Route("/contact/search/{username}", name="searchcontact")
-     * @param                 $username
-     * @return                Response
-     */
-    public function searchcontact(Request $request)
-    {
-        $form = $this->createForm(contactForm::class, $FormData);
+        $form = $this->createForm(contactSearchForm::class, $FormData);
         $form->handleRequest($request);
         $FormData = new FormData();
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery('SELECT p FROM deicrm:ei_user p
-    WHERE p.name LIKE :data')
-   ->setParameter('data', $data->search);
-
+            $query = $em->createQuery('SELECT p FROM deicrm:ei_Contact
+  WHERE p.name LIKE :data')
+  ->setParameter('data', $data->search);
 
             $res = $query->getResult();
 
@@ -93,8 +36,60 @@ class ContactController extends AbstractController
                 return $this->render('contact/search.html.twig', array('form' => $form->createView(), 'contact' => $res));
             }
         }
+
+        return $this->render('contact/index.html.twig', [ 'form' => $form->createView()]);
     }
 
+    /**
+     * @Route("/contact/create", name="createcontact")
+     * @param           Request $request
+     * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function createcontact(Request $request)
+    {
+        $FormData = new FormData();
+        $form = $this->createForm(ContactForm::class, $FormData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $Contact = new Contact();
+            $Contact->setEmailAddress($data->EmailAddress);
+            $Contact->setFirstName($data->FirstName);
+            $Contact->setLastName($data->LastName);
+            $Contact->setTitle($data->Title);
+            $Contact->setDepartment($data->Department);
+            $Contact->setOfficePhone($data->OfficePhone);
+            $Contact->setMobile($data->Mobile);
+            $Contact->setFax($data->Fax);
+            $Contact->setPrimaryAddressStreet($data->PrimaryAddressStreet);
+            $Contact->setPrimaryAddressCity($data->PrimaryAddressCity);
+            $Contact->setPrimaryAddressState($data->PrimaryAddressState);
+            $Contact->setPrimaryAddressPostalCode($data->PrimaryAddressPostalCode);
+            $Contact->setPrimaryAddressCountry($data->PrimaryAddressCountry);
+            $Contact->setAlternateAddressStreet($data->AlternateAddressStreet);
+            $Contact->setAlternateAddressCity($data->AlternateAddressCity);
+            $Contact->setAlternateAddressState($data->AlternateAddressState);
+            $Contact->setAlternateAddressPostalCode($data->AlternateAddressPostalCode);
+            $Contact->setAlternateAddressCountry($data->AlternateAddressCountry);
+            $Contact->setEmailAddress($data->EmailAddress);
+            $Contact->setDescription($data->Description);
+            $Contact->setReportsTo($data->ReportsTo);
+            $Contact->setLeadSource($data->LeadSource);
+            $Contact->setCampaign($data->Campaign);
+            $Contact->setAssignedTo($data->AssignedTo);
+            $em->persist($Contact);
+            $em->flush();
+
+            $this->addFlash('success', 'Contact Sucessfully Created');
+
+            return $this->redirectToRoute('contact');
+        }
+
+
+        return $this->render('contact/create.html.twig', array('form' => $form->createView()));
+    }
 
 
 
@@ -117,31 +112,31 @@ class ContactController extends AbstractController
                 $this->addFlash('success', 'This contact is Invalid');
                 return $this->render('contact/index.html.twig', array('form' => $form->createView()));
             } else {
-                $User->setEmail($data->Email);
-                $User->setUsername($data->Username);
-                $User->setPassword($data->Password);
-                $User->setName($data->Name);
-                $User->setOfficePhone($data->OfficePhone);
-                $User->setBillingStreet($data->BillingStreet);
-                $User->setBillingCity($data->BillingCity);
-                $User->setBillingPostalCode($data->BillingPostalCode);
-                $User->setBillingCountry($data->BillingCountry);
-                $User->setShippingStreet($data->ShippingStreet);
-                $User->setShippingCity($data->ShippingCity);
-                $User->setShippingState($data->ShippingState);
-                $User->setShippingPostalCode($data->ShippingPostalCode);
-                $User->setShippingCountry($data->ShippingCountry);
-                $User->setDescription($data->Description);
-                $User->setType($data->Type);
-                $User->setAnnualRevenue($data->AnnualRevenue);
-                $User->setSICCode($data->SICCode);
-                $User->setIndustry($data->Industry);
-                $User->setEmployees($data->Employees);
-                $User->setTickerSymbol($data->TickerSymbol);
-                $User->setOwnership($data->Ownership);
-                $User->setRating($data->Rating);
-                $User->persist($result);
-                $User->flush();
+                $Contact->setEmail($data->Email);
+                $Contact->setUsername($data->Username);
+                $Contact->setPassword($data->Password);
+                $Contact->setName($data->Name);
+                $Contact->setOfficePhone($data->OfficePhone);
+                $Contact->setBillingStreet($data->BillingStreet);
+                $Contact->setBillingCity($data->BillingCity);
+                $Contact->setBillingPostalCode($data->BillingPostalCode);
+                $Contact->setBillingCountry($data->BillingCountry);
+                $Contact->setShippingStreet($data->ShippingStreet);
+                $Contact->setShippingCity($data->ShippingCity);
+                $Contact->setShippingState($data->ShippingState);
+                $Contact->setShippingPostalCode($data->ShippingPostalCode);
+                $Contact->setShippingCountry($data->ShippingCountry);
+                $Contact->setDescription($data->Description);
+                $Contact->setType($data->Type);
+                $Contact->setAnnualRevenue($data->AnnualRevenue);
+                $Contact->setSICCode($data->SICCode);
+                $Contact->setIndustry($data->Industry);
+                $Contact->setEmployees($data->Employees);
+                $Contact->setTickerSymbol($data->TickerSymbol);
+                $Contact->setOwnership($data->Ownership);
+                $Contact->setRating($data->Rating);
+                $Contact->persist($result);
+                $Contact->flush();
 
                 $this->addFlash('success', 'contact Sucessfully Created');
 

@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="/accounts">Accounts</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/contacts">Contacts</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">Opportunies</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
+  </ol>
+</nav>
+
+
+
+
+
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}

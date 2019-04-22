@@ -15,9 +15,17 @@
   </ol>
 </nav>
 
+
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+
 <nav aria-label="breadcrumb">
-  <ol class="breadcrumb"> Actions: <li class="breadcrumb-item"><a href="#">Create Account</a></li>
-    <li class="breadcrumb-item"><a href="/accounts">View Accounts</a></li>
+  <ol class="breadcrumb"> Actions: <li class="breadcrumb-item"><a href="account/create">Create Account</a></li>
+    <li class="breadcrumb-item"><a href="/accounts/all">View Accounts</a></li>
     <li class="breadcrumb-item active" aria-current="page"><a href="/contacts">Contacts</a></li>
       <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">Opportunies</a></li>
           <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>

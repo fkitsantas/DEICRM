@@ -18,448 +18,397 @@ class Contact
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password;
-
-    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $firstname;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $lastname;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $mobile;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $office;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $primary_address;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $city;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $state;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $postal_code;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $country;
+    private $FirstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $email;
+    private $LastName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $lead_source;
+    private $Title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $campaign;
+    private $Department;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $reports_to;
+    private $OfficePhone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $description;
+    private $Mobile;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $title;
+    private $Fax;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $department;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $intials;
+    private $PrimaryAddressStreet;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $assigned_to;
+    private $PrimaryAddressCity;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $alternative_address;
+    private $PrimaryAddressState;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $alternative_city;
+    private $PrimaryAddressPostalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $alternative_state;
+    private $PrimaryAddressCountry;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $alternative_postal_code;
+    private $AlternateAddressStreet;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $alternative_country;
+    private $AlternateAddressCity;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $fax;
+    private $AlternateAddressState;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AlternateAddressPostalCode;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AlternateAddressCountry;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $EmailAddress;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ReportsTo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $LeadSource;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Campaign;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AssignedTo;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUsername(): ?string
+    public function getFirstName(): ?string
     {
-        return $this->username;
+        return $this->FirstName;
     }
 
-    public function setUsername(string $username): self
+    public function setFirstName(string $FirstName): self
     {
-        $this->username = $username;
+        $this->FirstName = $FirstName;
 
         return $this;
     }
 
-    public function getPassword(): ?string
+    public function getLastName(): ?string
     {
-        return $this->password;
+        return $this->LastName;
     }
 
-    public function setPassword(string $password): self
+    public function setLastName(string $LastName): self
     {
-        $this->password = $password;
-
-        return $this;
-    }
-
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(?string $firstname): self
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(?string $lastname): self
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
-    public function getMobile(): ?string
-    {
-        return $this->mobile;
-    }
-
-    public function setMobile(?string $mobile): self
-    {
-        $this->mobile = $mobile;
-
-        return $this;
-    }
-
-    public function getOffice(): ?string
-    {
-        return $this->office;
-    }
-
-    public function setOffice(?string $office): self
-    {
-        $this->office = $office;
-
-        return $this;
-    }
-
-    public function getPrimaryAddress(): ?string
-    {
-        return $this->primary_address;
-    }
-
-    public function setPrimaryAddress(?string $primary_address): self
-    {
-        $this->primary_address = $primary_address;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(?string $city): self
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getState(): ?string
-    {
-        return $this->state;
-    }
-
-    public function setState(?string $state): self
-    {
-        $this->state = $state;
-
-        return $this;
-    }
-
-    public function getPostalCode(): ?string
-    {
-        return $this->postal_code;
-    }
-
-    public function setPostalCode(?string $postal_code): self
-    {
-        $this->postal_code = $postal_code;
-
-        return $this;
-    }
-
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
-
-    public function setCountry(?string $country): self
-    {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getLeadSource(): ?string
-    {
-        return $this->lead_source;
-    }
-
-    public function setLeadSource(?string $lead_source): self
-    {
-        $this->lead_source = $lead_source;
-
-        return $this;
-    }
-
-    public function getCampaign(): ?string
-    {
-        return $this->campaign;
-    }
-
-    public function setCampaign(?string $campaign): self
-    {
-        $this->campaign = $campaign;
-
-        return $this;
-    }
-
-    public function getReportsTo(): ?string
-    {
-        return $this->reports_to;
-    }
-
-    public function setReportsTo(?string $reports_to): self
-    {
-        $this->reports_to = $reports_to;
-
-        return $this;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
+        $this->LastName = $LastName;
 
         return $this;
     }
 
     public function getTitle(): ?string
     {
-        return $this->title;
+        return $this->Title;
     }
 
-    public function setTitle(?string $title): self
+    public function setTitle(string $Title): self
     {
-        $this->title = $title;
+        $this->Title = $Title;
 
         return $this;
     }
 
     public function getDepartment(): ?string
     {
-        return $this->department;
+        return $this->Department;
     }
 
-    public function setDepartment(?string $department): self
+    public function setDepartment(string $Department = null): self
     {
-        $this->department = $department;
+        $this->Department = $Department;
 
         return $this;
     }
 
-    public function getIntials(): ?string
+    public function getOfficePhone(): ?string
     {
-        return $this->intials;
+        return $this->OfficePhone;
     }
 
-    public function setIntials(string $intials): self
+    public function setOfficePhone(string $OfficePhone = null): self
     {
-        $this->intials = $intials;
+        $this->OfficePhone = $OfficePhone;
 
         return $this;
     }
 
-    public function getAssignedTo(): ?string
+    public function getMobile(): ?string
     {
-        return $this->assigned_to;
+        return $this->Mobile;
     }
 
-    public function setAssignedTo(?string $assigned_to): self
+    public function setMobile(?string $Mobile = null): self
     {
-        $this->assigned_to = $assigned_to;
-
-        return $this;
-    }
-
-    public function getAlternativeAddress(): ?string
-    {
-        return $this->alternative_address;
-    }
-
-    public function setAlternativeAddress(?string $alternative_address): self
-    {
-        $this->alternative_address = $alternative_address;
-
-        return $this;
-    }
-
-    public function getAlternativeCity(): ?string
-    {
-        return $this->alternative_city;
-    }
-
-    public function setAlternativeCity(?string $alternative_city): self
-    {
-        $this->alternative_city = $alternative_city;
-
-        return $this;
-    }
-
-    public function getAlternativeState(): ?string
-    {
-        return $this->alternative_state;
-    }
-
-    public function setAlternativeState(?string $alternative_state): self
-    {
-        $this->alternative_state = $alternative_state;
-
-        return $this;
-    }
-
-    public function getAlternativePostalCode(): ?string
-    {
-        return $this->alternative_postal_code;
-    }
-
-    public function setAlternativePostalCode(?string $alternative_postal_code): self
-    {
-        $this->alternative_postal_code = $alternative_postal_code;
-
-        return $this;
-    }
-
-    public function getAlternativeCountry(): ?string
-    {
-        return $this->alternative_country;
-    }
-
-    public function setAlternativeCountry(?string $alternative_country): self
-    {
-        $this->alternative_country = $alternative_country;
+        $this->Mobile = $Mobile;
 
         return $this;
     }
 
     public function getFax(): ?string
     {
-        return $this->fax;
+        return $this->Fax;
     }
 
-    public function setFax(?string $fax): self
+    public function setFax(?string $Fax): self
     {
-        $this->fax = $fax;
+        $this->Fax = $Fax;
+
+        return $this;
+    }
+
+    public function getPrimaryAddressStreet(): ?string
+    {
+        return $this->PrimaryAddressStreet;
+    }
+
+    public function setPrimaryAddressStreet(?string $PrimaryAddressStreet = null): self
+    {
+        $this->PrimaryAddressStreet = $PrimaryAddressStreet;
+
+        return $this;
+    }
+
+    public function getPrimaryAddressCity(): ?string
+    {
+        return $this->PrimaryAddressCity;
+    }
+
+    public function setPrimaryAddressCity(?string $PrimaryAddressCity = null): self
+    {
+        $this->PrimaryAddressCity = $PrimaryAddressCity;
+
+        return $this;
+    }
+
+    public function getPrimaryAddressState(): ?string
+    {
+        return $this->PrimaryAddressState;
+    }
+
+    public function setPrimaryAddressState(?string $PrimaryAddressState = null): self
+    {
+        $this->PrimaryAddressState = $PrimaryAddressState;
+
+        return $this;
+    }
+
+    public function getPrimaryAddressPostalCode(): ?string
+    {
+        return $this->PrimaryAddressPostalCode;
+    }
+
+    public function setPrimaryAddressPostalCode(?string $PrimaryAddressPostalCode = null): self
+    {
+        $this->PrimaryAddressPostalCode = $PrimaryAddressPostalCode;
+
+        return $this;
+    }
+
+    public function getPrimaryAddressCountry(): ?string
+    {
+        return $this->PrimaryAddressCountry;
+    }
+
+    public function setPrimaryAddressCountry(?string $PrimaryAddressCountry = null): self
+    {
+        $this->PrimaryAddressCountry = $PrimaryAddressCountry;
+
+        return $this;
+    }
+
+    public function getAlternateAddressStreet(): ?string
+    {
+        return $this->AlternateAddressStreet;
+    }
+
+    public function setAlternateAddressStreet(?string $AlternateAddressStreet = null): self
+    {
+        $this->AlternateAddressStreet = $AlternateAddressStreet;
+
+        return $this;
+    }
+
+    public function getAlternateAddressCity(): ?string
+    {
+        return $this->AlternateAddressCity;
+    }
+
+    public function setAlternateAddressCity(?string $AlternateAddressCity = null): self
+    {
+        $this->AlternateAddressCity = $AlternateAddressCity;
+
+        return $this;
+    }
+
+    public function getAlternateAddressState(): ?string
+    {
+        return $this->AlternateAddressState;
+    }
+
+    public function setAlternateAddressState(?string $AlternateAddressState = null): self
+    {
+        $this->AlternateAddressState = $AlternateAddressState;
+
+        return $this;
+    }
+
+    public function getAlternateAddressPostalCode(): ?string
+    {
+        return $this->AlternateAddressPostalCode;
+    }
+
+    public function setAlternateAddressPostalCode(?string $AlternateAddressPostalCode = null): self
+    {
+        $this->AlternateAddressPostalCode = $AlternateAddressPostalCode;
+
+        return $this;
+    }
+
+    public function getAlternateAddressCountry(): ?string
+    {
+        return $this->AlternateAddressCountry;
+    }
+
+    public function setAlternateAddressCountry(?string $AlternateAddressCountry = null): self
+    {
+        $this->AlternateAddressCountry = $AlternateAddressCountry;
+
+        return $this;
+    }
+
+    public function getEmailAddress(): ?string
+    {
+        return $this->EmailAddress;
+    }
+
+    public function setEmailAddress(?string $EmailAddress = null): self
+    {
+        $this->EmailAddress = $EmailAddress;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(?string $Description = null): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function getReportsTo(): ?string
+    {
+        return $this->ReportsTo;
+    }
+
+    public function setReportsTo(?string $ReportsTo = null): self
+    {
+        $this->ReportsTo = $ReportsTo;
+
+        return $this;
+    }
+
+    public function getLeadSource(): ?string
+    {
+        return $this->LeadSource;
+    }
+
+    public function setLeadSource(?string $LeadSource = null): self
+    {
+        $this->LeadSource = $LeadSource;
+
+        return $this;
+    }
+
+    public function getCampaign(): ?string
+    {
+        return $this->Campaign;
+    }
+
+    public function setCampaign(?string $Campaign = null): self
+    {
+        $this->Campaign = $Campaign;
+
+        return $this;
+    }
+
+    public function getAssignedTo(): ?string
+    {
+        return $this->AssignedTo;
+    }
+
+    public function setAssignedTo(?string $AssignedTo = null): self
+    {
+        $this->AssignedTo = $AssignedTo;
 
         return $this;
     }

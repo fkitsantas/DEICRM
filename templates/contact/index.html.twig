@@ -7,32 +7,30 @@
 
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="/accounts">Accounts</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/contacts">Contacts</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">Opportunies</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
+    <li class="breadcrumb-item"><a href="../">Home</a></li>
+    <li class="breadcrumb-item"><a href="../accounts">Accounts</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="../contacts">Contacts</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="../opportunies">Opportunies</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="../leads">Leads</a></li>
   </ol>
 </nav>
 
+{% include 'contact/inc/flash.html.twig' %}
 
-{% for message in app.flashes('notice') %}
-    <div class="flash-notice">
+{% include 'contact/inc/breadcrumb.html.twig' %}
+
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
         {{ message }}
     </div>
 {% endfor %}
 
-
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb"> Actions: <li class="breadcrumb-item"><a href="contact/create">Create Account</a></li>
-    <li class="breadcrumb-item"><a href="/accounts/all">View Accounts</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/contacts">Contacts</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">Opportunies</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
-  </ol>
-</nav>
-
-
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
 
 {% if form is defined %}
 
@@ -43,5 +41,20 @@
 
 {% endif %}
 
+
+{% if contact is defined %}
+
+<div class="card">
+  <div class="card-header">
+    Search result for {{ searchfor }}
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for data in contact %}
+    <li class="list-group-item">{{ data.Title}} {{ data.FirstName}} {{ data.LastName}} {{ data.EmailAddress}} <a href="../contact/{{ data.id }}" class="btn btn-primary btn-sm">view</a></li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endif %}
 
 {% endblock %}

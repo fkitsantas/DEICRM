@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="/accounts">Accounts</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/Opportuniess">Opportuniess</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">Opportunies</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
+  </ol>
+</nav>
+
+
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% include 'Opportunies/inc/flash.html.twig' %}
+
+{% include 'Opportunies/inc/breadcrumb.html.twig' %}
+
+
+
+{% if Opportunies is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">First: {{Opportunies.FirstName}}</li>
+  <li class="list-group-item">Last: {{Opportunies.LastName}}</li>
+  <li class="list-group-item">Office Phone:{{Opportunies.OfficePhone}}</li>
+  <li class="list-group-item">Fax: {{Opportunies.Fax}} </li>
+  <li class="list-group-item">Primary Address: {{Opportunies.PrimaryAddressStreet}} </li>
+  <li class="list-group-item">Email Address: {{Opportunies.EmailAddress}} </li>
+  <li class="list-group-item">Description: {{Opportunies.Description}} </li>
+  <li class="list-group-item">Report To: {{Opportunies.ReportsTo}} </li>
+  <li class="list-group-item">Lead Source: {{Opportunies.LeadSource}} </li>
+  <li class="list-group-item">Campaign: {{Opportunies.Campaign}} </li>
+  <li class="list-group-item">Assigned To: {{Opportunies.AssignedTo}} </li>
+  <li class="list-group-item">Date Created: {{Opportunies.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{Opportunies.DateModified}} </li>
+  <li class="list-group-item">CreatedBy: {{createdby.FirstName}}  {{createdby.LastName}}</li>
+</ul>
+
+
+{% endif %}
+
+{% endblock %}

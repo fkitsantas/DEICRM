@@ -4,167 +4,192 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Seo\AuditBundle\Entity\User;
+use App\Entity\Account;
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Form\FormData;
+use App\Form\Account\AccountForm;
+use App\Form\Account\AccountEdit;
+use App\Form\Account\AccountSearchForm;
 
 class AccountController extends AbstractController
 {
     /**
-     * @Route("/accounts", name="account")
+     * @Route("/account", name="account")
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->render('account/index.html.twig', [
-            'controller_name' => 'AccountController',
-        ]);
+        $FormData = new FormData();
+        $form = $this->createForm(accountSearchForm::class, $FormData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $account = $this->getDoctrine()
+    ->getRepository(Account::class)
+    ->findByLastName($data->Search);
+
+            if (!$account) {
+                $this->addFlash('error', 'No account was found, Try Searching Again');
+                return $this->render('account/index.html.twig', array('form' => $form->createView()));
+            } else {
+                return $this->render('account/index.html.twig', array('form' => $form->createView(), 'account' => $account, 'searchfor' => $data->Search));
+            }
+        }
+
+        return $this->render('account/index.html.twig', [ 'form' => $form->createView()]);
     }
 
     /**
-     * @Route("/account/create", name="createAccount")
+     * @Route("/account/create", name="createaccount")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function createAccount(Request $request)
+    public function createaccount(Request $request)
     {
+        $FormData = new FormData();
         $form = $this->createForm(AccountForm::class, $FormData);
         $form->handleRequest($request);
-        $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $User = new User();
-            $User->setEmail($data->Email);
-            $User->setUsername($data->Username);
-            $User->setPassword($data->Password);
-            $User->setName($data->Name);
-            $User->setOfficePhone($data->OfficePhone);
-            $User->setBillingStreet($data->BillingStreet);
-            $User->setBillingCity($data->BillingCity);
-            $User->setBillingPostalCode($data->BillingPostalCode);
-            $User->setBillingCountry($data->BillingCountry);
-            $User->setShippingStreet($data->ShippingStreet);
-            $User->setShippingCity($data->ShippingCity);
-            $User->setShippingState($data->ShippingState);
-            $User->setShippingPostalCode($data->ShippingPostalCode);
-            $User->setShippingCountry($data->ShippingCountry);
-            $User->setDescription($data->Description);
-            $User->setType($data->Type);
-            $User->setAnnualRevenue($data->AnnualRevenue);
-            $User->setSICCode($data->SICCode);
-            $User->setIndustry($data->Industry);
-            $User->setEmployees($data->Employees);
-            $User->setTickerSymbol($data->TickerSymbol);
-            $User->setOwnership($data->Ownership);
-            $User->setRating($data->Rating);
-            $User->persist($result);
-            $User->flush();
 
-            $this->addFlash('success', 'Account Sucessfully Created');
-
-            return $this->render('Account/create.html.twig', array('form' => $form->createView()));
-        }
-    }
-
-
-
-    /**
-     * @Route("/account/search/{username}", name="searchAccount")
-     * @param                 $username
-     * @return                Response
-     */
-    public function searchAccount(Request $request)
-    {
-        $form = $this->createForm(AccountForm::class, $FormData);
-        $form->handleRequest($request);
-        $FormData = new FormData();
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery('SELECT p FROM deicrm:ei_user p
-    WHERE p.name LIKE :data')
-   ->setParameter('data', $data->search);
+            $Account = new Account();
+            $Account->setEmailAddress($data->EmailAddress);
+            $Account->setName($data->Name);
+            $Account->setWebsite($data->Website);
+            $Account->setDepartment($data->Department);
+            $Account->setOfficePhone($data->OfficePhone);
+            $Account->setFax($data->Fax);
+            $Account->setBillingAddressStreet($data->BillingAddressStreet);
+            $Account->setBillingAddressCity($data->BillingAddressCity);
+            $Account->setBillingAddressState($data->BillingAddressState);
+            $Account->setBillingAddressPostalCode($data->BillingAddressPostalCode);
+            $Account->setBillingAddressCountry($data->BillingAddressCountry);
+            $Account->setShippingAddressStreet($data->ShippingAddressStreet);
+            $Account->setShippingAddressCity($data->ShippingAddressCity);
+            $Account->setShippingAddressState($data->ShippingAddressState);
+            $Account->setShippingAddressPostalCode($data->ShippingAddressPostalCode);
+            $Account->setType($data->Type);
+            $Account->setAnnualRevenue($data->AnnualRevenue);
+            $Account->setSICCodee($data->SICCode);
+            $Account->setMemberOf($data->MemberOf);
+            $Account->setCampaign($data->Campaign);
+            $Account->setIndustry($data->Industry);
+            $Account->setEmployees($data->Employees);
+            $Account->setTickerSymbol($data->TickerSymbol);
+            $Account->setOwnership($data->Ownership);
+            $Account->setRating($data->Rating);
+            $Account->setAssignedTo($data->AssignedTo);
+            $Account->setDateCreated(date('m/d/Y h:i:s a', time()));
+            $Account->setCreatedBy($this->getUser()->getId());
+            $em->persist($Account);
+            $em->flush();
 
 
-            $res = $query->getResult();
+            $thisaccount = $this->getDoctrine()
+          ->getRepository(Account::class)
+          ->findOneByID($Account->getID());
 
-            if (!$query) {
-                $this->addFlash('success', 'No Account was found, Try Searching Again');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
-            } else {
-                return $this->render('Account/search.html.twig', array('form' => $form->createView(), 'account' => $res));
-            }
+            $this->addFlash('success', 'Account '.$thistarget->getName().' Sucessfully Created');
+            return $this->redirectToRoute('getaccount', ['id' => $thisaccount->getID()]);
         }
+
+
+        return $this->render('account/create.html.twig', array('form' => $form->createView()));
     }
 
 
 
 
     /**
-     * @Route("/account/edit/{username}", name="editAccount")
-     * @param                 $username
-     * @return                Response
+     * @Route("/account/edit/{id}", name="editaccount")
+     * @param           Request $request
+     * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function editAccount(Request $request)
+    public function editaccount(Request $request, $id)
     {
-        $form = $this->createForm(AccountForm::class, $FormData);
+        $Account = $this->getDoctrine()
+      ->getRepository(Account::class)
+      ->findOneByID($id);
+
+
+
+        if (!$Account) {
+            $this->addFlash('error', 'This account does not exist');
+
+            return $this->render('account/index.html.twig');
+        }
+
+
+        $form = $this->createForm(AccountEdit::class, $Account);
         $form->handleRequest($request);
-        $FormData = new FormData();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This Account is Invalid');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
-            } else {
-                $User->setEmail($data->Email);
-                $User->setUsername($data->Username);
-                $User->setPassword($data->Password);
-                $User->setName($data->Name);
-                $User->setOfficePhone($data->OfficePhone);
-                $User->setBillingStreet($data->BillingStreet);
-                $User->setBillingCity($data->BillingCity);
-                $User->setBillingPostalCode($data->BillingPostalCode);
-                $User->setBillingCountry($data->BillingCountry);
-                $User->setShippingStreet($data->ShippingStreet);
-                $User->setShippingCity($data->ShippingCity);
-                $User->setShippingState($data->ShippingState);
-                $User->setShippingPostalCode($data->ShippingPostalCode);
-                $User->setShippingCountry($data->ShippingCountry);
-                $User->setDescription($data->Description);
-                $User->setType($data->Type);
-                $User->setAnnualRevenue($data->AnnualRevenue);
-                $User->setSICCode($data->SICCode);
-                $User->setIndustry($data->Industry);
-                $User->setEmployees($data->Employees);
-                $User->setTickerSymbol($data->TickerSymbol);
-                $User->setOwnership($data->Ownership);
-                $User->setRating($data->Rating);
-                $User->persist($result);
-                $User->flush();
+            $Account->setEmailAddress($data->getEmailAddress());
+            $Account->setName($data->getName());
+            $Account->setWebsite($data->getWebsite());
+            $Account->setDepartment($data->getDepartment());
+            $Account->setOfficePhone($data->getOfficePhone());
+            $Account->setFax($data->getFax());
+            $Account->setBillingAddressStreet($data->getBillingAddressStreet());
+            $Account->setBillingAddressCity($data->getBillingAddressCity());
+            $Account->setBillingAddressState($data->getBillingAddressState());
+            $Account->setBillingAddressPostalCode($data->getBillingAddressPostalCode());
+            $Account->setBillingAddressCountry($data->getBillingAddressCountry());
+            $Account->setShippingAddressStreet($data->getShippingAddressStreet());
+            $Account->setShippingAddressCity($data->getShippingAddressCity());
+            $Account->setShippingAddressState($data->getShippingAddressState());
+            $Account->setShippingAddressPostalCode($data->getShippingAddressPostalCode());
+            $Account->setType($data->getType());
+            $Account->setAnnualRevenue($data->getAnnualRevenue());
+            $Account->setSICCodee($data->getSICCode());
+            $Account->setMemberOf($data->getMemberOf());
+            $Account->setCampaign($data->getCampaign());
+            $Account->setIndustry($data->getIndustry());
+            $Account->setEmployees($data->getEmployees());
+            $Account->setTickerSymbol($data->getTickerSymbol());
+            $Account->setOwnership($data->getOwnership());
+            $Account->setRating($data->getRating());
+            $Account->setAssignedTo($data->getAssignedTo());
+            $Account->setDateModified(date('m/d/Y h:i:s a', time()));
+            $em->persist($Account);
+            $em->flush();
 
-                $this->addFlash('success', 'Account Sucessfully Created');
 
-                return $this->render('Account/edit.html.twig', array('form' => $form->createView()));
-            }
+            $thisaccount = $this->getDoctrine()
+          ->getRepository(Account::class)
+          ->findOneByID($Account->getID());
+
+            $this->addFlash('success', 'Account '.$thistarget->getName().' Sucessfully Edited');
+            return $this->redirectToRoute('getaccount', ['id' => $thisaccount->getID()]);
         }
+
+
+        return $this->render('account/edit.html.twig', array('form' => $form->createView()));
     }
 
+
+
+
     /**
-     * @Route("/account/all", name="getAllAccount")
-     * @param                 $username
+     * @Route("/account/all", name="getAllaccount")
      * @return                Response
      */
-    public function getAllAccount()
+    public function getAllaccount()
     {
         $em = $this->getDoctrine()->getManager();
-        $result = $em->getRepository('deicrm:dei_user')
+        $result = $em->getRepository(Account::class)
             ->findAll();
         if (!$result) {
             $this->addFlash('success', 'There are no created account');
-            return $this->render('Account/all.html.twig', array('form' => $form->createView()));
+            return $this->render('account/all.html.twig');
         } else {
-            return $this->render('Account/all.html.twig', array('form' => $form->createView(), 'account' => $result));
+            return $this->render('account/all.html.twig', ['account' => $result]);
         }
     }
 
@@ -172,53 +197,49 @@ class AccountController extends AbstractController
 
 
     /**
-     * @Route("/account/{username}", name="getAccount")
-     * @param                 $username
+     * @Route("/account/{id}", name="getaccount")
+     * @param                 $id
      * @return                Response
      */
-    public function getAccount(Request $request)
+    public function getaccount($id)
     {
-        $form = $this->createForm(AccountForm::class, $FormData);
-        $form->handleRequest($request);
-        $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This Account is Invalid');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
-            } else {
-                return $this->render('Account/profile.html.twig', array('form' => $form->createView(), 'account' => $result));
-            }
+        $account = $this->getDoctrine()
+        ->getRepository(Account::class)
+        ->findOneByID($id);
+
+
+        if (!$account) {
+            $this->addFlash('error', 'Account not found');
+            return $this->redirectToRoute('account');
+        } else {
+            $createdby = $this->getDoctrine()
+          ->getRepository(User::class)
+          ->findOneByID($account->getCreatedBy());
+
+            return $this->render('account/view.html.twig', ['account' => $account, 'createdby' => $createdby]);
         }
     }
 
     /**
-     * @Route("/account/del/{username}", name="delAccount")
-     * @param                 $username
+     * @Route("/account/del/{id}", name="delaccount")
+     * @param                 $id
      * @return                Response
      */
-    public function delAccount(Request $request)
+    public function delaccount($id)
     {
-        $form = $this->createForm(AccountForm::class, $FormData);
-        $form->handleRequest($request);
-        $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+        $Account = $this->getDoctrine()
+    ->getRepository(Account::class)
+    ->findOneByID($id);
+
+        if (!$Account) {
+            $this->addFlash('error', 'Can not find account');
+            return $this->redirectToRoute('getAllaccount');
+        } else {
             $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This Account is Invalid');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
-            } else {
-                $em->remove($result);
-                $em->flush();
-                $this->addFlash('success', 'Account sucessfully deleted');
-                return $this->render('Account/index.html.twig', array('form' => $form->createView()));
-            }
+            $em->remove($Account);
+            $em->flush();
+            $this->addFlash('success', 'account sucessfully removed');
+            return $this->redirectToRoute('getAllaccount');
         }
     }
 }

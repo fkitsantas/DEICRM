@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'target/inc/flash.html.twig' %}
+
+{% include 'target/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+{% endblock %}

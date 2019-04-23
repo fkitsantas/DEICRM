@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'Opportunities/inc/flash.html.twig' %}
+
+{% include 'Opportunities/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+
+<script>
+       jQuery(document).ready(function() {
+           $('.js-datepicker').datepicker();
+       });
+   </script>
+{% endblock %}

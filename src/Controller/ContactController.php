@@ -5,10 +5,13 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Contact;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\FormData;
-use App\Form\ContactForm;
+use App\Form\Contact\ContactForm;
+use App\Form\Contact\ContactEdit;
+use App\Form\Contact\ContactSearchForm;
 
 class ContactController extends AbstractController
 {
@@ -17,23 +20,22 @@ class ContactController extends AbstractController
      */
     public function index(Request $request)
     {
+        $FormData = new FormData();
         $form = $this->createForm(contactSearchForm::class, $FormData);
         $form->handleRequest($request);
-        $FormData = new FormData();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery('SELECT p FROM deicrm:ei_Contact
-  WHERE p.name LIKE :data')
-  ->setParameter('data', $data->search);
 
-            $res = $query->getResult();
+            $contact = $this->getDoctrine()
+    ->getRepository(Contact::class)
+    ->findByLastName($data->Search);
 
-            if (!$query) {
-                $this->addFlash('success', 'No contact was found, Try Searching Again');
+            if (!$contact) {
+                $this->addFlash('error', 'No contact was found, Try Searching Again');
                 return $this->render('contact/index.html.twig', array('form' => $form->createView()));
             } else {
-                return $this->render('contact/search.html.twig', array('form' => $form->createView(), 'contact' => $res));
+                return $this->render('contact/index.html.twig', array('form' => $form->createView(), 'contact' => $contact, 'searchfor' => $data->Search));
             }
         }
 
@@ -79,12 +81,19 @@ class ContactController extends AbstractController
             $Contact->setLeadSource($data->LeadSource);
             $Contact->setCampaign($data->Campaign);
             $Contact->setAssignedTo($data->AssignedTo);
+            $Contact->setDateCreated(date('m/d/Y h:i:s a', time()));
+
+            $Contact->setCreatedBy($this->getUser()->getId());
             $em->persist($Contact);
             $em->flush();
 
-            $this->addFlash('success', 'Contact Sucessfully Created');
 
-            return $this->redirectToRoute('contact');
+            $thiscontact = $this->getDoctrine()
+          ->getRepository(Contact::class)
+          ->findOneByID($Contact->getID());
+
+            $this->addFlash('success', 'Contact '.$thistarget->getLastName().' Sucessfully Created');
+            return $this->redirectToRoute('getcontact', ['id' => $thiscontact->getID()]);
         }
 
 
@@ -93,73 +102,91 @@ class ContactController extends AbstractController
 
 
 
+
     /**
-     * @Route("/contact/edit/{username}", name="editcontact")
-     * @param                 $username
-     * @return                Response
+     * @Route("/contact/edit/{id}", name="editcontact")
+     * @param           Request $request
+     * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function editcontact(Request $request)
+    public function editcontact(Request $request, $id)
     {
-        $form = $this->createForm(contactForm::class, $FormData);
+        $Contact = $this->getDoctrine()
+      ->getRepository(Contact::class)
+      ->findOneByID($id);
+
+
+
+        if (!$Contact) {
+            $this->addFlash('error', 'This contact does not exist');
+
+            return $this->render('contact/index.html.twig');
+        }
+
+
+        $form = $this->createForm(ContactEdit::class, $Contact);
         $form->handleRequest($request);
-        $FormData = new FormData();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This contact is Invalid');
-                return $this->render('contact/index.html.twig', array('form' => $form->createView()));
-            } else {
-                $Contact->setEmail($data->Email);
-                $Contact->setUsername($data->Username);
-                $Contact->setPassword($data->Password);
-                $Contact->setName($data->Name);
-                $Contact->setOfficePhone($data->OfficePhone);
-                $Contact->setBillingStreet($data->BillingStreet);
-                $Contact->setBillingCity($data->BillingCity);
-                $Contact->setBillingPostalCode($data->BillingPostalCode);
-                $Contact->setBillingCountry($data->BillingCountry);
-                $Contact->setShippingStreet($data->ShippingStreet);
-                $Contact->setShippingCity($data->ShippingCity);
-                $Contact->setShippingState($data->ShippingState);
-                $Contact->setShippingPostalCode($data->ShippingPostalCode);
-                $Contact->setShippingCountry($data->ShippingCountry);
-                $Contact->setDescription($data->Description);
-                $Contact->setType($data->Type);
-                $Contact->setAnnualRevenue($data->AnnualRevenue);
-                $Contact->setSICCode($data->SICCode);
-                $Contact->setIndustry($data->Industry);
-                $Contact->setEmployees($data->Employees);
-                $Contact->setTickerSymbol($data->TickerSymbol);
-                $Contact->setOwnership($data->Ownership);
-                $Contact->setRating($data->Rating);
-                $Contact->persist($result);
-                $Contact->flush();
+            $Contact->setEmailAddress($data->getEmailAddress());
+            $Contact->setFirstName($data->getFirstName());
+            $Contact->setLastName($data->getLastName());
+            $Contact->setTitle($data->getTitle());
+            $Contact->setDepartment($data->getDepartment());
+            $Contact->setOfficePhone($data->getOfficePhone());
+            $Contact->setMobile($data->getMobile());
+            $Contact->setFax($data->getFax());
+            $Contact->setPrimaryAddressStreet($data->getPrimaryAddressStreet());
+            $Contact->setPrimaryAddressCity($data->getPrimaryAddressCity());
+            $Contact->setPrimaryAddressState($data->getPrimaryAddressState());
+            $Contact->setPrimaryAddressPostalCode($data->getPrimaryAddressPostalCode());
+            $Contact->setPrimaryAddressCountry($data->getPrimaryAddressCountry());
+            $Contact->setAlternateAddressStreet($data->getAlternateAddressStreet());
+            $Contact->setAlternateAddressCity($data->getAlternateAddressCity());
+            $Contact->setAlternateAddressState($data->getAlternateAddressState());
+            $Contact->setAlternateAddressPostalCode($data->getAlternateAddressPostalCode());
+            $Contact->setAlternateAddressCountry($data->getAlternateAddressCountry());
+            $Contact->setEmailAddress($data->getEmailAddress());
+            $Contact->setDescription($data->getDescription());
+            $Contact->setReportsTo($data->getReportsTo());
+            $Contact->setLeadSource($data->getLeadSource());
+            $Contact->setCampaign($data->getCampaign());
+            $Contact->setAssignedTo($data->getAssignedTo());
+            $Contact->setDateModified(date('m/d/Y h:i:s a', time()));
+            $em->persist($Contact);
+            $em->flush();
 
-                $this->addFlash('success', 'contact Sucessfully Created');
 
-                return $this->render('contact/edit.html.twig', array('form' => $form->createView()));
-            }
+            $thiscontact = $this->getDoctrine()
+          ->getRepository(Contact::class)
+          ->findOneByID($Contact->getID());
+
+            $this->addFlash('success', 'Contact '.$thistarget->getLastName().' Sucessfully Edited');
+            return $this->redirectToRoute('getcontact', ['id' => $thiscontact->getID()]);
         }
+
+
+        return $this->render('contact/edit.html.twig', array('form' => $form->createView()));
     }
+
+
+
 
     /**
      * @Route("/contact/all", name="getAllcontact")
-     * @param                 $username
      * @return                Response
      */
     public function getAllcontact()
     {
         $em = $this->getDoctrine()->getManager();
-        $result = $em->getRepository('deicrm:dei_user')
+        $result = $em->getRepository(Contact::class)
             ->findAll();
         if (!$result) {
             $this->addFlash('success', 'There are no created contact');
-            return $this->render('contact/all.html.twig', array('form' => $form->createView()));
+            return $this->render('contact/all.html.twig');
         } else {
-            return $this->render('contact/all.html.twig', array('form' => $form->createView(), 'contact' => $result));
+            return $this->render('contact/all.html.twig', ['contact' => $result]);
         }
     }
 
@@ -167,53 +194,49 @@ class ContactController extends AbstractController
 
 
     /**
-     * @Route("/contact/{username}", name="getcontact")
-     * @param                 $username
+     * @Route("/contact/{id}", name="getcontact")
+     * @param                 $id
      * @return                Response
      */
-    public function getcontact(Request $request)
+    public function getcontact($id)
     {
-        $form = $this->createForm(contactForm::class, $FormData);
-        $form->handleRequest($request);
-        $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This contact is Invalid');
-                return $this->render('contact/index.html.twig', array('form' => $form->createView()));
-            } else {
-                return $this->render('contact/profile.html.twig', array('form' => $form->createView(), 'contact' => $result));
-            }
+        $contact = $this->getDoctrine()
+        ->getRepository(Contact::class)
+        ->findOneByID($id);
+
+
+        if (!$contact) {
+            $this->addFlash('error', 'Contact not found');
+            return $this->redirectToRoute('contact');
+        } else {
+            $createdby = $this->getDoctrine()
+          ->getRepository(User::class)
+          ->findOneByID($contact->getCreatedBy());
+
+            return $this->render('contact/view.html.twig', ['contact' => $contact, 'createdby' => $createdby]);
         }
     }
 
     /**
-     * @Route("/contact/del/{username}", name="delcontact")
-     * @param                 $username
+     * @Route("/contact/del/{id}", name="delcontact")
+     * @param                 $id
      * @return                Response
      */
-    public function delcontact(Request $request)
+    public function delcontact($id)
     {
-        $form = $this->createForm(contactForm::class, $FormData);
-        $form->handleRequest($request);
-        $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+        $Contact = $this->getDoctrine()
+    ->getRepository(Contact::class)
+    ->findOneByID($id);
+
+        if (!$Contact) {
+            $this->addFlash('error', 'Can not find contact');
+            return $this->redirectToRoute('getAllcontact');
+        } else {
             $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This contact is Invalid');
-                return $this->render('contact/index.html.twig', array('form' => $form->createView()));
-            } else {
-                $em->remove($result);
-                $em->flush();
-                $this->addFlash('success', 'contact sucessfully deleted');
-                return $this->render('contact/index.html.twig', array('form' => $form->createView()));
-            }
+            $em->remove($Contact);
+            $em->flush();
+            $this->addFlash('success', 'contact sucessfully removed');
+            return $this->redirectToRoute('getAllcontact');
         }
     }
 }

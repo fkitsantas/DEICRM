@@ -22,11 +22,11 @@ class ContactRepository extends ServiceEntityRepository
     // /**
     //  * @return Contact[] Returns an array of Contact objects
     //  */
-    /*
-    public function findByExampleField($value)
+
+    public function findByLastName($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+            ->andWhere('c.LastName LIKE :val OR c.FirstName LIKE :val')
             ->setParameter('val', $value)
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
@@ -34,17 +34,25 @@ class ContactRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Contact
+    public function findOneByID($value): ?Contact
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+            ->andWhere('c.id = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+
+
+    public function findOneByLastName($value): ?Contact
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.LastName = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 }

@@ -55,4 +55,53 @@ class FormData extends AbstractType
     public $Campaign;
 
     public $AssignedTo;
+
+    public $Search;
+
+    public $LeadSourceDescription;
+
+    public $Status;
+
+    public $StatusDescription;
+
+    public $ReferredBy;
+
+    public $OpportunityAmount;
+
+    public $LeadDescription;
+
+    public $NextStep;
+
+    public $Probability;
+
+    public $SalesStage;
+
+    public $Type;
+
+    public $ExpectedCloseDate;
+
+    public $AccountName;
+
+    public $OpportunityName;
+
+    public $Currency;
+
+    public $Name;
+
+    public $StartDate;
+
+    public $EndDate;
+
+
+    public $ActualCost;
+
+    public $ExpectedCost;
+
+    public $ExpectedRevenue;
+
+    public $Objective;
+
+    public $Impressions;
+
+    public $Budget;
 }

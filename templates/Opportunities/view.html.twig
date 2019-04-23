@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="/accounts">Accounts</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/Opportunitiess">Opportunitiess</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/Opportunities">Opportunities</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
+  </ol>
+</nav>
+
+
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% include 'Opportunities/inc/flash.html.twig' %}
+
+{% include 'Opportunities/inc/breadcrumb.html.twig' %}
+
+
+
+{% if opportunities is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">Opportunity Name: {{opportunities.OpportunityName}}</li>
+  <li class="list-group-item">Account Name: {{opportunities.AccountName}}</li>
+
+  <li class="list-group-item">Opportunity Amount: {{opportunities.OpportunityAmount}} </li>
+  <li class="list-group-item">Expected Close Date: {{opportunities.ExpectedCloseDate|date('Y-m-d')}} </li>
+  <li class="list-group-item">Sales Stage: {{opportunities.SalesStage}} </li>
+  <li class="list-group-item">Probability: {{opportunities.Probability}} </li>
+  <li class="list-group-item">Type: {{opportunities.Type}} </li>
+  <li class="list-group-item">Next Step: {{opportunities.NextStep}} </li>
+  <li class="list-group-item">Lead Source: {{opportunities.LeadSource}} </li>
+  <li class="list-group-item">Campaign: {{opportunities.Campaign}} </li>
+  <li class="list-group-item">Date Created: {{opportunities.DateCreated}} </li>
+  <li class="list-group-item">Description: {{opportunities.Description}} </li>
+</ul>
+
+
+{% endif %}
+
+{% endblock %}

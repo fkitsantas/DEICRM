@@ -132,6 +132,21 @@ class Contact
      */
     private $AssignedTo;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $DateCreated;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $DateModified;
+
+    /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $CreatedBy;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -166,7 +181,7 @@ class Contact
         return $this->Title;
     }
 
-    public function setTitle(string $Title): self
+    public function setTitle(string $Title = null): self
     {
         $this->Title = $Title;
 
@@ -214,7 +229,7 @@ class Contact
         return $this->Fax;
     }
 
-    public function setFax(?string $Fax): self
+    public function setFax(?string $Fax= null): self
     {
         $this->Fax = $Fax;
 
@@ -409,6 +424,42 @@ class Contact
     public function setAssignedTo(?string $AssignedTo = null): self
     {
         $this->AssignedTo = $AssignedTo;
+
+        return $this;
+    }
+
+    public function getDateCreated(): ?string
+    {
+        return $this->DateCreated;
+    }
+
+    public function setDateCreated(?string $DateCreated = null): self
+    {
+        $this->DateCreated = $DateCreated;
+
+        return $this;
+    }
+
+    public function getDateModified(): ?string
+    {
+        return $this->DateModified;
+    }
+
+    public function setDateModified(?string $DateModified = null): self
+    {
+        $this->DateModified = $DateModified;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->CreatedBy;
+    }
+
+    public function setCreatedBy(?string $CreatedBy = null): self
+    {
+        $this->CreatedBy = $CreatedBy;
 
         return $this;
     }

@@ -4,18 +4,42 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Seo\AuditBundle\Entity\User;
+use App\Entity\Lead;
+use App\Entity\User;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use App\Form\FormData;
+use App\Form\Lead\LeadForm;
+use App\Form\Lead\LeadEdit;
+use App\Form\Lead\LeadSearchForm;
 
 class LeadController extends AbstractController
 {
     /**
-     * @Route("/leads", name="lead")
+     * @Route("/lead", name="lead")
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->render('lead/index.html.twig', [
-            'controller_name' => 'leadController',
-        ]);
+        $FormData = new FormData();
+        $form = $this->createForm(leadSearchForm::class, $FormData);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $lead = $this->getDoctrine()
+    ->getRepository(Lead::class)
+    ->findByLastName($data->Search);
+
+            if (!$lead) {
+                $this->addFlash('error', 'No lead was found, Try Searching Again');
+                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
+            } else {
+                return $this->render('lead/index.html.twig', array('form' => $form->createView(), 'lead' => $lead, 'searchfor' => $data->Search));
+            }
+        }
+
+        return $this->render('lead/index.html.twig', [ 'form' => $form->createView()]);
     }
 
     /**
@@ -25,146 +49,155 @@ class LeadController extends AbstractController
      */
     public function createlead(Request $request)
     {
-        $form = $this->createForm(leadForm::class, $FormData);
-        $form->handleRequest($request);
         $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $entityManager = $this->getDoctrine()->getManager();
-            $User = new User();
-            $User->setEmail($data->Email);
-            $User->setUsername($data->Username);
-            $User->setPassword($data->Password);
-            $User->setName($data->Name);
-            $User->setOfficePhone($data->OfficePhone);
-            $User->setBillingStreet($data->BillingStreet);
-            $User->setBillingCity($data->BillingCity);
-            $User->setBillingPostalCode($data->BillingPostalCode);
-            $User->setBillingCountry($data->BillingCountry);
-            $User->setShippingStreet($data->ShippingStreet);
-            $User->setShippingCity($data->ShippingCity);
-            $User->setShippingState($data->ShippingState);
-            $User->setShippingPostalCode($data->ShippingPostalCode);
-            $User->setShippingCountry($data->ShippingCountry);
-            $User->setDescription($data->Description);
-            $User->setType($data->Type);
-            $User->setAnnualRevenue($data->AnnualRevenue);
-            $User->setSICCode($data->SICCode);
-            $User->setIndustry($data->Industry);
-            $User->setEmployees($data->Employees);
-            $User->setTickerSymbol($data->TickerSymbol);
-            $User->setOwnership($data->Ownership);
-            $User->setRating($data->Rating);
-            $User->persist($result);
-            $User->flush();
-
-            $this->addFlash('success', 'lead Sucessfully Created');
-
-            return $this->render('lead/create.html.twig', array('form' => $form->createView()));
-        }
-    }
-
-
-
-    /**
-     * @Route("/lead/search/{username}", name="searchlead")
-     * @param                 $username
-     * @return                Response
-     */
-    public function searchlead(Request $request)
-    {
-        $form = $this->createForm(leadForm::class, $FormData);
+        $form = $this->createForm(LeadForm::class, $FormData);
         $form->handleRequest($request);
-        $FormData = new FormData();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery('SELECT p FROM deicrm:ei_user p
-    WHERE p.name LIKE :data')
-   ->setParameter('data', $data->search);
+            $Lead = new Lead();
+            $Lead->setEmailAddress($data->EmailAddress);
+            $Lead->setFirstName($data->FirstName);
+            $Lead->setLastName($data->LastName);
+            $Lead->setTitle($data->Title);
+            $Lead->setDepartment($data->Department);
+            $Lead->setOfficePhone($data->OfficePhone);
+            $Lead->setMobile($data->Mobile);
+            $Lead->setFax($data->Fax);
+            $Lead->setPrimaryAddressStreet($data->PrimaryAddressStreet);
+            $Lead->setPrimaryAddressCity($data->PrimaryAddressCity);
+            $Lead->setPrimaryAddressState($data->PrimaryAddressState);
+            $Lead->setPrimaryAddressPostalCode($data->PrimaryAddressPostalCode);
+            $Lead->setPrimaryAddressCountry($data->PrimaryAddressCountry);
+            $Lead->setAlternateAddressStreet($data->AlternateAddressStreet);
+            $Lead->setAlternateAddressCity($data->AlternateAddressCity);
+            $Lead->setAlternateAddressState($data->AlternateAddressState);
+            $Lead->setAlternateAddressPostalCode($data->AlternateAddressPostalCode);
+            $Lead->setAlternateAddressCountry($data->AlternateAddressCountry);
+            $Lead->setEmailAddress($data->EmailAddress);
+            $Lead->setDescription($data->Description);
+            $Lead->setReferredBy($data->ReferredBy);
+            $Lead->setLeadSource($data->LeadSource);
+            $Lead->setStatus($data->Status);
+            $Lead->setStatusDescription($data->StatusDescription);
+            $Lead->setLeadDescription($data->LeadDescription);
+            $Lead->setLeadSourceDescription($data->LeadSourceDescription);
+            $Lead->setOpportunityAmount($data->OpportunityAmount);
+            $Lead->setCampaign($data->Campaign);
+            $Lead->setAssignedTo($data->AssignedTo);
+            $Lead->setDateCreated(date('m/d/Y h:i:s a', time()));
+
+            $Lead->setCreatedBy($this->getUser()->getId());
+            $em->persist($Lead);
+            $em->flush();
 
 
-            $res = $query->getResult();
+            $thislead = $this->getDoctrine()
+          ->getRepository(Lead::class)
+          ->findOneByID($Lead->getID());
 
-            if (!$query) {
-                $this->addFlash('success', 'No lead was found, Try Searching Again');
-                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
-            } else {
-                return $this->render('lead/search.html.twig', array('form' => $form->createView(), 'lead' => $res));
-            }
+            $this->addFlash('success', 'Lead '.$thislead->getLastName().' Sucessfully Created');
+            return $this->redirectToRoute('getlead', ['id' => $thislead->getID()]);
         }
+
+
+        return $this->render('lead/create.html.twig', array('form' => $form->createView()));
     }
 
 
 
 
     /**
-     * @Route("/lead/edit/{username}", name="editlead")
-     * @param                 $username
-     * @return                Response
+     * @Route("/lead/edit/{id}", name="editlead")
+     * @param           Request $request
+     * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function editlead(Request $request)
+    public function editlead(Request $request, $id)
     {
-        $form = $this->createForm(leadForm::class, $FormData);
+        $Lead = $this->getDoctrine()
+      ->getRepository(Lead::class)
+      ->findOneByID($id);
+
+
+
+        if (!$Lead) {
+            $this->addFlash('error', 'This lead does not exist');
+
+            return $this->render('lead/index.html.twig');
+        }
+
+
+        $form = $this->createForm(LeadEdit::class, $Lead);
         $form->handleRequest($request);
-        $FormData = new FormData();
+
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This lead is Invalid');
-                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
-            } else {
-                $User->setEmail($data->Email);
-                $User->setUsername($data->Username);
-                $User->setPassword($data->Password);
-                $User->setName($data->Name);
-                $User->setOfficePhone($data->OfficePhone);
-                $User->setBillingStreet($data->BillingStreet);
-                $User->setBillingCity($data->BillingCity);
-                $User->setBillingPostalCode($data->BillingPostalCode);
-                $User->setBillingCountry($data->BillingCountry);
-                $User->setShippingStreet($data->ShippingStreet);
-                $User->setShippingCity($data->ShippingCity);
-                $User->setShippingState($data->ShippingState);
-                $User->setShippingPostalCode($data->ShippingPostalCode);
-                $User->setShippingCountry($data->ShippingCountry);
-                $User->setDescription($data->Description);
-                $User->setType($data->Type);
-                $User->setAnnualRevenue($data->AnnualRevenue);
-                $User->setSICCode($data->SICCode);
-                $User->setIndustry($data->Industry);
-                $User->setEmployees($data->Employees);
-                $User->setTickerSymbol($data->TickerSymbol);
-                $User->setOwnership($data->Ownership);
-                $User->setRating($data->Rating);
-                $User->persist($result);
-                $User->flush();
+            $Lead->setEmailAddress($data->getEmailAddress());
+            $Lead->setFirstName($data->getFirstName());
+            $Lead->setLastName($data->getLastName());
+            $Lead->setTitle($data->getTitle());
+            $Lead->setDepartment($data->getDepartment());
+            $Lead->setOfficePhone($data->getOfficePhone());
+            $Lead->setMobile($data->getMobile());
+            $Lead->setFax($data->getFax());
+            $Lead->setPrimaryAddressStreet($data->getPrimaryAddressStreet());
+            $Lead->setPrimaryAddressCity($data->getPrimaryAddressCity());
+            $Lead->setPrimaryAddressState($data->getPrimaryAddressState());
+            $Lead->setPrimaryAddressPostalCode($data->getPrimaryAddressPostalCode());
+            $Lead->setPrimaryAddressCountry($data->getPrimaryAddressCountry());
+            $Lead->setAlternateAddressStreet($data->getAlternateAddressStreet());
+            $Lead->setAlternateAddressCity($data->getAlternateAddressCity());
+            $Lead->setAlternateAddressState($data->getAlternateAddressState());
+            $Lead->setAlternateAddressPostalCode($data->getAlternateAddressPostalCode());
+            $Lead->setAlternateAddressCountry($data->getAlternateAddressCountry());
+            $Lead->setEmailAddress($data->getEmailAddress());
+            $Lead->setReferredBy($data->getReferredBy());
+            $Lead->setLeadSource($data->getLeadSource());
+            $Lead->setStatus($data->getStatus());
+            $Lead->setStatusDescription($data->getStatusDescription());
+            $Lead->setLeadSourceDescription($data->getLeadSourceDescription());
+            $Lead->setLeadDescription($data->getLeadDescription());
+            $Lead->setOpportunityAmount($data->getOpportunityAmount());
+            $Lead->setDateCreated(date('m/d/Y h:i:s a', time()));
+            $Lead->setDescription($data->getDescription());
+            $Lead->setCampaign($data->getCampaign());
+            $Lead->setAssignedTo($data->getAssignedTo());
+            $Lead->setDateModified(date('m/d/Y h:i:s a', time()));
+            $em->persist($Lead);
+            $em->flush();
 
-                $this->addFlash('success', 'lead Sucessfully Created');
 
-                return $this->render('lead/edit.html.twig', array('form' => $form->createView()));
-            }
+            $thislead = $this->getDoctrine()
+          ->getRepository(Lead::class)
+          ->findOneByID($Lead->getID());
+
+            $this->addFlash('success', 'Lead '.$thislead->getLastName().' Sucessfully Edited');
+            return $this->redirectToRoute('getlead', ['id' => $thislead->getID()]);
         }
+
+
+        return $this->render('lead/edit.html.twig', array('form' => $form->createView()));
     }
+
+
+
 
     /**
      * @Route("/lead/all", name="getAlllead")
-     * @param                 $username
      * @return                Response
      */
     public function getAlllead()
     {
         $em = $this->getDoctrine()->getManager();
-        $result = $em->getRepository('deicrm:dei_user')
+        $result = $em->getRepository(Lead::class)
             ->findAll();
         if (!$result) {
             $this->addFlash('success', 'There are no created lead');
-            return $this->render('lead/all.html.twig', array('form' => $form->createView()));
+            return $this->render('lead/all.html.twig');
         } else {
-            return $this->render('lead/all.html.twig', array('form' => $form->createView(), 'lead' => $result));
+            return $this->render('lead/all.html.twig', ['lead' => $result]);
         }
     }
 
@@ -172,53 +205,49 @@ class LeadController extends AbstractController
 
 
     /**
-     * @Route("/lead/{username}", name="getlead")
-     * @param                 $username
+     * @Route("/lead/{id}", name="getlead")
+     * @param                 $id
      * @return                Response
      */
-    public function getlead(Request $request)
+    public function getlead($id)
     {
-        $form = $this->createForm(leadForm::class, $FormData);
-        $form->handleRequest($request);
-        $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This lead is Invalid');
-                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
-            } else {
-                return $this->render('lead/profile.html.twig', array('form' => $form->createView(), 'lead' => $result));
-            }
+        $lead = $this->getDoctrine()
+        ->getRepository(Lead::class)
+        ->findOneByID($id);
+
+
+        if (!$lead) {
+            $this->addFlash('error', 'Lead not found');
+            return $this->redirectToRoute('lead');
+        } else {
+            $createdby = $this->getDoctrine()
+          ->getRepository(User::class)
+          ->findOneByID($lead->getCreatedBy());
+
+            return $this->render('lead/view.html.twig', ['lead' => $lead, 'createdby' => $createdby]);
         }
     }
 
     /**
-     * @Route("/lead/del/{username}", name="dellead")
-     * @param                 $username
+     * @Route("/lead/del/{id}", name="dellead")
+     * @param                 $id
      * @return                Response
      */
-    public function dellead(Request $request)
+    public function dellead($id)
     {
-        $form = $this->createForm(leadForm::class, $FormData);
-        $form->handleRequest($request);
-        $FormData = new FormData();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
+        $Lead = $this->getDoctrine()
+    ->getRepository(Lead::class)
+    ->findOneByID($id);
+
+        if (!$Lead) {
+            $this->addFlash('error', 'Can not find lead');
+            return $this->redirectToRoute('getAlllead');
+        } else {
             $em = $this->getDoctrine()->getManager();
-            $result = $em->getRepository('deicrm')
-      ->findOneBy(['dei_user' => $data->name]);
-            if (!$result) {
-                $this->addFlash('success', 'This lead is Invalid');
-                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
-            } else {
-                $em->remove($result);
-                $em->flush();
-                $this->addFlash('success', 'lead sucessfully deleted');
-                return $this->render('lead/index.html.twig', array('form' => $form->createView()));
-            }
+            $em->remove($Lead);
+            $em->flush();
+            $this->addFlash('success', 'lead sucessfully removed');
+            return $this->redirectToRoute('getAlllead');
         }
     }
 }

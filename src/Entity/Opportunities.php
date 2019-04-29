@@ -57,6 +57,14 @@ class Opportunities
      */
     private $AccountName;
 
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AccountId;
+
+
+
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
@@ -82,10 +90,22 @@ class Opportunities
      */
     private $Campaign;
 
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $AssignedTo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CampaignId;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AssignedToId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -97,6 +117,7 @@ class Opportunities
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $DateModified;
+
 
 
     public function getId(): ?int
@@ -186,7 +207,7 @@ class Opportunities
 
         return $this;
     }
-    
+
     public function getNextStep(): ?string
     {
         return $this->NextStep;
@@ -219,6 +240,19 @@ class Opportunities
     public function setAccountName(?string $AccountName): self
     {
         $this->AccountName = $AccountName;
+
+        return $this;
+    }
+
+
+    public function getAccountId(): ?string
+    {
+        return $this->AccountId;
+    }
+
+    public function setAccountId(?string $AccountId): self
+    {
+        $this->AccountId = $AccountId;
 
         return $this;
     }
@@ -259,6 +293,20 @@ class Opportunities
         return $this;
     }
 
+
+    public function getDateCreated(): ?string
+    {
+        return $this->DateCreated;
+    }
+
+    public function setDateCreated(?string $DateCreated): self
+    {
+        $this->DateCreated = $DateCreated;
+
+        return $this;
+    }
+
+
     public function getCampaign(): ?string
     {
         return $this->Campaign;
@@ -270,6 +318,21 @@ class Opportunities
 
         return $this;
     }
+
+
+    public function getCampaignId(): ?string
+    {
+        return $this->CampaignId;
+    }
+
+    public function setCampaignId(?string $CampaignId): self
+    {
+        $this->CampaignId = $CampaignId;
+
+        return $this;
+    }
+
+
 
     public function getAssignedTo(): ?string
     {
@@ -283,14 +346,14 @@ class Opportunities
         return $this;
     }
 
-    public function getDateCreated(): ?string
+    public function getAssignedToId(): ?string
     {
-        return $this->DateCreated;
+        return $this->AssignedToId;
     }
 
-    public function setDateCreated(?string $DateCreated): self
+    public function setAssignedToId(?string $AssignedToId): self
     {
-        $this->DateCreated = $DateCreated;
+        $this->AssignedToId = $AssignedToId;
 
         return $this;
     }

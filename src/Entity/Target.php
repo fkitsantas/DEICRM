@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\TargetRespository")
+ * @ORM\Entity(repositoryClass="App\Repository\TargetRepository")
  * @ORM\Table(name="dei_target")
  */
 class Target
@@ -118,6 +118,12 @@ class Target
      */
     private $AssignedTo;
 
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AssignedToId;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -132,6 +138,41 @@ class Target
      * @ORM\Column(type="integer", length=255, nullable=true)
      */
     private $CreatedBy;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Subject;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $StartDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $DueDate;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Priority;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Status;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $RelatedTo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ContactName;
 
     public function getId(): ?int
     {
@@ -368,17 +409,7 @@ class Target
 
 
 
-    public function getAssignedTo(): ?string
-    {
-        return $this->AssignedTo;
-    }
 
-    public function setAssignedTo(?string $AssignedTo = null): self
-    {
-        $this->AssignedTo = $AssignedTo;
-
-        return $this;
-    }
 
     public function getDateCreated(): ?string
     {
@@ -412,6 +443,115 @@ class Target
     public function setCreatedBy(?string $CreatedBy = null): self
     {
         $this->CreatedBy = $CreatedBy;
+
+        return $this;
+    }
+
+
+    public function getAssignedTo(): ?string
+    {
+        return $this->AssignedTo;
+    }
+
+    public function setAssignedTo(?string $AssignedTo): self
+    {
+        $this->AssignedTo = $AssignedTo;
+
+        return $this;
+    }
+
+    public function getAssignedToId(): ?string
+    {
+        return $this->AssignedToId;
+    }
+
+    public function setAssignedToId(?string $AssignedTId): self
+    {
+        $this->AssignedToId = $AssignedToId;
+
+        return $this;
+    }
+
+    public function getSubject(): ?string
+    {
+        return $this->Subject;
+    }
+
+    public function setSubject(?string $Subject): self
+    {
+        $this->Subject = $Subject;
+
+        return $this;
+    }
+
+    public function getStartDate(): ?\DateTimeInterface
+    {
+        return $this->StartDate;
+    }
+
+    public function setStartDate(?\DateTimeInterface $StartDate): self
+    {
+        $this->StartDate = $StartDate;
+
+        return $this;
+    }
+
+    public function getDueDate(): ?\DateTimeInterface
+    {
+        return $this->DueDate;
+    }
+
+    public function setDueDate(?\DateTimeInterface $DueDate): self
+    {
+        $this->DueDate = $DueDate;
+
+        return $this;
+    }
+
+    public function getPriority(): ?string
+    {
+        return $this->Priority;
+    }
+
+    public function setPriority(?string $Priority): self
+    {
+        $this->Priority = $Priority;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->Status;
+    }
+
+    public function setStatus(?string $Status): self
+    {
+        $this->Status = $Status;
+
+        return $this;
+    }
+
+    public function getRelatedTo(): ?string
+    {
+        return $this->RelatedTo;
+    }
+
+    public function setRelatedTo(?string $RelatedTo): self
+    {
+        $this->RelatedTo = $RelatedTo;
+
+        return $this;
+    }
+
+    public function getContactName(): ?string
+    {
+        return $this->ContactName;
+    }
+
+    public function setContactName(?string $ContactName): self
+    {
+        $this->ContactName = $ContactName;
 
         return $this;
     }

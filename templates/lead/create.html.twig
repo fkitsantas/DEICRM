@@ -16,6 +16,108 @@
 
 
     {{ form_start(form) }}
+    <div class="row">
+      <div class="col-2">
+        {{ form_row(form.Title) }}
+      </div>
+     <div class="col-5">
+       {{ form_row(form.FirstName) }}
+     </div>
+     <div class="col-5">
+          {{ form_row(form.LastName) }}
+     </div>
+   </div>
+
+
+
+      <div class="row">
+       <div class="col-4">
+         {{ form_row(form.OfficePhone) }}
+       </div>
+       <div class="col-4">
+            {{ form_row(form.Mobile) }}
+       </div>
+       <div class="col-4">
+            {{ form_row(form.Fax) }}
+       </div>
+     </div>
+
+
+
+
+      <div class="row">
+        <div class="col-4">
+          {{ form_row(form.PrimaryAddressCity) }}
+        </div>
+       <div class="col-4">
+         {{ form_row(form.PrimaryAddressStreet) }}
+       </div>
+       <div class="col-4">
+            {{ form_row(form.PrimaryAddressPostalCode) }}
+       </div>
+     </div>
+
+     <div class="row">
+      <div class="col">
+        {{ form_row(form.PrimaryAddressCountry) }}
+      </div>
+      <div class="col">
+           {{ form_row(form.PrimaryAddressState) }}
+      </div>
+     </div>
+
+
+
+     <div class="row">
+       <div class="col-4">
+         {{ form_row(form.AlternateAddressCity) }}
+       </div>
+      <div class="col-4">
+        {{ form_row(form.AlternateAddressStreet) }}
+      </div>
+      <div class="col-4">
+           {{ form_row(form.AlternateAddressPostalCode) }}
+      </div>
+    </div>
+
+
+    <div class="row">
+     <div class="col">
+       {{ form_row(form.AlternateAddressCountry) }}
+     </div>
+     <div class="col">
+          {{ form_row(form.AlternateAddressState) }}
+     </div>
+    </div>
+
+
+
+    <div class="row">
+     <div class="col">
+       {{ form_row(form.AssignedTo) }}
+     </div>
+     <div class="col">
+          {{ form_row(form.ReferredBy) }}
+     </div>
+    </div>
+
+    <div class="row">
+     <div class="col">
+       {{ form_row(form.LeadSource) }}
+     </div>
+     <div class="col">
+          {{ form_row(form.Status) }}
+     </div>
+    </div>
+
+    <div class="row">
+     <div class="col">
+       {{ form_row(form.LeadSourceDescription) }}
+     </div>
+     <div class="col">
+          {{ form_row(form.StatusDescription) }}
+     </div>
+    </div>
     {{ form_widget(form) }}
     {{ form_end(form) }}
 

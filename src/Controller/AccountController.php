@@ -29,7 +29,7 @@ class AccountController extends AbstractController
 
             $account = $this->getDoctrine()
     ->getRepository(Account::class)
-    ->findByLastName($data->Search);
+    ->findByName($data->Search);
 
             if (!$account) {
                 $this->addFlash('error', 'No account was found, Try Searching Again');
@@ -60,7 +60,6 @@ class AccountController extends AbstractController
             $Account->setEmailAddress($data->EmailAddress);
             $Account->setName($data->Name);
             $Account->setWebsite($data->Website);
-            $Account->setDepartment($data->Department);
             $Account->setOfficePhone($data->OfficePhone);
             $Account->setFax($data->Fax);
             $Account->setBillingAddressStreet($data->BillingAddressStreet);
@@ -74,15 +73,18 @@ class AccountController extends AbstractController
             $Account->setShippingAddressPostalCode($data->ShippingAddressPostalCode);
             $Account->setType($data->Type);
             $Account->setAnnualRevenue($data->AnnualRevenue);
-            $Account->setSICCodee($data->SICCode);
-            $Account->setMemberOf($data->MemberOf);
-            $Account->setCampaign($data->Campaign);
+            $Account->setSICCode($data->SICCode);
+            $Account->setMemberOf($data->MemberOf->getName());
+            $Account->setMemberOfId($data->MemberOf->getId());
             $Account->setIndustry($data->Industry);
             $Account->setEmployees($data->Employees);
             $Account->setTickerSymbol($data->TickerSymbol);
             $Account->setOwnership($data->Ownership);
             $Account->setRating($data->Rating);
-            $Account->setAssignedTo($data->AssignedTo);
+            $Account->setCampaign($data->Campaign->getName());
+            $Account->setCampaignId($data->Campaign->getId());
+            $Account->setAssignedTo($data->AssignedTo->getUsername());
+            $Account->setAssignedToId($data->AssignedTo->getId());
             $Account->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Account->setCreatedBy($this->getUser()->getId());
             $em->persist($Account);
@@ -93,7 +95,7 @@ class AccountController extends AbstractController
           ->getRepository(Account::class)
           ->findOneByID($Account->getID());
 
-            $this->addFlash('success', 'Account '.$thistarget->getName().' Sucessfully Created');
+            $this->addFlash('success', 'Account '.$thisaccount->getName().' Sucessfully Created');
             return $this->redirectToRoute('getaccount', ['id' => $thisaccount->getID()]);
         }
 
@@ -133,7 +135,6 @@ class AccountController extends AbstractController
             $Account->setEmailAddress($data->getEmailAddress());
             $Account->setName($data->getName());
             $Account->setWebsite($data->getWebsite());
-            $Account->setDepartment($data->getDepartment());
             $Account->setOfficePhone($data->getOfficePhone());
             $Account->setFax($data->getFax());
             $Account->setBillingAddressStreet($data->getBillingAddressStreet());
@@ -147,15 +148,12 @@ class AccountController extends AbstractController
             $Account->setShippingAddressPostalCode($data->getShippingAddressPostalCode());
             $Account->setType($data->getType());
             $Account->setAnnualRevenue($data->getAnnualRevenue());
-            $Account->setSICCodee($data->getSICCode());
-            $Account->setMemberOf($data->getMemberOf());
-            $Account->setCampaign($data->getCampaign());
+            $Account->setSICCode($data->getSICCode());
             $Account->setIndustry($data->getIndustry());
             $Account->setEmployees($data->getEmployees());
             $Account->setTickerSymbol($data->getTickerSymbol());
             $Account->setOwnership($data->getOwnership());
             $Account->setRating($data->getRating());
-            $Account->setAssignedTo($data->getAssignedTo());
             $Account->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Account);
             $em->flush();
@@ -165,7 +163,7 @@ class AccountController extends AbstractController
           ->getRepository(Account::class)
           ->findOneByID($Account->getID());
 
-            $this->addFlash('success', 'Account '.$thistarget->getName().' Sucessfully Edited');
+            $this->addFlash('success', 'Account '.$thisaccount->getName().' Sucessfully Edited');
             return $this->redirectToRoute('getaccount', ['id' => $thisaccount->getID()]);
         }
 
@@ -215,6 +213,8 @@ class AccountController extends AbstractController
             $createdby = $this->getDoctrine()
           ->getRepository(User::class)
           ->findOneByID($account->getCreatedBy());
+
+
 
             return $this->render('account/view.html.twig', ['account' => $account, 'createdby' => $createdby]);
         }

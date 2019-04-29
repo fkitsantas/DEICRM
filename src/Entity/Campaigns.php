@@ -96,6 +96,10 @@ class Campaigns
      */
     private $AssignedTo;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AssignedToId;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -274,13 +278,24 @@ class Campaigns
         return $this->AssignedTo;
     }
 
-    public function setAssignedTo(?string $AssignedTo = null): self
+    public function setAssignedTo(?string $AssignedTo): self
     {
         $this->AssignedTo = $AssignedTo;
 
         return $this;
     }
 
+    public function getAssignedToId(): ?string
+    {
+        return $this->AssignedToId;
+    }
+
+    public function setAssignedToId(?string $AssignedToId): self
+    {
+        $this->AssignedToId = $AssignedToId;
+
+        return $this;
+    }
     public function getDateModified(): ?string
     {
         return $this->DateModified;

@@ -5,32 +5,131 @@
 {% block body %}
 
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="/accounts">Accounts</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/contacts">Contacts</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">Opportunies</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
-  </ol>
-</nav>
+{% include 'account/inc/flash.html.twig' %}
 
+{% include 'account/inc/breadcrumb.html.twig' %}
 
-
-
-
-{% for message in app.flashes('notice') %}
-    <div class="flash-notice">
-        {{ message }}
-    </div>
-{% endfor %}
 
 
 {% if form is defined %}
 
 
     {{ form_start(form) }}
+
+    {{ form_row(form.Name) }}
+
+    <div class="row">
+     <div class="col">
+       {{ form_row(form.OfficePhone) }}
+     </div>
+     <div class="col">
+          {{ form_row(form.Fax) }}
+     </div>
+    </div>
+    <div class="row">
+     <div class="col">
+       {{ form_row(form.Website) }}
+     </div>
+     <div class="col">
+          {{ form_row(form.EmailAddress) }}
+     </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        {{ form_row(form.BillingAddressCity) }}
+      </div>
+     <div class="col-4">
+       {{ form_row(form.BillingAddressStreet) }}
+     </div>
+     <div class="col-4">
+          {{ form_row(form.BillingAddressPostalCode) }}
+     </div>
+   </div>
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.BillingAddressCountry) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.BillingAddressState) }}
+    </div>
+   </div>
+
+
+
+    <div class="row">
+      <div class="col-4">
+        {{ form_row(form.ShippingAddressCity) }}
+      </div>
+     <div class="col-4">
+       {{ form_row(form.ShippingAddressStreet) }}
+     </div>
+     <div class="col-4">
+          {{ form_row(form.ShippingAddressPostalCode) }}
+     </div>
+   </div>
+
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.ShippingAddressCountry) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.ShippingAddressState) }}
+    </div>
+   </div>
+
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.Type) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.Industry) }}
+    </div>
+   </div>
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.AnnualRevenue) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.Employees) }}
+    </div>
+   </div>
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.SICCode) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.TickerSymbol) }}
+    </div>
+   </div>
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.MemberOf) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.Ownership) }}
+    </div>
+   </div>
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.Campaign) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.Rating) }}
+    </div>
+   </div>
+
+
     {{ form_widget(form) }}
     {{ form_end(form) }}
 
 {% endif %}
+
+
+
+{% endblock %}

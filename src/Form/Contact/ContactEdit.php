@@ -9,9 +9,11 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Contacts;
+use Doctrine\ORM\EntityRepository;
+use App\Entity\Contact;
 use App\Form\FormData;
 use App\Entity\Campaigns;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ContactEdit extends AbstractType
@@ -19,6 +21,7 @@ class ContactEdit extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
             ->add(
                 'FirstName',
                 TextType::class,
@@ -246,18 +249,7 @@ class ContactEdit extends AbstractType
                 ]
                 ]
             )
-            ->add(
-                'ReportsTo',
-                TextType::class,
-                [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Reports to',
-                    'label' => ' '
-                ]
-                ]
-            )
             ->add(
                 'LeadSource',
                 ChoiceType::class,
@@ -284,30 +276,9 @@ class ContactEdit extends AbstractType
       ]
     ]
             )
-            ->add(
-                'Campaign',
-                TextType::class,
-                [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Campaign',
-                    'label' => ' '
-                ]
-                ]
-            )
-            ->add(
-                'AssignedTo',
-                TextType::class,
-                [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Assign to',
-                    'label' => ' '
-                ]
-                ]
-            )
+
             ->add(
                 'submit',
                 SubmitType::class

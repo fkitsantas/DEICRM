@@ -85,7 +85,7 @@ class Lead
     private $PrimaryAddressPostalCode;
 
     /**
-     * @ORM\Column(type="integer", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $CreatedBy;
 
@@ -129,10 +129,6 @@ class Lead
      */
     private $Description;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $ReportsTo;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -152,7 +148,18 @@ class Lead
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $CampaignId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $AssignedTo;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AssignedToId;
 
 
 
@@ -184,6 +191,7 @@ class Lead
      */
     private $ReferredBy;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -194,7 +202,7 @@ class Lead
         return $this->FirstName;
     }
 
-    public function setFirstName(string $FirstName): self
+    public function setFirstName(string $FirstName = null): self
     {
         $this->FirstName = $FirstName;
 
@@ -494,17 +502,6 @@ class Lead
         return $this;
     }
 
-    public function getReportsTo(): ?string
-    {
-        return $this->ReportsTo;
-    }
-
-    public function setReportsTo(?string $ReportsTo = null): self
-    {
-        $this->ReportsTo = $ReportsTo;
-
-        return $this;
-    }
 
     public function getLeadSource(): ?string
     {
@@ -520,29 +517,8 @@ class Lead
 
 
 
-    public function getCampaign(): ?string
-    {
-        return $this->Campaign;
-    }
 
-    public function setCampaign(?string $Campaign = null): self
-    {
-        $this->Campaign = $Campaign;
 
-        return $this;
-    }
-
-    public function getAssignedTo(): ?string
-    {
-        return $this->AssignedTo;
-    }
-
-    public function setAssignedTo(?string $AssignedTo = null): self
-    {
-        $this->AssignedTo = $AssignedTo;
-
-        return $this;
-    }
 
     public function getDateCreated(): ?string
     {
@@ -576,6 +552,59 @@ class Lead
     public function setReferredBy(?string $ReferredBy = null): self
     {
         $this->ReferredBy = $ReferredBy;
+
+        return $this;
+    }
+
+
+
+    public function getCampaign(): ?string
+    {
+        return $this->Campaign;
+    }
+
+    public function setCampaign(?string $Campaign): self
+    {
+        $this->Campaign = $Campaign;
+
+        return $this;
+    }
+
+
+    public function getCampaignId(): ?string
+    {
+        return $this->CampaignId;
+    }
+
+    public function setCampaignId(?string $CampaignId): self
+    {
+        $this->CampaignId = $CampaignId;
+
+        return $this;
+    }
+
+
+
+    public function getAssignedTo(): ?string
+    {
+        return $this->AssignedTo;
+    }
+
+    public function setAssignedTo(?string $AssignedTo): self
+    {
+        $this->AssignedTo = $AssignedTo;
+
+        return $this;
+    }
+
+    public function getAssignedToId(): ?string
+    {
+        return $this->AssignedToId;
+    }
+
+    public function setAssignedToId(?string $AssignedToId): self
+    {
+        $this->AssignedToId = $AssignedToId;
 
         return $this;
     }

@@ -110,6 +110,8 @@ class OpportunitiesEdit extends AbstractType
       ]
     ]
             )
+
+            
             ->add(
                 'LeadSource',
                 ChoiceType::class,
@@ -148,11 +150,7 @@ class OpportunitiesEdit extends AbstractType
                 ]
                 ]
             )
-            ->add('Campaign', EntityType::class, [
-                'class' => Campaigns::class,
-                'choice_label' => 'Name',
-                'choice_value' => 'Id'
-    ])
+
 
             ->add(
                 'NextStep',
@@ -178,18 +176,7 @@ class OpportunitiesEdit extends AbstractType
                 ]
                 ]
             )
-            ->add(
-                'AssignedTo',
-                TextType::class,
-                [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Assign to',
-                    'label' => ' '
-                ]
-                ]
-            )
             ->add(
                 'submit',
                 SubmitType::class

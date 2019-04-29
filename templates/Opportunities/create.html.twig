@@ -16,6 +16,50 @@
 
 
     {{ form_start(form) }}
+
+    <div class="row">
+      <div class="col">
+        {{ form_row(form.OpportunityName) }}
+      </div>
+     <div class="col">
+       {{ form_row(form.AccountName) }}
+     </div>
+   </div>
+
+   <div class="row">
+     <div class="col">
+       {{ form_row(form.Currency) }}
+     </div>
+    <div class="col">
+      {{ form_row(form.ExpectedCloseDate) }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      {{ form_row(form.OpportunityAmount) }}
+    </div>
+   <div class="col">
+     {{ form_row(form.Type) }}
+   </div>
+ </div>
+ <div class="row">
+   <div class="col">
+     {{ form_row(form.SalesStage) }}
+   </div>
+  <div class="col">
+    {{ form_row(form.LeadSource) }}
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    {{ form_row(form.Probability) }}
+  </div>
+ <div class="col">
+   {{ form_row(form.Campaign) }}
+ </div>
+</div>
+ {{ form_row(form.NextStep) }}
+ {{ form_row(form.Description) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 

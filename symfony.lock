@@ -399,19 +399,37 @@
             "config/routes/dev/web_profiler.yaml"
         ]
     },
+    "symfony/webpack-encore-bundle": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "1.0",
+            "ref": "7b6180725839c090cd8dbd069a3947b0dca1bae0"
+        },
+        "files": [
+            "assets/css/app.css",
+            "assets/js/app.js",
+            "config/packages/assets.yaml",
+            "config/packages/prod/webpack_encore.yaml",
+            "config/packages/webpack_encore.yaml",
+            "package.json",
+            "webpack.config.js"
+        ]
+    },
     "symfony/yaml": {
         "version": "v4.2.5"
     },
-    "toiba/fullcalendar-bundle": {
-        "version": "6.2",
+    "tattali/calendar-bundle": {
+        "version": "1.1",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "master",
-            "version": "6.2",
-            "ref": "43c9033fa6f75f9325f9ac21787c8e8acb086934"
+            "version": "1.1",
+            "ref": "0c643e17b5340747b35c2c75e11727fa31bfa9bb"
         },
         "files": [
-            "config/routes/fullcalendar.yaml"
+            "config/routes/calendar.yaml"
         ]
     },
     "twig/twig": {

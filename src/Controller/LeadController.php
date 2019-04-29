@@ -28,8 +28,8 @@ class LeadController extends AbstractController
             $data = $form->getData();
 
             $lead = $this->getDoctrine()
-    ->getRepository(Lead::class)
-    ->findByLastName($data->Search);
+            ->getRepository(Lead::class)
+            ->findByLastName($data->Search);
 
             if (!$lead) {
                 $this->addFlash('error', 'No lead was found, Try Searching Again');
@@ -84,11 +84,12 @@ class LeadController extends AbstractController
             $Lead->setLeadDescription($data->LeadDescription);
             $Lead->setLeadSourceDescription($data->LeadSourceDescription);
             $Lead->setOpportunityAmount($data->OpportunityAmount);
-            $Lead->setCampaign($data->Campaign);
-            $Lead->setAssignedTo($data->AssignedTo);
+            $Lead->setCampaign($data->Campaign->getName());
+            $Lead->setCampaignId($data->Campaign->getId());
+            $Lead->setAssignedTo($data->AssignedTo->getUserName());
+            $Lead->setAssignedToId($data->AssignedTo->getId());
             $Lead->setDateCreated(date('m/d/Y h:i:s a', time()));
-
-            $Lead->setCreatedBy($this->getUser()->getId());
+            $Lead->setCreatedBy($this->getUser()->getUsername());
             $em->persist($Lead);
             $em->flush();
 
@@ -162,8 +163,6 @@ class LeadController extends AbstractController
             $Lead->setOpportunityAmount($data->getOpportunityAmount());
             $Lead->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Lead->setDescription($data->getDescription());
-            $Lead->setCampaign($data->getCampaign());
-            $Lead->setAssignedTo($data->getAssignedTo());
             $Lead->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Lead);
             $em->flush();
@@ -220,11 +219,7 @@ class LeadController extends AbstractController
             $this->addFlash('error', 'Lead not found');
             return $this->redirectToRoute('lead');
         } else {
-            $createdby = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($lead->getCreatedBy());
-
-            return $this->render('lead/view.html.twig', ['lead' => $lead, 'createdby' => $createdby]);
+            return $this->render('lead/view.html.twig', ['lead' => $lead ]);
         }
     }
 
@@ -233,7 +228,7 @@ class LeadController extends AbstractController
      * @param                 $id
      * @return                Response
      */
-    public function dellead($id)
+    public function delaccount($id)
     {
         $Lead = $this->getDoctrine()
     ->getRepository(Lead::class)

@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\FormData;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class TargetForm extends AbstractType
 {
@@ -244,18 +246,12 @@ class TargetForm extends AbstractType
                 ]
             )
 
-            ->add(
-                'AssignedTo',
-                TextType::class,
-                [
-                  'label' => false,
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Assign to',
-                    'label' => ' '
-                ]
-                ]
-            )
+            ->add('AssignedTo', EntityType::class, [
+                'label' => 'Assign to',
+                'class' => User::class,
+                'choice_label' => 'Username',
+                'choice_value' => 'Id',
+        ])
             ->add(
                 'submit',
                 SubmitType::class

@@ -69,7 +69,8 @@ class CampaignsController extends AbstractController
             $Campaigns->setDescription($data->Description);
             $Campaigns->setImpressions($data->Impressions);
             $Campaigns->setDescription($data->Description);
-            $Campaigns->setAssignedTo($data->AssignedTo);
+            $Campaigns->setAssignedTo($data->AssignedTo->getUserName());
+            $Campaigns->setAssignedToId($data->AssignedTo->getId());
             $Campaigns->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Campaigns->setCreatedBy($this->getUser()->getId());
             $em->persist($Campaigns);

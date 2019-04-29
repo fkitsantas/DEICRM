@@ -10,6 +10,16 @@ class FormData extends AbstractType
 
     public $submit;
 
+    public $id;
+
+    public $ToTime;
+
+    public $Who;
+
+    public $WhoBy;
+
+    public $WhoTo;
+
     public $FirstName;
 
     public $LastName;
@@ -50,11 +60,17 @@ class FormData extends AbstractType
 
     public $ReportsTo;
 
+    public $ReportsToId;
+
     public $LeadSource;
 
     public $Campaign;
 
+    public $CampaignId;
+
     public $AssignedTo;
+
+    public $AssignedToId;
 
     public $Search;
 
@@ -88,10 +104,21 @@ class FormData extends AbstractType
 
     public $Name;
 
+    public $RelatedTo;
+
+    public $ContactName;
+    
     public $StartDate;
 
     public $EndDate;
 
+    public $DueDate;
+
+    public $Subject;
+
+    public $RelatedToType;
+
+    public $Priority;
 
     public $ActualCost;
 
@@ -104,4 +131,63 @@ class FormData extends AbstractType
     public $Impressions;
 
     public $Budget;
+
+    public $Website;
+
+    public $BillingAddressStreet;
+
+    public $BillingAddressCity;
+
+    public $BillingAddressState;
+
+    public $BillingAddressPostalCode;
+
+    public $BillingAddressCountry;
+
+    public $ShippingAddressStreet;
+
+    public $ShippingAddressCity;
+
+    public $ShippingAddressState;
+
+    public $ShippingAddressPostalCode;
+
+    public $ShippingAddressCountry;
+
+    public $AnnualRevenue;
+
+    public $SICCode;
+
+    public $MemberOf;
+
+    public $Industry;
+
+    public $Employees;
+
+    public $TickerSymbol;
+
+    public $Ownership;
+
+    public $Rating;
+
+    public $MediaType;
+
+    public $LineDurationL;
+
+    public $LineDurationS;
+
+    public $Direction;
+
+    public $RemoteAddress;
+
+    public $Dnis;
+
+    public $LastIc;
+
+
+    public $FromDate;
+
+    public $ToDate;
+
+    public $FromTime;
 }

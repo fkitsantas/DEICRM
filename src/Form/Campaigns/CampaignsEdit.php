@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Campaigns;
 use App\Form\FormData;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class CampaignsEdit extends AbstractType
 {
@@ -138,7 +140,7 @@ class CampaignsEdit extends AbstractType
           )
           ->add(
               'ExpectedRevenue',
-              TextareaType::class,
+              TextType::class,
               [
 
                 'required' => false,
@@ -172,18 +174,11 @@ class CampaignsEdit extends AbstractType
               ]
               ]
           )
-          ->add(
-              'AssignedTo',
-              TextType::class,
-              [
-
-                'required' => false,
-              'attr' => [
-                  'placeholder' => 'Assign to',
-                  'label' => ' '
-              ]
-              ]
-          )
+          ->add('AssignedTo', EntityType::class, [
+              'label' => 'Assign to',
+              'class' => User::class,
+              'choice_label' => 'Username',
+      ])
           ->add(
               'submit',
               SubmitType::class

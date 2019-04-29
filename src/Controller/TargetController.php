@@ -77,7 +77,8 @@ class TargetController extends AbstractController
             $Target->setAlternateAddressCountry($data->AlternateAddressCountry);
             $Target->setEmailAddress($data->EmailAddress);
             $Target->setDescription($data->Description);
-            $Target->setAssignedTo($data->AssignedTo);
+            $Target->setAssignedTo($data->AssignedTo->getUserName());
+            $Target->setAssignedToId($data->AssignedTo->getId());
             $Target->setDateCreated(date('m/d/Y h:i:s a', time()));
 
             $Target->setCreatedBy($this->getUser()->getId());

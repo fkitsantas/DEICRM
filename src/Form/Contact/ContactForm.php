@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\FormData;
 use App\Entity\Campaigns;
+use App\Entity\User;
+use App\Entity\Contact;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class ContactForm extends AbstractType
@@ -245,18 +247,12 @@ class ContactForm extends AbstractType
                 ]
                 ]
             )
-            ->add(
-                'ReportsTo',
-                TextType::class,
-                [
-
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Reports to',
-                    'label' => ' '
-                ]
-                ]
-            )
+            ->add('ReportsTo', EntityType::class, [
+                'label' => 'Report to',
+                'class' => Contact::class,
+                'choice_label' => 'LastName',
+                'choice_value' => 'Id',
+          ])
             ->add(
                 'LeadSource',
                 ChoiceType::class,
@@ -283,33 +279,28 @@ class ContactForm extends AbstractType
       ]
     ]
             )
-            ->add(
-                'Campaign',
-                TextType::class,
-                [
+            ->add('Campaign', EntityType::class, [
+                'class' => Campaigns::class,
+                'choice_label' => 'Name',
+                'choice_value' => 'Id',
+    ])
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Campaign',
-                    'label' => ' '
-                ]
-                ]
-            )
-            ->add(
-                'AssignedTo',
-                TextType::class,
-                [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Assign to',
-                    'label' => ' '
-                ]
-                ]
-            )
+      ->add('AssignedTo', EntityType::class, [
+          'label' => 'Assign to',
+          'class' => User::class,
+          'choice_label' => 'Username',
+          'choice_value' => 'Id',
+    ])
             ->add(
                 'submit',
-                SubmitType::class
+                SubmitType::class,
+                [
+                  'attr' =>
+                  [
+                    'class' => 'btn btn-primary btn-lg btn-block'
+                  ]
+                ]
 
             );
     }

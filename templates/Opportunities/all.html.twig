@@ -24,15 +24,52 @@
 
 {% if opportunities is defined %}
 
+
 <div class="card">
   <div class="card-header">
-    All opportunitiess
+    All Opportunities ( {{ opportunities | length }} )
   </div>
-  <ul class="list-group list-group-flush">
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Opportunity Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Account Name</th>
+        <th scope="col">Sales Stage</th>
+        <th scope="col">Lead Source</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Expected Close date</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+
     {% for data in opportunities %}
-    <li class="list-group-item">{{ data.opportunityName}} {{ data.opportunityAmount}} {{ data.AccountName}} <a href="../opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a> <a href="../opportunities/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
-      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal">remove
-</button></li>
+
+
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.OpportunityName}}</td>
+        <td>{{ data.OpportunityAmount}}</td>
+      <td>{{ data.AccountName}}</td>
+      <td>{{ data.SalesStage}}</td>
+      <td>{{ data.LeadSource}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td>{{ data.ExpectedCloseDate|date('Y-m-d')}}</td>
+      <td> <a href="../opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a> <a href="../opportunities/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal">remove
+  </button></td>
+    </tr>
+
+
+
+
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -52,8 +89,11 @@
     </div>
   </div>
 </div>
-    {% endfor %}
-  </ul>
+
+
+{% endfor %}
+</tbody>
+</table>
 </div>
 
 

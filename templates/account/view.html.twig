@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item"><a href="/accounts">accounts</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="/accounts">accounts</a></li>
+      <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">account</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
+  </ol>
+</nav>
+
+
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% include 'account/inc/flash.html.twig' %}
+
+{% include 'account/inc/breadcrumb.html.twig' %}
+
+
+
+{% if account is defined %}
+
+
+<ul class="list-group">
+
+
+
+<li class="list-group-item">Name: {{account.Name}}</li>
+<li class="list-group-item">Office Phone: {{account.OfficePhone}}</li>
+<li class="list-group-item">Website: {{account.Website}}</li>
+<li class="list-group-item">Fax: {{account.Fax}}</li>
+<li class="list-group-item">BillingAddress Street: {{account.BillingAddressStreet}}</li>
+<li class="list-group-item">BillingAddress City:  {{account.BillingAddressCity}}</li>
+<li class="list-group-item">BillingAddress State: {{account.BillingAddressState}}</li>
+<li class="list-group-item">BillingAddress PostalCode: {{account.BillingAddressPostalCode}}</li>
+<li class="list-group-item">BillingAddress Country: {{account.BillingAddressCountry}}</li>
+<li class="list-group-item">ShippingAddress Street: {{account.ShippingAddressStreet}}</li>
+<li class="list-group-item">ShippingAddress City: {{account.ShippingAddressCity}}</li>
+<li class="list-group-item">ShippingAddress State: {{account.ShippingAddressState}}</li>
+<li class="list-group-item">ShippingAddress PostalCode: {{account.ShippingAddressPostalCode}}</li>
+<li class="list-group-item">ShippingAddress Country: {{account.ShippingAddressCountry}}</li>
+<li class="list-group-item">Type: {{account.Type}}</li>
+<li class="list-group-item">Annual Revenue: {{account.AnnualRevenue}}</li>
+<li class="list-group-item">SIC Code: {{account.SICCode}}</li>
+<li class="list-group-item">Member of: {{account.MemberOf}}</li>
+<li class="list-group-item">Campaign:  {{account.Campaign}} </li>
+<li class="list-group-item">Industry: {{account.Industry}}</li>
+<li class="list-group-item">Employees: {{account.Employees}}</li>
+<li class="list-group-item">Ticker Symbol: {{account.TickerSymbol}}</li>
+<li class="list-group-item">Ownership: {{account.Ownership}}</li>
+<li class="list-group-item">Rating: {{account.Rating}}</li>
+<li class="list-group-item">Assigned To: {{account.AssignedTo}}</li>
+<li class="list-group-item">Date Created: {{account.DateCreated}}</li>
+<li class="list-group-item">Date Modified: {{account.DateModified}} </li>
+
+</ul>
+
+{% endif %}
+
+{% endblock %}

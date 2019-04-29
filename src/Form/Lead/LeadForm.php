@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\FormData;
 use App\Entity\Campaigns;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class LeadForm extends AbstractType
@@ -246,18 +247,7 @@ class LeadForm extends AbstractType
                 ]
             )
 
-            ->add(
-                'ReportsTo',
-                TextType::class,
-                [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Reports to',
-                    'label' => ' '
-                ]
-                ]
-            )
             ->add(
                 'LeadSource',
                 ChoiceType::class,
@@ -334,21 +324,14 @@ class LeadForm extends AbstractType
             ->add('Campaign', EntityType::class, [
                 'class' => Campaigns::class,
                 'choice_label' => 'Name',
-                'choice_value' => 'Id'
     ])
 
-            ->add(
-                'AssignedTo',
-                TextType::class,
-                [
-
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Assign to',
-                    'label' => ' '
-                ]
-                ]
-            )
+    ->add('AssignedTo', EntityType::class, [
+        'label' => 'Assign to',
+        'class' => User::class,
+        'choice_label' => 'Username',
+        'choice_value' => 'Id',
+])
 
             ->add(
                 'ReferredBy',

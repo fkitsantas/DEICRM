@@ -57,7 +57,8 @@ class OpportunitiesController extends AbstractController
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $Opportunities = new Opportunities();
-            $Opportunities->setAccountName($data->AccountName);
+            $Opportunities->setAccountName($data->AccountName->getName());
+            $Opportunities->setAccountId($data->AccountName->getId());
             $Opportunities->setCurrency($data->Currency);
             $Opportunities->setExpectedCloseDate($data->ExpectedCloseDate);
             $Opportunities->setOpportunityName($data->OpportunityName);
@@ -66,10 +67,12 @@ class OpportunitiesController extends AbstractController
             $Opportunities->setSalesStage($data->SalesStage);
             $Opportunities->setLeadSource($data->LeadSource);
             $Opportunities->setProbability($data->Probability);
-            $Opportunities->setCampaign($data->Campaign);
+            $Opportunities->setCampaign($data->Campaign->getName());
+            $Opportunities->setCampaignId($data->Campaign->getId());
             $Opportunities->setNextStep($data->NextStep);
             $Opportunities->setDescription($data->Description);
-            $Opportunities->setAssignedTo($data->AssignedTo);
+            $Opportunities->setAssignedTo($data->AssignedTo->getUserName());
+            $Opportunities->setAssignedToId($data->AssignedTo->getId());
             $Opportunities->setDateCreated(date('m/d/Y h:i:s a', time()));
 
             $Opportunities->setCreatedBy($this->getUser()->getId());
@@ -119,7 +122,6 @@ class OpportunitiesController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $Opportunities->setOpportunityName($data->getOpportunityName());
-            $Opportunities->setAccountName($data->getAccountName());
             $Opportunities->setCurrency($data->getCurrency());
             $Opportunities->setExpectedCloseDate($data->getExpectedCloseDate());
             $Opportunities->setOpportunityAmount($data->getOpportunityAmount());
@@ -127,10 +129,8 @@ class OpportunitiesController extends AbstractController
             $Opportunities->setSalesStage($data->getSalesStage());
             $Opportunities->setLeadSource($data->getLeadSource());
             $Opportunities->setProbability($data->getProbability());
-            $Opportunities->setCampaign($data->getCampaign());
             $Opportunities->setNextStep($data->getNextStep());
             $Opportunities->setDescription($data->getDescription());
-            $Opportunities->setAssignedTo($data->getAssignedTo());
             $Opportunities->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Opportunities);
             $em->flush();

@@ -9,9 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use App\Entity\Lead;
 use App\Form\FormData;
 use App\Entity\Campaigns;
+use App\Entity\User;
+use App\Entity\Lead;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class LeadEdit extends AbstractType
@@ -247,18 +248,7 @@ class LeadEdit extends AbstractType
               ]
           )
 
-          ->add(
-              'ReportsTo',
-              TextType::class,
-              [
 
-                'required' => false,
-              'attr' => [
-                  'placeholder' => 'Reports to',
-                  'label' => ' '
-              ]
-              ]
-          )
           ->add(
               'LeadSource',
               ChoiceType::class,
@@ -332,37 +322,8 @@ class LeadEdit extends AbstractType
               ]
           )
 
-          ->add('Campaign', EntityType::class, [
-              'class' => Campaigns::class,
-              'choice_label' => 'Name',
-              'choice_value' => 'Id'
-  ])
 
-          ->add(
-              'AssignedTo',
-              TextType::class,
-              [
 
-                'required' => false,
-              'attr' => [
-                  'placeholder' => 'Assign to',
-                  'label' => ' '
-              ]
-              ]
-          )
-
-          ->add(
-              'ReferredBy',
-              TextType::class,
-              [
-
-                'required' => false,
-              'attr' => [
-                  'placeholder' => 'Referred by',
-                  'label' => ' '
-              ]
-              ]
-          )
           ->add(
               'OpportunityAmount',
               TextType::class,
@@ -375,11 +336,8 @@ class LeadEdit extends AbstractType
               ]
               ]
           )
-          ->add('Campaign', EntityType::class, [
-              'class' => Campaigns::class,
-              'choice_label' => 'Name',
-              'choice_value' => 'Id'
-  ])
+
+
 
           ->add(
               'submit',

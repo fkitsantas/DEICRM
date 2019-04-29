@@ -6,10 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Contact;
 use App\Entity\User;
+use App\Entity\Interaction;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\FormData;
 use App\Form\Contact\ContactForm;
+use App\Form\Interaction\InteractionForm;
 use App\Form\Contact\ContactEdit;
 use App\Form\Contact\ContactSearchForm;
 
@@ -28,8 +30,8 @@ class ContactController extends AbstractController
             $data = $form->getData();
 
             $contact = $this->getDoctrine()
-    ->getRepository(Contact::class)
-    ->findByLastName($data->Search);
+            ->getRepository(Contact::class)
+            ->findByLastName($data->Search);
 
             if (!$contact) {
                 $this->addFlash('error', 'No contact was found, Try Searching Again');
@@ -77,12 +79,12 @@ class ContactController extends AbstractController
             $Contact->setAlternateAddressCountry($data->AlternateAddressCountry);
             $Contact->setEmailAddress($data->EmailAddress);
             $Contact->setDescription($data->Description);
-            $Contact->setReportsTo($data->ReportsTo);
             $Contact->setLeadSource($data->LeadSource);
-            $Contact->setCampaign($data->Campaign);
-            $Contact->setAssignedTo($data->AssignedTo);
+            $Contact->setReportsTo($data->ReportsTo->getLastName());
+            $Contact->setReportsToId($data->ReportsTo->getid());
+            $Contact->setAssignedTo($data->AssignedTo->getUserName());
+            $Contact->setAssignedToId($data->AssignedTo->getId());
             $Contact->setDateCreated(date('m/d/Y h:i:s a', time()));
-
             $Contact->setCreatedBy($this->getUser()->getId());
             $em->persist($Contact);
             $em->flush();
@@ -92,7 +94,7 @@ class ContactController extends AbstractController
           ->getRepository(Contact::class)
           ->findOneByID($Contact->getID());
 
-            $this->addFlash('success', 'Contact '.$thistarget->getLastName().' Sucessfully Created');
+            $this->addFlash('success', 'Contact '.$thiscontact->getLastName().' Sucessfully Created');
             return $this->redirectToRoute('getcontact', ['id' => $thiscontact->getID()]);
         }
 
@@ -113,8 +115,6 @@ class ContactController extends AbstractController
         $Contact = $this->getDoctrine()
       ->getRepository(Contact::class)
       ->findOneByID($id);
-
-
 
         if (!$Contact) {
             $this->addFlash('error', 'This contact does not exist');
@@ -151,8 +151,8 @@ class ContactController extends AbstractController
             $Contact->setDescription($data->getDescription());
             $Contact->setReportsTo($data->getReportsTo());
             $Contact->setLeadSource($data->getLeadSource());
-            $Contact->setCampaign($data->getCampaign());
             $Contact->setAssignedTo($data->getAssignedTo());
+            $Contact->setCampaign($data->getCampaign());
             $Contact->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Contact);
             $em->flush();
@@ -162,7 +162,7 @@ class ContactController extends AbstractController
           ->getRepository(Contact::class)
           ->findOneByID($Contact->getID());
 
-            $this->addFlash('success', 'Contact '.$thistarget->getLastName().' Sucessfully Edited');
+            $this->addFlash('success', 'Contact '.$thiscontact->getLastName().' Sucessfully Edited');
             return $this->redirectToRoute('getcontact', ['id' => $thiscontact->getID()]);
         }
 
@@ -186,7 +186,7 @@ class ContactController extends AbstractController
             $this->addFlash('success', 'There are no created contact');
             return $this->render('contact/all.html.twig');
         } else {
-            return $this->render('contact/all.html.twig', ['contact' => $result]);
+            return $this->render('Contact/all.html.twig', ['contact' => $result]);
         }
     }
 
@@ -204,16 +204,24 @@ class ContactController extends AbstractController
         ->getRepository(Contact::class)
         ->findOneByID($id);
 
-
         if (!$contact) {
             $this->addFlash('error', 'Contact not found');
             return $this->redirectToRoute('contact');
         } else {
+            $FormData = new FormData();
+            $form = $this->createForm(InteractionForm::class, $FormData, array(
+            'id' => $contact->getId(), 'whoby' => $this->getUser()->getLastName(), 'type' => 'contact'));
+
             $createdby = $this->getDoctrine()
           ->getRepository(User::class)
           ->findOneByID($contact->getCreatedBy());
 
-            return $this->render('contact/view.html.twig', ['contact' => $contact, 'createdby' => $createdby]);
+            $repository = $this->getDoctrine()->getRepository(Interaction::class);
+            $interaction = $repository->findBy(
+                ['WhoTo' => $contact->getId()]
+          );
+
+            return $this->render('Contact/view.html.twig', ['contact' => $contact, 'createdby' => $createdby, 'interaction' => $interaction, 'form' => $form->createView()]);
         }
     }
 

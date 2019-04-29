@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
+* @ORM\Table(name="dei_account")
  */
 class Account
 {
@@ -34,62 +35,75 @@ class Account
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $EmailAddress;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $Fax;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $BillingStreet;
+    private $BillingAddressStreet;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $BillingCity;
+    private $BillingAddressCity;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $BillingState;
+    private $BillingAddressState;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $BillingPostalCode;
+    private $BillingAddressPostalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $BillingCountry;
+    private $BillingAddressCountry;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $ShippingStreet;
+    private $ShippingAddressStreet;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $ShippingCity;
+    private $ShippingAddressCity;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $ShippingState;
+    private $ShippingAddressState;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $ShippingPostalCode;
+    private $ShippingAddressPostalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $ShippingCountry;
+    private $ShippingAddressCountry;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Type;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CreatedBy;
+
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -109,7 +123,14 @@ class Account
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $MemberOfId;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $Industry;
+
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -126,6 +147,17 @@ class Account
      */
     private $Ownership;
 
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Campaign;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CampaignId;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -135,6 +167,11 @@ class Account
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $AssignedTo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AssignedToId;
 
 
     /**
@@ -146,6 +183,7 @@ class Account
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $DateModified;
+
 
     public function getId(): ?int
     {
@@ -176,6 +214,21 @@ class Account
         return $this;
     }
 
+    public function getEmailAddress(): ?string
+    {
+        return $this->EmailAddress;
+    }
+
+    public function setEmailAddress(?string $EmailAddress): self
+    {
+        $this->EmailAddress = $EmailAddress;
+
+        return $this;
+    }
+
+
+
+
     public function getWebsite(): ?string
     {
         return $this->Website;
@@ -200,122 +253,122 @@ class Account
         return $this;
     }
 
-    public function getBillingStreet(): ?string
+    public function getBillingAddressStreet(): ?string
     {
-        return $this->BillingStreet;
+        return $this->BillingAddressStreet;
     }
 
-    public function setBillingStreet(?string $BillingStreet): self
+    public function setBillingAddressStreet(?string $BillingAddressStreet): self
     {
-        $this->BillingStreet = $BillingStreet;
+        $this->BillingAddressStreet = $BillingAddressStreet;
 
         return $this;
     }
 
-    public function getBillingCity(): ?string
+    public function getBillingAddressCity(): ?string
     {
-        return $this->BillingCity;
+        return $this->BillingAddressCity;
     }
 
-    public function setBillingCity(?string $BillingCity): self
+    public function setBillingAddressCity(?string $BillingAddressCity): self
     {
-        $this->BillingCity = $BillingCity;
+        $this->BillingAddressCity = $BillingAddressCity;
 
         return $this;
     }
 
-    public function getBillingState(): ?string
+    public function getBillingAddressState(): ?string
     {
-        return $this->BillingState;
+        return $this->BillingAddressState;
     }
 
-    public function setBillingState(?string $BillingState): self
+    public function setBillingAddressState(?string $BillingAddressState): self
     {
-        $this->BillingState = $BillingState;
+        $this->BillingAddressState = $BillingAddressState;
 
         return $this;
     }
 
-    public function getBillingPostalCode(): ?string
+    public function getBillingAddressPostalCode(): ?string
     {
-        return $this->BillingPostalCode;
+        return $this->BillingAddressPostalCode;
     }
 
-    public function setBillingPostalCode(?string $BillingPostalCode): self
+    public function setBillingAddressPostalCode(?string $BillingAddressPostalCode): self
     {
-        $this->BillingPostalCode = $BillingPostalCode;
+        $this->BillingAddressPostalCode = $BillingAddressPostalCode;
 
         return $this;
     }
 
-    public function getBillingCountry(): ?string
+    public function getBillingAddressCountry(): ?string
     {
-        return $this->BillingCountry;
+        return $this->BillingAddressCountry;
     }
 
-    public function setBillingCountry(?string $BillingCountry): self
+    public function setBillingAddressCountry(?string $BillingAddressCountry): self
     {
-        $this->BillingCountry = $BillingCountry;
+        $this->BillingAddressCountry = $BillingAddressCountry;
 
         return $this;
     }
 
-    public function getShippingStreet(): ?string
+    public function getShippingAddressStreet(): ?string
     {
-        return $this->ShippingStreet;
+        return $this->ShippingAddressStreet;
     }
 
-    public function setShippingStreet(?string $ShippingStreet): self
+    public function setShippingAddressStreet(?string $ShippingAddressStreet): self
     {
-        $this->ShippingStreet = $ShippingStreet;
+        $this->ShippingAddressStreet = $ShippingAddressStreet;
 
         return $this;
     }
 
-    public function getShippingCity(): ?string
+    public function getShippingAddressCity(): ?string
     {
-        return $this->ShippingCity;
+        return $this->ShippingAddressCity;
     }
 
-    public function setShippingCity(?string $ShippingCity): self
+    public function setShippingAddressCity(?string $ShippingAddressCity): self
     {
-        $this->ShippingCity = $ShippingCity;
+        $this->ShippingAddressCity = $ShippingAddressCity;
 
         return $this;
     }
 
-    public function getShippingState(): ?string
+    public function getShippingAddressState(): ?string
     {
-        return $this->ShippingState;
+        return $this->ShippingAddressState;
     }
 
-    public function setShippingState(?string $ShippingState): self
+    public function setShippingAddressState(?string $ShippingAddressState): self
     {
-        $this->ShippingState = $ShippingState;
+        $this->ShippingAddressState = $ShippingAddressState;
 
         return $this;
     }
 
-    public function getShippingPostalCode(): ?string
+    public function getShippingAddressPostalCode(): ?string
     {
-        return $this->ShippingPostalCode;
+        return $this->ShippingAddressPostalCode;
     }
 
-    public function setShippingPostalCode(?string $ShippingPostalCode): self
+    public function setShippingAddressPostalCode(?string $ShippingAddressPostalCode): self
     {
-        $this->ShippingPostalCode = $ShippingPostalCode;
+        $this->ShippingAddressPostalCode = $ShippingAddressPostalCode;
 
         return $this;
     }
 
-    public function getShippingCountry(): ?string
+    public function getShippingAddressCountry(): ?string
     {
-        return $this->ShippingCountry;
+        return $this->ShippingAddressCountry;
     }
 
-    public function setShippingCountry(?string $ShippingCountry): self
+    public function setShippingAddressCountry(?string $ShippingAddressCountry): self
     {
-        $this->ShippingCountry = $ShippingCountry;
+        $this->ShippingAddressCountry = $ShippingAddressCountry;
 
         return $this;
     }
@@ -367,6 +420,19 @@ class Account
 
         return $this;
     }
+
+    public function getMemberOfId(): ?string
+    {
+        return $this->MemberOfId;
+    }
+
+    public function setMemberOfId(?string $MemberOfId): self
+    {
+        $this->MemberOfId = $MemberOfId;
+
+        return $this;
+    }
+
 
     public function getIndustry(): ?string
     {
@@ -428,17 +494,6 @@ class Account
         return $this;
     }
 
-    public function getAssignedTo(): ?string
-    {
-        return $this->AssignedTo;
-    }
-
-    public function setAssignedTo(?string $AssignedTo): self
-    {
-        $this->AssignedTo = $AssignedTo;
-
-        return $this;
-    }
 
 
     public function getDateCreated(): ?string
@@ -453,6 +508,21 @@ class Account
         return $this;
     }
 
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->CreatedBy;
+    }
+
+    public function setCreatedBy(string $CreatedBy): self
+    {
+        $this->CreatedBy = $CreatedBy;
+
+        return $this;
+    }
+
+
+
     public function getDateModified(): ?string
     {
         return $this->DateModified;
@@ -461,6 +531,57 @@ class Account
     public function setDateModified(?string $DateModified): self
     {
         $this->DateModified = $DateModified;
+
+        return $this;
+    }
+
+    public function getCampaign(): ?string
+    {
+        return $this->Campaign;
+    }
+
+    public function setCampaign(?string $Campaign): self
+    {
+        $this->Campaign = $Campaign;
+
+        return $this;
+    }
+
+
+    public function getCampaignId(): ?string
+    {
+        return $this->CampaignId;
+    }
+
+    public function setCampaignId(?string $CampaignId): self
+    {
+        $this->CampaignId = $CampaignId;
+
+        return $this;
+    }
+
+
+
+    public function getAssignedTo(): ?string
+    {
+        return $this->AssignedTo;
+    }
+
+    public function setAssignedTo(?string $AssignedTo): self
+    {
+        $this->AssignedTo = $AssignedTo;
+
+        return $this;
+    }
+
+    public function getAssignedToId(): ?string
+    {
+        return $this->AssignedToId;
+    }
+
+    public function setAssignedToId(?string $AssignedToId): self
+    {
+        $this->AssignedToId = $AssignedToId;
 
         return $this;
     }

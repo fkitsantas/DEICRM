@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Target;
 use App\Form\FormData;
+use App\Entity\User;
 
 class TargetEdit extends AbstractType
 {
@@ -245,18 +246,7 @@ class TargetEdit extends AbstractType
                 ]
             )
 
-            ->add(
-                'AssignedTo',
-                TextType::class,
-                [
-                  'label' => false,
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Assigned to',
-                    'label' => ' '
-                ]
-                ]
-            )
+
             ->add(
                 'submit',
                 SubmitType::class

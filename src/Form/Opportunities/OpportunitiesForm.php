@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\FormData;
 use App\Entity\Campaigns;
+use App\Entity\Account;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class OpportunitiesForm extends AbstractType
@@ -30,17 +32,12 @@ class OpportunitiesForm extends AbstractType
                 ]
                 ]
             )
-            ->add(
-                'AccountName',
-                TextType::class,
-                [
-
-                'attr' => [
-                    'placeholder' => 'Account Name',
-                    'label' => ' '
-                ]
-                ]
-            )
+            ->add('AccountName', EntityType::class, [
+                'label' => 'Account Name',
+                'class' => Account::class,
+                'choice_label' => 'Name',
+                'choice_value' => 'Id',
+        ])
             ->add(
                 'Currency',
                 ChoiceType::class,
@@ -102,8 +99,8 @@ class OpportunitiesForm extends AbstractType
           'PerceptionAnalysis' => 'Perception Analysis',
           'Proposal/PriceQuote' => 'Proposal/Price Quote',
           'Negotiation/Review' => 'Negotiation/Review',
-          'ClosedWon' => 'Closed Won',
-          'ClosedLost' => 'Closed Lost',
+          'Closed/Won' => 'Closed Won',
+          'Closed/Lost' => 'Closed Lost',
 
 
 
@@ -178,18 +175,12 @@ class OpportunitiesForm extends AbstractType
                 ]
                 ]
             )
-            ->add(
-                'AssignedTo',
-                TextType::class,
-                [
-
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Assign to',
-                    'label' => ' '
-                ]
-                ]
-            )
+            ->add('AssignedTo', EntityType::class, [
+                'label' => 'Assign to',
+                'class' => User::class,
+                'choice_label' => 'Username',
+                'choice_value' => 'Id',
+        ])
             ->add(
                 'submit',
                 SubmitType::class

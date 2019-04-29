@@ -117,6 +117,12 @@ class Contact
      */
     private $ReportsTo;
 
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $ReportsToId;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -130,7 +136,18 @@ class Contact
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $CampaignID;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $AssignedTo;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AssignedToId;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -146,6 +163,8 @@ class Contact
      * @ORM\Column(type="integer", length=255, nullable=true)
      */
     private $CreatedBy;
+
+
 
     public function getId(): ?int
     {
@@ -380,17 +399,6 @@ class Contact
         return $this;
     }
 
-    public function getReportsTo(): ?string
-    {
-        return $this->ReportsTo;
-    }
-
-    public function setReportsTo(?string $ReportsTo = null): self
-    {
-        $this->ReportsTo = $ReportsTo;
-
-        return $this;
-    }
 
     public function getLeadSource(): ?string
     {
@@ -404,29 +412,8 @@ class Contact
         return $this;
     }
 
-    public function getCampaign(): ?string
-    {
-        return $this->Campaign;
-    }
 
-    public function setCampaign(?string $Campaign = null): self
-    {
-        $this->Campaign = $Campaign;
 
-        return $this;
-    }
-
-    public function getAssignedTo(): ?string
-    {
-        return $this->AssignedTo;
-    }
-
-    public function setAssignedTo(?string $AssignedTo = null): self
-    {
-        $this->AssignedTo = $AssignedTo;
-
-        return $this;
-    }
 
     public function getDateCreated(): ?string
     {
@@ -460,6 +447,86 @@ class Contact
     public function setCreatedBy(?string $CreatedBy = null): self
     {
         $this->CreatedBy = $CreatedBy;
+
+        return $this;
+    }
+
+
+
+    public function getCampaign(): ?string
+    {
+        return $this->Campaign;
+    }
+
+    public function setCampaign(?string $Campaign): self
+    {
+        $this->Campaign = $Campaign;
+
+        return $this;
+    }
+
+
+    public function getCampaignId(): ?string
+    {
+        return $this->CampaignId;
+    }
+
+    public function setCampaignId(?string $CampaignId): self
+    {
+        $this->CampaignId = $CampaignId;
+
+        return $this;
+    }
+
+
+
+    public function getAssignedTo(): ?string
+    {
+        return $this->AssignedTo;
+    }
+
+    public function setAssignedTo(?string $AssignedTo): self
+    {
+        $this->AssignedTo = $AssignedTo;
+
+        return $this;
+    }
+
+    public function getAssignedToId(): ?string
+    {
+        return $this->AssignedToId;
+    }
+
+    public function setAssignedToId(?string $AssignedToId): self
+    {
+        $this->AssignedToId = $AssignedToId;
+
+        return $this;
+    }
+
+
+
+
+    public function getReportsTo(): ?string
+    {
+        return $this->ReportsTo;
+    }
+
+    public function setReportsTo(?string $ReportsTo): self
+    {
+        $this->ReportsTo = $ReportsTo;
+
+        return $this;
+    }
+
+    public function getReportsToId(): ?string
+    {
+        return $this->ReportsToId;
+    }
+
+    public function setReportsToId(?string $ReportsToId): self
+    {
+        $this->ReportsToId = $ReportsToId;
 
         return $this;
     }

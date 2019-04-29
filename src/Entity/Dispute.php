@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DisputeRepository")
+ * @ORM\Table(name="dei_dispute")
  */
 class Dispute
 {
@@ -60,6 +61,13 @@ class Dispute
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $AssignedTo;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $AssignedToId;
+
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -172,17 +180,7 @@ class Dispute
         return $this;
     }
 
-    public function getAssignedTo(): ?string
-    {
-        return $this->AssignedTo;
-    }
 
-    public function setAssignedTo(?string $AssignedTo): self
-    {
-        $this->AssignedTo = $AssignedTo;
-
-        return $this;
-    }
 
     public function getDateCreated(): ?string
     {
@@ -204,6 +202,32 @@ class Dispute
     public function setDateModified(?string $DateModified): self
     {
         $this->DateModified = $DateModified;
+
+        return $this;
+    }
+
+
+
+    public function getAssignedTo(): ?string
+    {
+        return $this->AssignedTo;
+    }
+
+    public function setAssignedTo(?string $AssignedTo): self
+    {
+        $this->AssignedTo = $AssignedTo;
+
+        return $this;
+    }
+
+    public function getAssignedToId(): ?string
+    {
+        return $this->AssignedToId;
+    }
+
+    public function setAssignedToId(?string $AssignedToId): self
+    {
+        $this->AssignedToId = $AssignedToId;
 
         return $this;
     }

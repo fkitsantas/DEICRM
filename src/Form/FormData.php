@@ -107,7 +107,7 @@ class FormData extends AbstractType
     public $RelatedTo;
 
     public $ContactName;
-    
+
     public $StartDate;
 
     public $EndDate;
@@ -129,6 +129,8 @@ class FormData extends AbstractType
     public $Objective;
 
     public $Impressions;
+
+    public $Location;
 
     public $Budget;
 

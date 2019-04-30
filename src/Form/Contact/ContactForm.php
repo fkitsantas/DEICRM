@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Form\Contact;
 
 use Symfony\Component\Form\AbstractType;
@@ -24,7 +23,6 @@ class ContactForm extends AbstractType
                 'FirstName',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'First name',
@@ -36,7 +34,6 @@ class ContactForm extends AbstractType
                 'LastName',
                 TextType::class,
                 [
-
                 'attr' => [
                     'placeholder' => 'Last name',
                     'label' => ' '
@@ -47,7 +44,6 @@ class ContactForm extends AbstractType
                 'Title',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Title',
@@ -59,7 +55,6 @@ class ContactForm extends AbstractType
                 'Department',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Department',
@@ -71,7 +66,6 @@ class ContactForm extends AbstractType
                 'OfficePhone',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Office Phone',
@@ -83,7 +77,6 @@ class ContactForm extends AbstractType
                 'Mobile',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Mobile',
@@ -95,7 +88,6 @@ class ContactForm extends AbstractType
                 'Fax',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'fax',
@@ -107,7 +99,6 @@ class ContactForm extends AbstractType
                 'PrimaryAddressStreet',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Address Street',
@@ -119,7 +110,6 @@ class ContactForm extends AbstractType
                 'PrimaryAddressCity',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Address city',
@@ -131,7 +121,6 @@ class ContactForm extends AbstractType
                 'PrimaryAddressState',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Address state',
@@ -143,7 +132,6 @@ class ContactForm extends AbstractType
                 'PrimaryAddressPostalCode',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Postal code',
@@ -155,7 +143,6 @@ class ContactForm extends AbstractType
                 'PrimaryAddressCountry',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Primary address country',
@@ -167,7 +154,6 @@ class ContactForm extends AbstractType
                 'AlternateAddressStreet',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Alternative address street',
@@ -179,7 +165,6 @@ class ContactForm extends AbstractType
                 'AlternateAddressCity',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Alternative address city',
@@ -191,7 +176,6 @@ class ContactForm extends AbstractType
                 'AlternateAddressState',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Alternative address state',
@@ -203,7 +187,6 @@ class ContactForm extends AbstractType
                 'AlternateAddressPostalCode',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Alternative address postal code',
@@ -215,7 +198,6 @@ class ContactForm extends AbstractType
                 'AlternateAddressCountry',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Alternative address country',
@@ -227,7 +209,6 @@ class ContactForm extends AbstractType
                 'EmailAddress',
                 TextType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Email Address',
@@ -239,7 +220,6 @@ class ContactForm extends AbstractType
                 'Description',
                 TextareaType::class,
                 [
-
                   'required' => false,
                 'attr' => [
                     'placeholder' => 'Description',
@@ -273,9 +253,6 @@ class ContactForm extends AbstractType
           'Email' => 'Email',
           'Campaign' => 'Campaign',
           'Other' => 'Other',
-
-
-
       ]
     ]
             )
@@ -284,8 +261,6 @@ class ContactForm extends AbstractType
                 'choice_label' => 'Name',
                 'choice_value' => 'Id',
     ])
-
-
       ->add('AssignedTo', EntityType::class, [
           'label' => 'Assign to',
           'class' => User::class,
@@ -301,10 +276,8 @@ class ContactForm extends AbstractType
                     'class' => 'btn btn-primary btn-lg btn-block'
                   ]
                 ]
-
             );
     }
-
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(

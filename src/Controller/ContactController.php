@@ -22,6 +22,7 @@ class ContactController extends AbstractController
      */
     public function index(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(contactSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -51,10 +52,10 @@ class ContactController extends AbstractController
      */
     public function createcontact(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(ContactForm::class, $FormData);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
@@ -88,21 +89,14 @@ class ContactController extends AbstractController
             $Contact->setCreatedBy($this->getUser()->getId());
             $em->persist($Contact);
             $em->flush();
-
-
             $thiscontact = $this->getDoctrine()
-          ->getRepository(Contact::class)
-          ->findOneByID($Contact->getID());
-
+           ->getRepository(Contact::class)
+           ->findOneByID($Contact->getID());
             $this->addFlash('success', 'Contact '.$thiscontact->getLastName().' Sucessfully Created');
             return $this->redirectToRoute('getcontact', ['id' => $thiscontact->getID()]);
         }
-
-
         return $this->render('contact/create.html.twig', array('form' => $form->createView()));
     }
-
-
 
 
     /**
@@ -112,6 +106,7 @@ class ContactController extends AbstractController
      */
     public function editcontact(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Contact = $this->getDoctrine()
       ->getRepository(Contact::class)
       ->findOneByID($id);
@@ -179,6 +174,7 @@ class ContactController extends AbstractController
      */
     public function getAllcontact()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
         $result = $em->getRepository(Contact::class)
             ->findAll();
@@ -200,6 +196,7 @@ class ContactController extends AbstractController
      */
     public function getcontact($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $contact = $this->getDoctrine()
         ->getRepository(Contact::class)
         ->findOneByID($id);
@@ -232,6 +229,7 @@ class ContactController extends AbstractController
      */
     public function delcontact($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Contact = $this->getDoctrine()
     ->getRepository(Contact::class)
     ->findOneByID($id);

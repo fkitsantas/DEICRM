@@ -5,6 +5,7 @@
 {% block body %}
 
 
+{% include 'inc/breadcrumb.html.twig' %}
 {% include 'Opportunities/inc/flash.html.twig' %}
 
 {% include 'Opportunities/inc/breadcrumb.html.twig' %}
@@ -67,18 +68,12 @@
 
 
 
-<script>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('date') }}
 
-$(document).ready(function() {
 
-  $('.js-datepicker').datepicker({
-  format: 'yyyy-MM-dd',
-    setDate: new Date(),
-    startDate:new Date(),
-    autoclose: true
+{% endblock %}
 
-  });
-$('.js-datepicker').datepicker('setDate', 'now');
-});
-   </script>
 {% endblock %}

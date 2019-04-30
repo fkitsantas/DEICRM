@@ -11,6 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Task;
+use App\Entity\User;
+use App\Entity\Contact;
+
 use App\Form\FormData;
 use App\Entity\Campaigns;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -20,6 +23,7 @@ class TaskEdit extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+
         ->add(
             'Subject',
             TextType::class,
@@ -48,65 +52,48 @@ class TaskEdit extends AbstractType
 ]
         )
 
-        ->add(
-            'RelatedToType',
-            ChoiceType::class,
-            [
-  'choices'  => [
-      'Account' => 'Account',
-      'Contact' => 'Contact',
-      'Lead' => 'Lead',
-      'Opportunity' => 'Opportunity',
-      'Case' => 'Case',
-      'Target' => 'Target',
-      'Task' => 'Task',
-  ]
-]
-        )
+
+
+
 
 
         ->add(
             'Priority',
             ChoiceType::class,
             [
-  'choices'  => [
-      'High' => 'High',
-      'Medium' => 'Medium',
-      'Low' => 'Low',
-  ]
-]
-        )
+         'choices'  => [
+         'High' => 'High',
+         'Medium' => 'Medium',
+         'Low' => 'Low',
+         ]
+         ]
+          )
 
 
-            ->add(
-              'StartDate',
-                DateTimeType::class,
-                array(
-  'required' => true,
-  'widget' => 'single_text',
-  'attr' => [
-      'class' => 'form-control input-inline datetimepicker1',
-      'data-provide' => 'datetimepicker',
-      'html5' => false,
-  ],
-  )
-            )
+      ->add('StartDate', DateTimeType::class, array(
+                'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => [
+                    'class' => 'form-control input-inline js-datepicker1',
+                    'data-provide' => 'datetimepicker',
+                    'html5' => false,
 
-  ->add(
-    'DueDate',
-      DateTimeType::class,
-      array(
-'required' => true,
-'widget' => 'single_text',
-'attr' => [
-'class' => 'form-control input-inline datetimepicker2',
-'data-provide' => 'datetimepicker',
-'html5' => false,
-],
-)
-  )
+                ],
+                ))
 
 
+                ->add('DueDate', DateTimeType::class, array(
+          'required' => true,
+          'widget' => 'single_text',
+          'format' => 'yyyy-MM-dd',
+          'attr' => [
+          'class' => 'form-control input-inline js-datepicker2',
+          'data-provide' => 'datetimepicker',
+          'html5' => false,
+
+          ],
+          ))
 
 
         ->add(
@@ -122,12 +109,16 @@ class TaskEdit extends AbstractType
             ]
         )
 
+
+
         ->add(
             'submit',
             SubmitType::class
-
         );
     }
+
+
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

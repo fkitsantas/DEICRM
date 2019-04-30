@@ -20,6 +20,8 @@ class TaskController extends AbstractController
      */
     public function index(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $FormData = new FormData();
         $form = $this->createForm(taskSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -50,6 +52,17 @@ class TaskController extends AbstractController
      */
     public function createtask(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('task');
+        }
+
+
+
+
         $FormData = new FormData();
         $form = $this->createForm(TaskForm::class, $FormData);
         $form->handleRequest($request);
@@ -58,16 +71,17 @@ class TaskController extends AbstractController
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $Task = new Task();
+            $Task->setSubject($data->Subject);
             $Task->setStartDate($data->StartDate);
             $Task->setDueDate($data->DueDate);
             $Task->setPriority($data->Priority);
-            $Task->setContactName($data->ContactName);
+            $Task->setContactName($data->ContactName->getFirstName());
             $Task->setDescription($data->Description);
             $Task->setAssignedTo($data->AssignedTo->getUserName());
             $Task->setAssignedToId($data->AssignedTo->getId());
             $Task->setRelatedToType($data->RelatedToType);
-            $Task->setRelatedTo($data->AssignedTo->getUserName());
-            $Task->setRelatedToId($data->AssignedTo->getId());
+            $Task->setRelatedTo($data->RelatedTo);
+
             $Task->setStatus($data->Status);
             $Task->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Task->setCreatedBy($this->getUser()->getId());
@@ -96,6 +110,8 @@ class TaskController extends AbstractController
      */
     public function edittask(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         $Task = $this->getDoctrine()
       ->getRepository(Task::class)
       ->findOneByID($id);
@@ -109,6 +125,12 @@ class TaskController extends AbstractController
         }
 
 
+        if (!$this->isGranted('ROLE_ADMIN') || $this->getUser()->getId() !== $Task->getAssignedToId()) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('task');
+        }
+
         $form = $this->createForm(TaskEdit::class, $Task);
         $form->handleRequest($request);
 
@@ -116,19 +138,19 @@ class TaskController extends AbstractController
             $data = $form->getData();
 
             $em = $this->getDoctrine()->getManager();
-            $Task->getsetStartDate($data->getStartDate());
-            $Task->getsetDueDate($data->getDueDate());
-            $Task->getsetPriority($data->getPriority());
-            $Task->getsetContactName($data->getContactName());
-            $Task->getsetDescription($data->getDescription());
-            $Task->getsetAssignedTo($data->getAssignedTo->getgetUserName());
-            $Task->getsetAssignedToId($data->getAssignedTo->getgetId());
-            $Task->getsetRelatedToType($data->getRelatedToType());
-            $Task->getsetRelatedTo($data->getAssignedTo->getgetUserName());
-            $Task->getsetRelatedToId($data->getAssignedTo->getgetId());
-            $Task->getsetStatus($data->getStatus());
-            $Task->getsetDateCreated(date('m/d/Y h:i:s a', time()));
-            $Task->getsetCreatedBy($this->getgetUser()->getgetId());
+            $Task->setSubject($data->getSubject());
+            $Task->setStartDate($data->getStartDate());
+            $Task->setDueDate($data->getDueDate());
+            $Task->setPriority($data->getPriority());
+            //$Task->setContactName($data->getContactName->getFirstName());
+            $Task->setDescription($data->getDescription());
+            //$Task->setAssignedTo($data->getAssignedTo->getUserName());
+            //$Task->setAssignedToId($data->getAssignedTo->getId());
+            //$Task->setRelatedToType($data->getRelatedToType());
+            //$Task->setRelatedTo($data->getRelatedTo());
+            $Task->setStatus($data->getStatus());
+            $Task->setDateModified(date('m/d/Y h:i:s a', time()));
+            $Task->setCreatedBy($this->getUser()->getId());
             $em->persist($Task);
             $em->flush();
 

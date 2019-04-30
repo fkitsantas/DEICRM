@@ -4,7 +4,7 @@
 
 {% block body %}
 
-
+{% include 'inc/breadcrumb.html.twig' %}
 {% include 'contact/inc/flash.html.twig' %}
 
 {% include 'contact/inc/breadcrumb.html.twig' %}
@@ -87,14 +87,9 @@
  </div>
 </div>
 
-<div class="row">
- <div class="col-11">
+
    {{ form_row(form.Campaign) }}
- </div>
- <div class="col-1">
-    <button type="button" class="btn btn-primary  mr-5 mt-4" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">+</button>
- </div>
-</div>
+
 
     {{ form_widget(form) }}
     {{ form_end(form) }}

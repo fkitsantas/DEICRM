@@ -5,6 +5,7 @@
 {% block body %}
 
 
+{% include 'inc/breadcrumb.html.twig' %}
 {% include 'Campaigns/inc/flash.html.twig' %}
 
 {% include 'Campaigns/inc/breadcrumb.html.twig' %}
@@ -65,10 +66,12 @@
 {% endif %}
 
 
-
 {% block javascripts %}
     {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
     {{ encore_entry_script_tags('date') }}
+
+
 {% endblock %}
 
 {% endblock %}

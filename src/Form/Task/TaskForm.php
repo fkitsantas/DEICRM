@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\FormData;
-use App\Entity\Campaigns;
 use App\Entity\Account;
 use App\Entity\Contact;
 use App\Entity\User;
@@ -55,6 +54,7 @@ class TaskForm extends AbstractType
               'RelatedToType',
               ChoiceType::class,
               [
+                'label' => 'Type',
     'choices'  => [
         'Account' => 'Account',
         'Contact' => 'Contact',
@@ -70,22 +70,22 @@ class TaskForm extends AbstractType
 
 
           ->add(
-
-            'RelatedTo',
-              EntityType::class,
+              'RelatedTo',
+              TextType::class,
               [
-                        'label' => 'Assign to',
-                        'class' => Contact::class,
-                        'choice_label' => 'FirstName',
-                        'choice_value' => 'Id',
-                  ]
+                'label' => 'Related To',
+                'required' => false,
+              'attr' => [
+                  'placeholder' => 'Related To',
+                  'label' => ' '
+              ]
+              ]
           )
 
 
 
           ->add(
-
-            'ContactName',
+              'ContactName',
               EntityType::class,
               [
               'label' => 'Assign to',
@@ -100,7 +100,7 @@ class TaskForm extends AbstractType
 
 
                 ->add(
-                  'AssignedTo',
+                    'AssignedTo',
                     EntityType::class,
                     [
                     'label' => 'Assign to',

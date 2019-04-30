@@ -22,6 +22,7 @@ class InteractionController extends AbstractController
  */
     public function interaction(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
 
         $interactionForm = $this->createForm(InteractionForm::class, $FormData);

@@ -5,15 +5,7 @@
 {% block body %}
 
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="/accounts">Accounts</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/contacts">contacts</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">contact</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
-  </ol>
-</nav>
+{% include 'inc/breadcrumb.html.twig' %}
 
 
 {% for message in app.flashes('notice') %}
@@ -174,31 +166,11 @@
 
 
 
-<script>
-
-$(document).ready(function() {
-
-  $('.js-datepicker1').datepicker({
-  format: 'yyyy-MM-dd',
-    setDate: new Date(),
-    startDate:new Date(),
-    autoclose: true
-
-  });
-$('.js-datepicker1').datepicker('setDate', 'now');
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('date') }}
 
 
-$('.js-datepicker2').datepicker({
-format: 'yyyy-MM-dd',
-  setDate: new Date(),
-  startDate:new Date(),
-  autoclose: true
-
-});
-$('.js-datepicker2').datepicker('setDate', 'now');
-
-
-
-});
-   </script>
+{% endblock %}
 {% endblock %}

@@ -20,6 +20,7 @@ class TargetController extends AbstractController
      */
     public function index(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(targetSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -49,6 +50,7 @@ class TargetController extends AbstractController
      */
     public function createtarget(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(TargetForm::class, $FormData);
         $form->handleRequest($request);
@@ -109,6 +111,7 @@ class TargetController extends AbstractController
      */
     public function edittarget(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Target = $this->getDoctrine()
       ->getRepository(Target::class)
       ->findOneByID($id);
@@ -176,6 +179,7 @@ class TargetController extends AbstractController
      */
     public function getAlltarget()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
         $result = $em->getRepository(Target::class)
             ->findAll();
@@ -197,6 +201,7 @@ class TargetController extends AbstractController
      */
     public function gettarget($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $target = $this->getDoctrine()
         ->getRepository(Target::class)
         ->findOneByID($id);
@@ -221,6 +226,7 @@ class TargetController extends AbstractController
      */
     public function deltarget($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Target = $this->getDoctrine()
     ->getRepository(Target::class)
     ->findOneByID($id);

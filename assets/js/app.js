@@ -16,6 +16,6 @@ const $ = require('jquery');
 // create global $ and jQuery variables
 global.$ = global.jQuery = $;
 
-import('./datepicker');
+
 
 require('bootstrap');

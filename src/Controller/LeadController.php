@@ -20,6 +20,7 @@ class LeadController extends AbstractController
      */
     public function index(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(leadSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -49,6 +50,7 @@ class LeadController extends AbstractController
      */
     public function createlead(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(LeadForm::class, $FormData);
         $form->handleRequest($request);
@@ -116,6 +118,7 @@ class LeadController extends AbstractController
      */
     public function editlead(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Lead = $this->getDoctrine()
       ->getRepository(Lead::class)
       ->findOneByID($id);
@@ -189,6 +192,7 @@ class LeadController extends AbstractController
      */
     public function getAlllead()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
         $result = $em->getRepository(Lead::class)
             ->findAll();
@@ -210,6 +214,7 @@ class LeadController extends AbstractController
      */
     public function getlead($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $lead = $this->getDoctrine()
         ->getRepository(Lead::class)
         ->findOneByID($id);
@@ -230,6 +235,7 @@ class LeadController extends AbstractController
      */
     public function delaccount($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Lead = $this->getDoctrine()
     ->getRepository(Lead::class)
     ->findOneByID($id);

@@ -4,22 +4,10 @@
 
 {% block body %}
 
+{% include 'inc/breadcrumb.html.twig' %}
+{% include 'inc/messages/flash.html.twig' %}
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="../">Home</a></li>
-    <li class="breadcrumb-item"><a href="../accounts">Accounts</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="../tasks">Tasks</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="../opportunies">Opportunies</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="../leads">Leads</a></li>
-  </ol>
-</nav>
-
-{% include 'task/inc/flash.html.twig' %}
-
-{% include 'task/inc/breadcrumb.html.twig' %}
-
-
+{% include 'inc/messages//breadcrumb.html.twig' %}
 
 
 
@@ -28,7 +16,7 @@
 
 <div class="card">
   <div class="card-header">
-    All Tasks ( {{ task | length }} )
+    All task ( {{ task | length }} )
   </div>
 
   <table class="table">
@@ -36,30 +24,42 @@
       <tr>
         <th scope="col">#</th>
         <th scope="col">Subject</th>
-        <th scope="col">Priority</th>
         <th scope="col">Status</th>
-        <th scope="col">Type</th>
         <th scope="col">Start Date</th>
-        <th scope="col">End Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Type</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
+
     {% for data in task %}
 
     <tr>
       <th scope="row">{{ data.Id}}</th>
       <td>{{ data.Subject}}</td>
-      <td>{{ data.Priority}}</td>
-      <td>{{ data.Status}}</td>
+        <td>{{ data.Status}}</td>
+      <td>{{ data.StartDate|date('Y-m-d')}}</td>
+      <td>{{ data.DueDate|date('Y-m-d')}}</td>
       <td>{{ data.RelatedToType}}</td>
-      <td>{{ data.StartDate}}</td>
-      <td>{{ data.EndDate}}</td>
-      <td> <a href="../task/{{ data.id }}" class="btn btn-primary btn-sm">view</a> <a href="../task/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal">remove
-  </button> </td>
-    </tr>
+      <td>{{ data.Priority}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="/task/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
 
+        {% if  (is_granted('ROLE_ADMIN')) or (app.user.id) is same as (data.AssignedToId) %}
+
+        <a href="/task/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
+
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal">remove</button>
+
+{% endif %}
+
+</td>
+    </tr>
 
 
 
@@ -67,7 +67,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLongTitle">Remove {{ data.Subject}}</h5>
+        <h5 class="modal-title" id="deleteModalLongTitle">Remove {{ data.Subject}} </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -82,11 +82,10 @@
     </div>
   </div>
 </div>
+
     {% endfor %}
-
   </tbody>
-</table>
-
+  </table>
 </div>
 
 

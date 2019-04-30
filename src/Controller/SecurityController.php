@@ -11,7 +11,7 @@ use Seo\AuditBundle\Form\FormData;
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/admin", name="login")
+     * @Route("/", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {

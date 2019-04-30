@@ -20,6 +20,7 @@ class CampaignsController extends AbstractController
      */
     public function index(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(campaignsSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -49,6 +50,7 @@ class CampaignsController extends AbstractController
      */
     public function createcampaigns(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(CampaignsForm::class, $FormData);
         $form->handleRequest($request);
@@ -99,6 +101,7 @@ class CampaignsController extends AbstractController
      */
     public function editcampaigns(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Campaigns = $this->getDoctrine()
       ->getRepository(Campaigns::class)
       ->findOneByID($id);
@@ -156,6 +159,7 @@ class CampaignsController extends AbstractController
      */
     public function getAllcampaigns()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
         $result = $em->getRepository(Campaigns::class)
             ->findAll();
@@ -177,6 +181,7 @@ class CampaignsController extends AbstractController
      */
     public function getcampaigns($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $campaigns = $this->getDoctrine()
         ->getRepository(Campaigns::class)
         ->findOneByID($id);
@@ -201,6 +206,7 @@ class CampaignsController extends AbstractController
      */
     public function delcampaigns($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Campaigns = $this->getDoctrine()
     ->getRepository(Campaigns::class)
     ->findOneByID($id);

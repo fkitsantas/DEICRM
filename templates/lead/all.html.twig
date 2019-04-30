@@ -5,15 +5,7 @@
 {% block body %}
 
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="../">Home</a></li>
-    <li class="breadcrumb-item"><a href="../leads">Leads</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="../leads">Leads</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="../opportunies">Opportunies</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="../leads">Leads</a></li>
-  </ol>
-</nav>
+{% include 'inc/breadcrumb.html.twig' %}
 
 {% include 'lead/inc/flash.html.twig' %}
 
@@ -57,9 +49,13 @@
       <td>{{ data.DateCreated}}</td>
       <td>{{ data.DateModified}}</td>
       <td>{{ data.CreatedBy}}</td>
-      <td> <a href="../lead/{{ data.id }}" class="btn btn-primary btn-sm">view</a> <a href="../lead/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
+      <td> <a href="/lead/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+          {% if  (is_granted('ROLE_ADMIN')) or (app.user.id) is same as (data.AssignedToId) %}
+          <a href="/lead/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
         <button type="button" class="btn btn-primary btn-sm mt-1" data-toggle="modal" data-target="#deleteModal">remove
-  </button></td>
+  </button>
+{% endif %}
+</td>
     </tr>
 
 

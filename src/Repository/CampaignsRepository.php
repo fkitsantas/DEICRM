@@ -26,7 +26,7 @@ class CampaignsRepository extends ServiceEntityRepository
     public function findByName($value)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.Name LIKE :val OR c.FirstName LIKE :val')
+            ->andWhere('c.Name LIKE :val')
             ->setParameter('val', $value)
             ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)

@@ -4,8 +4,8 @@
 
 {% block body %}
 
-
-{% include 'contact/inc/flash.html.twig' %}
+{% include 'inc/breadcrumb.html.twig' %}
+{% include 'inc/messages/flash.html.twig' %}
 
 {% include 'contact/inc/breadcrumb.html.twig' %}
 
@@ -17,75 +17,41 @@
 
     {{ form_start(form) }}
     <div class="row">
-      <div class="col-2">
-        {{ form_row(form.Title) }}
+      <div class="col">
+        {{ form_row(form.Subject) }}
       </div>
-     <div class="col-5">
-       {{ form_row(form.FirstName) }}
-     </div>
-     <div class="col-5">
-          {{ form_row(form.LastName) }}
+     <div class="col">
+       {{ form_row(form.Status) }}
      </div>
    </div>
+
 
    <div class="row">
-    <div class="col-4">
-      {{ form_row(form.OfficePhone) }}
+    <div class="col">
+      {{ form_row(form.StartDate) }}
     </div>
-    <div class="col-4">
-         {{ form_row(form.Mobile) }}
-    </div>
-    <div class="col-4">
-         {{ form_row(form.Fax) }}
+    <div class="col">
+         {{ form_row(form.DueDate) }}
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-4">
-      {{ form_row(form.PrimaryAddressCity) }}
-    </div>
-   <div class="col-4">
-     {{ form_row(form.PrimaryAddressStreet) }}
-   </div>
-   <div class="col-4">
-        {{ form_row(form.PrimaryAddressPostalCode) }}
-   </div>
+
+
+<div class="row">
+  <div class="col-8">
+    {{ form_row(form.Priority) }}
   </div>
 
-  <div class="row">
-   <div class="col">
-     {{ form_row(form.PrimaryAddressCountry) }}
-   </div>
-   <div class="col">
-        {{ form_row(form.PrimaryAddressState) }}
-   </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-4">
-      {{ form_row(form.AlternateAddressCity) }}
-    </div>
-   <div class="col-4">
-     {{ form_row(form.AlternateAddressStreet) }}
-   </div>
-   <div class="col-4">
-        {{ form_row(form.AlternateAddressPostalCode) }}
-   </div>
- </div>
+</div>
 
 
 
- <div class="row">
-  <div class="col">
-    {{ form_row(form.AlternateAddressCountry) }}
-  </div>
-  <div class="col">
-       {{ form_row(form.AlternateAddressState) }}
-  </div>
- </div>
 
- 
+
+   {{ form_row(form.Description) }}
+
+
+
 
 
     {{ form_widget(form) }}
@@ -93,6 +59,16 @@
 
 {% endif %}
 
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('date') }}
+
+
+{% endblock %}
 
 
 {% endblock %}

@@ -20,6 +20,7 @@ class AccountController extends AbstractController
      */
     public function index(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(accountSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -49,6 +50,7 @@ class AccountController extends AbstractController
      */
     public function createaccount(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(AccountForm::class, $FormData);
         $form->handleRequest($request);
@@ -113,6 +115,7 @@ class AccountController extends AbstractController
      */
     public function editaccount(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Account = $this->getDoctrine()
       ->getRepository(Account::class)
       ->findOneByID($id);
@@ -180,6 +183,7 @@ class AccountController extends AbstractController
      */
     public function getAllaccount()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
         $result = $em->getRepository(Account::class)
             ->findAll();
@@ -201,6 +205,7 @@ class AccountController extends AbstractController
      */
     public function getaccount($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $account = $this->getDoctrine()
         ->getRepository(Account::class)
         ->findOneByID($id);
@@ -227,6 +232,7 @@ class AccountController extends AbstractController
      */
     public function delaccount($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Account = $this->getDoctrine()
     ->getRepository(Account::class)
     ->findOneByID($id);

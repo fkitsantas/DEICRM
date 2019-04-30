@@ -37,6 +37,17 @@ class Task
      */
     private $Priority;
 
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $Campaign;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $CampaignId;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -194,6 +205,33 @@ class Task
 
 
 
+
+    public function getCampaign(): ?string
+    {
+        return $this->Campaign;
+    }
+
+    public function setCampaign(?string $Campaign): self
+    {
+        $this->Campaign = $Campaign;
+
+        return $this;
+    }
+
+
+    public function getCampaignId(): ?string
+    {
+        return $this->CampaignId;
+    }
+
+    public function setCampaignId(?string $CampaignId): self
+    {
+        $this->CampaignId = $CampaignId;
+
+        return $this;
+    }
+
+
     public function getDescription(): ?string
     {
         return $this->Description;
@@ -250,7 +288,7 @@ class Task
         return $this->RelatedToId;
     }
 
-    public function setRelatedToId(?int $AssignedToId = null): self
+    public function setRelatedToId(?int $RelatedToId = null): self
     {
         $this->RelatedToId = $RelatedToId;
 

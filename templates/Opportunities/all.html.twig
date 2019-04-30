@@ -5,15 +5,7 @@
 {% block body %}
 
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="../">Home</a></li>
-    <li class="breadcrumb-item"><a href="../accounts">Accounts</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="../opportunities">opportunities</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="../opportunities">opportunities</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="../leads">Leads</a></li>
-  </ol>
-</nav>
+{% include 'inc/breadcrumb.html.twig' %}
 
 {% include 'Opportunities/inc/flash.html.twig' %}
 
@@ -62,9 +54,15 @@
       <td>{{ data.LeadSource}}</td>
       <td>{{ data.DateModified}}</td>
       <td>{{ data.ExpectedCloseDate|date('Y-m-d')}}</td>
-      <td> <a href="../opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a> <a href="../opportunities/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
+      <td> <a href="../opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+        {% if  (is_granted('ROLE_ADMIN')) or (app.user.id) is same as (data.AssignedToId) %}
+        <a href="../opportunities/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal">remove
-  </button></td>
+  </button>
+{% endif %}
+</td>
     </tr>
 
 

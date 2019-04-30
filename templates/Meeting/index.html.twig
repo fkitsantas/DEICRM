@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'meeting/inc/breadcrumb.html.twig' %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+{% if contact is defined %}
+
+<div class="card">
+  <div class="card-header">
+    Search result for {{ searchfor }}
+  </div>
+  <ul class="list-group list-group-flush">
+    {% for data in contact %}
+    <li class="list-group-item">{{ data.Title}} {{ data.FirstName}} {{ data.LastName}} {{ data.EmailAddress}} <a href="../contact/{{ data.id }}" class="btn btn-primary btn-sm">view</a></li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% endif %}
+
+{% endblock %}

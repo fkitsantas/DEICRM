@@ -1,19 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}DEICRM{% endblock %}
 
 {% block body %}
 
 
-<nav aria-label="breadcrumb">
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="#">Home</a></li>
-    <li class="breadcrumb-item"><a href="/accounts">Accounts</a></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="/contacts">Contacts</a></li>
-      <li class="breadcrumb-item active" aria-current="page"><a href="/opportunies">Opportunies</a></li>
-          <li class="breadcrumb-item active" aria-current="page"><a href="/leads">Leads</a></li>
-  </ol>
-</nav>
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'dashboard/inc/flash.html.twig' %}
+
+{% include 'dashboard/inc/breadcrumb.html.twig' %}
+
+
+
+
+
+{% include 'dashboard/accounts.html.twig' %}
+
+{% include 'dashboard/campaigns.html.twig' %}
+
+{% include 'dashboard/contact.html.twig' %}
+
+{% include 'dashboard/lead.html.twig' %}
+
+{% include 'dashboard/meeting.html.twig' %}
+
+{% include 'dashboard/opportunities.html.twig' %}
+
+{% include 'dashboard/target.html.twig' %}
+
+{% include 'dashboard/task.html.twig' %}
 
 
 

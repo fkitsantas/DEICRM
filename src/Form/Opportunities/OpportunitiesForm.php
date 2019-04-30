@@ -55,7 +55,7 @@ class OpportunitiesForm extends AbstractType
       'widget' => 'single_text',
       'format' => 'yyyy-MM-dd',
       'attr' => [
-          'class' => 'form-control input-inline js-datepicker',
+          'class' => 'form-control input-inline js-datepicker1',
           'data-provide' => 'datetimepicker',
           'html5' => false,
 

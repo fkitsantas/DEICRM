@@ -465,7 +465,7 @@ class Target
         return $this->AssignedToId;
     }
 
-    public function setAssignedToId(?string $AssignedTId): self
+    public function setAssignedToId(?string $AssignedToId): self
     {
         $this->AssignedToId = $AssignedToId;
 

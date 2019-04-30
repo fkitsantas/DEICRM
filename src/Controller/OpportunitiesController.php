@@ -20,6 +20,7 @@ class OpportunitiesController extends AbstractController
      */
     public function index(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(opportunitiesSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -49,6 +50,7 @@ class OpportunitiesController extends AbstractController
      */
     public function createopportunities(Request $request)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(OpportunitiesForm::class, $FormData);
         $form->handleRequest($request);
@@ -101,6 +103,7 @@ class OpportunitiesController extends AbstractController
      */
     public function editopportunities(Request $request, $id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Opportunities = $this->getDoctrine()
       ->getRepository(Opportunities::class)
       ->findOneByID($id);
@@ -157,6 +160,7 @@ class OpportunitiesController extends AbstractController
      */
     public function getAllopportunities()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
         $result = $em->getRepository(Opportunities::class)
             ->findAll();
@@ -178,6 +182,7 @@ class OpportunitiesController extends AbstractController
      */
     public function getopportunities($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $opportunities = $this->getDoctrine()
         ->getRepository(Opportunities::class)
         ->findOneByID($id);
@@ -202,6 +207,7 @@ class OpportunitiesController extends AbstractController
      */
     public function delopportunities($id)
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Opportunities = $this->getDoctrine()
     ->getRepository(Opportunities::class)
     ->findOneByID($id);

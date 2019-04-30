@@ -1,0 +1,62 @@
+
+
+<div class="card mb-3">
+  <div class="card-header">
+    Top Campaigns
+  </div>
+{% if campaigns is defined %}
+
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Impressions</th>
+        <th scope="col">Type</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for data in campaigns %}
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Name}}</td>
+        <td>{{ data.Status}}</td>
+      <td>{{ data.StartDate|date('Y-m-d')}}</td>
+      <td>{{ data.EndDate|date('Y-m-d')}}</td>
+      <td>{{ data.Currency}}</td>
+      <td>{{ data.Impressions}}</td>
+      <td>{{ data.Type}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="/campaigns/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+</td>
+    </tr>
+
+
+    {% endfor %}
+  </tbody>
+  </table>
+
+
+{% else %}
+
+
+
+<div class="alert alert-danger mt-2 mb-2" role="alert">
+No Campaign found
+</div>
+
+
+  {% endif %}
+</div>

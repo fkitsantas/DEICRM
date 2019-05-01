@@ -49,8 +49,8 @@ This application uses Open Source tools and components. You can find their websi
 - Symfony PHP Framework [https://symfony.com/](https://symfony.com/) && [https://github.com/symfony/symfony](https://github.com/symfony/symfony)
 - Bootstrap [https://getbootstrap.com/](https://getbootstrap.com/) && [https://github.com/twbs/bootstrap](https://github.com/twbs/bootstrap)
 - jQuery [https://jquery.com/](https://jquery.com/) && [https://github.com/jquery/jquery](https://github.com/jquery/jquery)
-- Bootstrap Datepicker [https://uxsolutions.github.io/](https://uxsolutions.github.io/) && [https://github.com/uxsolutions/bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
-- Tattali/calendarBundle [https://github.com/tattali](https://github.com/tattali) && [https://github.com/tattali/CalendarBundle](https://github.com/tattali/CalendarBundle)
+- UXSolutions (Bootstrap-Datepicker) [https://uxsolutions.github.io/](https://uxsolutions.github.io/) && [https://github.com/uxsolutions/bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
+- Tattali (CalendarBundle) [https://github.com/tattali](https://github.com/tattali) && [https://github.com/tattali/CalendarBundle](https://github.com/tattali/CalendarBundle)
 - Popper.js [https://popper.js.org/](https://popper.js.org/) && [https://github.com/FezVrasta/popper.js/](https://github.com/FezVrasta/popper.js/)
 
 

@@ -3,9 +3,9 @@
     Top Opportunities
   </div>
 
-{% if opportunities is defined %}
 
 
+{% if opportunities|length %}
 
   <table class="table">
     <thead class="thead-light">
@@ -39,7 +39,7 @@
       <td>{{ data.LeadSource}}</td>
       <td>{{ data.DateModified}}</td>
       <td>{{ data.ExpectedCloseDate|date('Y-m-d')}}</td>
-      <td> <a href="../opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+      <td> <a href="/opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
 
 
 

@@ -24,6 +24,12 @@ class User implements UserInterface
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    private $level;
+
+
+    /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
@@ -45,23 +51,40 @@ class User implements UserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $intials;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $middlename;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $username;
 
 
+
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $DateCreated;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $DateModified;
+
+    /**
+     * @ORM\Column(type="integer", length=255, nullable=true)
+     */
+    private $CreatedBy;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $status;
 
@@ -82,7 +105,7 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setUsername(string $username): self
+    public function setUsername(string $username = null): self
     {
         $this->username = $username;
 
@@ -161,6 +184,19 @@ class User implements UserInterface
         return $this;
     }
 
+
+    public function getLevel(): ?string
+    {
+        return $this->level;
+    }
+
+    public function setLevel(string $level): self
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
     public function getLastname(): ?string
     {
         return $this->lastname;
@@ -169,6 +205,42 @@ class User implements UserInterface
     public function setLastname(string $lastname): self
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?string
+    {
+        return $this->CreatedBy;
+    }
+
+    public function setCreatedBy(?string $CreatedBy = null): self
+    {
+        $this->CreatedBy = $CreatedBy;
+
+        return $this;
+    }
+
+    public function getDateCreated(): ?string
+    {
+        return $this->DateCreated;
+    }
+
+    public function setDateCreated(?string $DateCreated = null): self
+    {
+        $this->DateCreated = $DateCreated;
+
+        return $this;
+    }
+
+    public function getDateModified(): ?string
+    {
+        return $this->DateModified;
+    }
+
+    public function setDateModified(?string $DateModified = null): self
+    {
+        $this->DateModified = $DateModified;
 
         return $this;
     }
@@ -190,7 +262,7 @@ class User implements UserInterface
         return $this->middlename;
     }
 
-    public function setMiddlename(string $middlename): self
+    public function setMiddlename(string $middlename = null): self
     {
         $this->middlename = $middlename;
 
@@ -202,7 +274,7 @@ class User implements UserInterface
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(string $status = null): self
     {
         $this->status = $status;
 

@@ -228,16 +228,21 @@ class ContactForm extends AbstractType
                 ]
             )
             ->add('ReportsTo', EntityType::class, [
+
+              'required' => false,
+              'placeholder' => 'Choose an option',
                 'label' => 'Report to',
                 'class' => Contact::class,
-                'choice_label' => 'LastName',
+                'choice_label' => 'FirstName',
                 'choice_value' => 'Id',
           ])
             ->add(
                 'LeadSource',
                 ChoiceType::class,
                 [
+                  'placeholder' => 'Choose an option',
                 'required' => false,
+                'placeholder' => 'Choose an option',
       'choices'  => [
           'cold call' => 'cold call',
           'Existing Customer' => 'Existing Customer',
@@ -257,11 +262,14 @@ class ContactForm extends AbstractType
     ]
             )
             ->add('Campaign', EntityType::class, [
+              'required' => false,
+              'placeholder' => 'Choose an option',
                 'class' => Campaigns::class,
                 'choice_label' => 'Name',
                 'choice_value' => 'Id',
     ])
       ->add('AssignedTo', EntityType::class, [
+        'placeholder' => 'Choose an option',
           'label' => 'Assign to',
           'class' => User::class,
           'choice_label' => 'Username',

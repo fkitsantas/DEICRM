@@ -13,6 +13,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Meeting;
 use App\Form\FormData;
 use App\Entity\Campaigns;
+use App\Entity\Contact;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class MeetingEdit extends AbstractType
@@ -67,30 +69,27 @@ class MeetingEdit extends AbstractType
         )
 
 
+        ->add('AssignedTo', EntityType::class, [
+            'label' => 'Assign to',
+            'class' => User::class,
+            'choice_label' => 'FirstName',
+            'choice_value' => 'Id',
+            'mapped' => false,
+    ])
+
+
+
+
 
         ->add(
             'RelatedTo',
-            TextType::class,
-            [
-              'label' => 'Related To',
-              'required' => false,
-            'attr' => [
-                'placeholder' => 'Related To',
-                'label' => ' '
-            ]
-            ]
-        )
-
-
-
-        ->add(
-            'ContactName',
             EntityType::class,
             [
-            'label' => 'Assign to',
+            'label' => 'Related To',
             'class' => Contact::class,
             'choice_label' => 'FirstName',
             'choice_value' => 'Id',
+            'mapped' => false,
       ]
         )
 
@@ -98,16 +97,6 @@ class MeetingEdit extends AbstractType
 
 
 
-              ->add(
-                  'AssignedTo',
-                  EntityType::class,
-                  [
-                  'label' => 'Assign to',
-                  'class' => User::class,
-                  'choice_label' => 'Username',
-                  'choice_value' => 'Id',
-            ]
-              )
 
 
 
@@ -115,10 +104,10 @@ class MeetingEdit extends AbstractType
             'Location',
             TextType::class,
             [
-              'label' => 'Related To',
+              'label' => 'Location',
               'required' => false,
             'attr' => [
-                'placeholder' => 'Related To',
+                'placeholder' => 'location',
                 'label' => ' '
             ]
             ]

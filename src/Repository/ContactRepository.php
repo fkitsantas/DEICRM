@@ -45,6 +45,16 @@ class ContactRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByNotID($value): ?Contact
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id != :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     public function findOneByLastName($value): ?Contact
     {

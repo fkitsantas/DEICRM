@@ -252,7 +252,6 @@ class LeadForm extends AbstractType
                 'LeadSource',
                 ChoiceType::class,
                 [
-                'required' => false,
       'choices'  => [
           'cold call' => 'cold call',
           'Existing Customer' => 'Existing Customer',
@@ -292,7 +291,6 @@ class LeadForm extends AbstractType
                 'Status',
                 ChoiceType::class,
                 [
-                'required' => false,
       'choices'  => [
           'New' => 'New',
           'Assigned' => 'Assigned',
@@ -322,6 +320,8 @@ class LeadForm extends AbstractType
             )
 
             ->add('Campaign', EntityType::class, [
+            'required' => false,
+            'placeholder' => 'Choose an option',
                 'class' => Campaigns::class,
                 'choice_label' => 'Name',
     ])

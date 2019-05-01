@@ -5,9 +5,9 @@
 {% block body %}
 
 {% include 'inc/breadcrumb.html.twig' %}
-{% include 'inc/messages/flash.html.twig' %}
+{% include 'task/inc/flash.html.twig' %}
 
-{% include 'contact/inc/breadcrumb.html.twig' %}
+{% include 'task/inc/breadcrumb.html.twig' %}
 
 
 
@@ -51,7 +51,7 @@
    {{ form_row(form.Description) }}
 
 
-
+{{ form_row(form.AssignedTo) }}
 
 
     {{ form_widget(form) }}

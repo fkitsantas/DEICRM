@@ -12,7 +12,10 @@
 
 
 
+{% if is_granted('ROLE_ADMIN') %}
 
+{% include 'dashboard/user.html.twig' %}
+{% endif %}
 
 {% include 'dashboard/accounts.html.twig' %}
 

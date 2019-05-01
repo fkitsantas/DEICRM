@@ -16,7 +16,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/user", name="user")
+     * @Route("/users", name="users")
      */
     public function index(Request $request)
     {
@@ -48,9 +48,17 @@ class UserController extends AbstractController
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function createuser(Request $request)
+    public function createuser(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('dashboard');
+        }
+
+        $this->passwordEncoder = $passwordEncoder;
         $FormData = new FormData();
         $form = $this->createForm(UserForm::class, $FormData);
         $form->handleRequest($request);
@@ -59,14 +67,28 @@ class UserController extends AbstractController
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $User = new User();
-            $User->setEmailAddress($data->EmailAddress);
+            $User->setEmail($data->Email);
             $User->setFirstName($data->FirstName);
             $User->setLastName($data->LastName);
-            $User->setIntial($data->Intial);
-            $User->setPassword($data->Password);
-            $User->setRoles($data->Roles);
+            $User->setIntials($data->Intials);
+
+            if (empty($data->Password)) {
+                $plainPassword = substr(md5(microtime()), rand(0, 26), 5);
+
+
+                $password = $this->passwordEncoder->encodePassword($User, $plainPassword);
+
+                $User->setPassword($password);
+            } else {
+                $password = $this->passwordEncoder->encodePassword($User, $data->Password);
+                $User->setPassword($password);
+            }
+            $level = ($data->Roles == "ROLE_ADMIN") ? "admin" : "sales_manager";
+
+            $roles = explode(' ', $data->Roles);
+            $User->setRoles($roles);
+            $User->setLevel($level);
             $User->setDateCreated(date('m/d/Y h:i:s a', time()));
-            $User->setCreatedBy($this->getUser()->getId());
             $em->persist($User);
             $em->flush();
 
@@ -75,8 +97,8 @@ class UserController extends AbstractController
           ->getRepository(User::class)
           ->findOneByID($User->getID());
 
-            $this->addFlash('success', 'User '.$thisuser->getName().' Sucessfully Created');
-            return $this->redirectToRoute('getuser', ['id' => $thisuser->getID()]);
+            $this->addFlash('success', 'User '.$thisuser->getFirstName().' Sucessfully Created');
+            return $this->redirectToRoute('getthisuser', ['id' => $thisuser->getID()]);
         }
 
 
@@ -98,6 +120,11 @@ class UserController extends AbstractController
       ->getRepository(User::class)
       ->findOneByID($id);
 
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('dashboard');
+        }
 
 
         if (!$User) {
@@ -108,34 +135,21 @@ class UserController extends AbstractController
 
 
         $form = $this->createForm(UserEdit::class, $User);
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
-            $User->setEmailAddress($data->getEmailAddress());
-            $User->setName($data->getName());
-            $User->setWebsite($data->getWebsite());
-            $User->setOfficePhone($data->getOfficePhone());
-            $User->setFax($data->getFax());
-            $User->setBillingAddressStreet($data->getBillingAddressStreet());
-            $User->setBillingAddressCity($data->getBillingAddressCity());
-            $User->setBillingAddressState($data->getBillingAddressState());
-            $User->setBillingAddressPostalCode($data->getBillingAddressPostalCode());
-            $User->setBillingAddressCountry($data->getBillingAddressCountry());
-            $User->setShippingAddressStreet($data->getShippingAddressStreet());
-            $User->setShippingAddressCity($data->getShippingAddressCity());
-            $User->setShippingAddressState($data->getShippingAddressState());
-            $User->setShippingAddressPostalCode($data->getShippingAddressPostalCode());
-            $User->setType($data->getType());
-            $User->setAnnualRevenue($data->getAnnualRevenue());
-            $User->setSICCode($data->getSICCode());
-            $User->setIndustry($data->getIndustry());
-            $User->setEmployees($data->getEmployees());
-            $User->setTickerSymbol($data->getTickerSymbol());
-            $User->setOwnership($data->getOwnership());
-            $User->setRating($data->getRating());
-            $User->setDateModified(date('m/d/Y h:i:s a', time()));
+            $User->setEmail($data->getEmail());
+            $User->setFirstName($data->getFirstName());
+            $User->setLastName($data->getLastName());
+            $User->setIntials($data->getIntials());
+            $level = (implode("|", $data->getRoles()) == "ROLE_ADMIN") ? "admin" : "sales_manager";
+
+            $User->setRoles($data->getRoles());
+            $User->setLevel($level);
+
             $em->persist($User);
             $em->flush();
 
@@ -144,8 +158,8 @@ class UserController extends AbstractController
           ->getRepository(User::class)
           ->findOneByID($User->getID());
 
-            $this->addFlash('success', 'User '.$thisuser->getName().' Sucessfully Edited');
-            return $this->redirectToRoute('getuser', ['id' => $thisuser->getID()]);
+            $this->addFlash('success', 'User '.$thisuser->getFirstName().' Sucessfully Edited');
+            return $this->redirectToRoute('getthisuser', ['id' => $thisuser->getID()]);
         }
 
 
@@ -177,11 +191,11 @@ class UserController extends AbstractController
 
 
     /**
-     * @Route("/user/{id}", name="getuser")
+     * @Route("/user/{id}", name="getthisuser")
      * @param                 $id
      * @return                Response
      */
-    public function getuser($id)
+    public function getthisuser($id)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getDoctrine()

@@ -89,9 +89,9 @@ class CampaignsEdit extends AbstractType
 ],
 ))
 ->add(
-  'Currency',
-  ChoiceType::class,
-  [
+    'Currency',
+    ChoiceType::class,
+    [
 'choices'  => [
 'US Dollar' => 'US Dollar $',
 'Pound' => 'Pound £',
@@ -177,7 +177,9 @@ class CampaignsEdit extends AbstractType
           ->add('AssignedTo', EntityType::class, [
               'label' => 'Assign to',
               'class' => User::class,
-              'choice_label' => 'Username',
+              'choice_label' => 'FirstName',
+              'choice_value' => 'Id',
+              'mapped' => false,
       ])
           ->add(
               'submit',

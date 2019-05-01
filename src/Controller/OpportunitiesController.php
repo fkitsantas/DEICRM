@@ -21,6 +21,13 @@ class OpportunitiesController extends AbstractController
     public function index(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('task');
+        }
+
         $FormData = new FormData();
         $form = $this->createForm(opportunitiesSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -51,6 +58,11 @@ class OpportunitiesController extends AbstractController
     public function createopportunities(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('opportunities');
+        }
         $FormData = new FormData();
         $form = $this->createForm(OpportunitiesForm::class, $FormData);
         $form->handleRequest($request);
@@ -69,12 +81,16 @@ class OpportunitiesController extends AbstractController
             $Opportunities->setSalesStage($data->SalesStage);
             $Opportunities->setLeadSource($data->LeadSource);
             $Opportunities->setProbability($data->Probability);
-            $Opportunities->setCampaign($data->Campaign->getName());
-            $Opportunities->setCampaignId($data->Campaign->getId());
+            if (!is_null($data->Campaign)) {
+                $Opportunities->setCampaign($data->Campaign->getName());
+                $Opportunities->setCampaignId($data->Campaign->getId());
+            }
             $Opportunities->setNextStep($data->NextStep);
             $Opportunities->setDescription($data->Description);
-            $Opportunities->setAssignedTo($data->AssignedTo->getUserName());
-            $Opportunities->setAssignedToId($data->AssignedTo->getId());
+            if (!is_null($data->AssignedTo)) {
+                $Opportunities->setAssignedTo($data->AssignedTo->getFirstName());
+                $Opportunities->setAssignedToId($data->AssignedTo->getId());
+            }
             $Opportunities->setDateCreated(date('m/d/Y h:i:s a', time()));
 
             $Opportunities->setCreatedBy($this->getUser()->getId());
@@ -133,6 +149,10 @@ class OpportunitiesController extends AbstractController
             $Opportunities->setLeadSource($data->getLeadSource());
             $Opportunities->setProbability($data->getProbability());
             $Opportunities->setNextStep($data->getNextStep());
+            if (!is_null($form->get('AssignedTo')->getData())) {
+                $Opportunities->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
+                $Opportunities->setAssignedToId($form->get('AssignedTo')->getData()->getId());
+            }
             $Opportunities->setDescription($data->getDescription());
             $Opportunities->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Opportunities);

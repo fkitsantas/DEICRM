@@ -18,11 +18,11 @@ class AdminUser extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setUserName('deicrm1');
-        $plainPassword = 'deicrm';
+        $user->setUserName('deicrm');
+        $plainPassword = '123';
         $encoded = $this->passwordEncoder->encodePassword($user, $plainPassword);
         $user->setPassword($encoded);
-        $user->setEmail('deicrm1@gmail.com');
+        $user->setEmail('admin@deicrm.app');
         $user->setFirstname('deicrm');
         $user->setLastname('deicrm');
         $user->setMiddlename('deicrm');

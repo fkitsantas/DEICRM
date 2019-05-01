@@ -21,6 +21,9 @@ class TargetController extends AbstractController
     public function index(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+
+
         $FormData = new FormData();
         $form = $this->createForm(targetSearchForm::class, $FormData);
         $form->handleRequest($request);
@@ -51,6 +54,13 @@ class TargetController extends AbstractController
     public function createtarget(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('target');
+        }
+
         $FormData = new FormData();
         $form = $this->createForm(TargetForm::class, $FormData);
         $form->handleRequest($request);
@@ -79,8 +89,10 @@ class TargetController extends AbstractController
             $Target->setAlternateAddressCountry($data->AlternateAddressCountry);
             $Target->setEmailAddress($data->EmailAddress);
             $Target->setDescription($data->Description);
-            $Target->setAssignedTo($data->AssignedTo->getUserName());
-            $Target->setAssignedToId($data->AssignedTo->getId());
+            if (!is_null($data->AssignedTo)) {
+                $Target->setAssignedTo($data->AssignedTo->getFirstName());
+                $Target->setAssignedToId($data->AssignedTo->getId());
+            }
             $Target->setDateCreated(date('m/d/Y h:i:s a', time()));
 
             $Target->setCreatedBy($this->getUser()->getId());
@@ -151,7 +163,10 @@ class TargetController extends AbstractController
             $Target->setAlternateAddressCountry($data->getAlternateAddressCountry());
             $Target->setEmailAddress($data->getEmailAddress());
             $Target->setDescription($data->getDescription());
-            $Target->setAssignedTo($data->getAssignedTo());
+            if (!is_null($form->get('AssignedTo')->getData())) {
+                $Target->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
+                $Target->setAssignedToId($form->get('AssignedTo')->getData()->getId());
+            }
             $Target->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Target);
             $em->flush();

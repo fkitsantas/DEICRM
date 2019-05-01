@@ -33,6 +33,7 @@ class TaskController extends AbstractController
     ->getRepository(Task::class)
     ->findByOpportunityName($data->Search);
 
+
             if (!$task) {
                 $this->addFlash('error', 'No task was found, Try Searching Again');
                 return $this->render('task/index.html.twig', array('form' => $form->createView()));
@@ -75,13 +76,17 @@ class TaskController extends AbstractController
             $Task->setStartDate($data->StartDate);
             $Task->setDueDate($data->DueDate);
             $Task->setPriority($data->Priority);
-            $Task->setContactName($data->ContactName->getFirstName());
-            $Task->setDescription($data->Description);
-            $Task->setAssignedTo($data->AssignedTo->getUserName());
-            $Task->setAssignedToId($data->AssignedTo->getId());
-            $Task->setRelatedToType($data->RelatedToType);
-            $Task->setRelatedTo($data->RelatedTo);
 
+            $Task->setDescription($data->Description);
+            if (!is_null($data->AssignedTo)) {
+                $Task->setAssignedTo($data->AssignedTo->getFirstName());
+                $Task->setAssignedToId($data->AssignedTo->getId());
+            }
+            if (!is_null($data->RelatedTo)) {
+                $Task->setRelatedToType($data->RelatedToType);
+                $Task->setRelatedTo($data->RelatedTo->getFirstName());
+                $Task->setRelatedToId($data->RelatedTo->getId());
+            }
             $Task->setStatus($data->Status);
             $Task->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Task->setCreatedBy($this->getUser()->getId());
@@ -92,12 +97,20 @@ class TaskController extends AbstractController
           ->getRepository(Task::class)
           ->findOneByID($Task->getID());
 
+            $tasks = $this->getDoctrine()->getRepository(Task::class)->findAll();
+            $meeting = $this->getDoctrine()->getRepository(Meeting::class)->findAll();
+            $contact = $this->getDoctrine()->getRepository(Contact::class)->findAll();
+
+            $account = $this->getDoctrine()->getRepository(Account::class)->findAll();
+            $target = $this->getDoctrine()>getRepository(Target::class)->findAll();
+            $campaign = $this->getDoctrine()>getRepository(Campaigns::class)->findAll();
+
             $this->addFlash('success', 'Task '.$thistask->getSubject().' Sucessfully Created');
             return $this->redirectToRoute('gettask', ['id' => $thistask->getID()]);
         }
 
 
-        return $this->render('Task/create.html.twig', array('form' => $form->createView()));
+        return $this->render('Task/create.html.twig', array('form' => $form->createView(), 'tasks' => $tasks,  'lead' => $lead,  'meeting' => $meeting, 'contact' => $contact, 'target' => $target, 'opportunities' => $opportunities, 'campaigns' => $campaign, 'account' => $account));
     }
 
 
@@ -116,7 +129,14 @@ class TaskController extends AbstractController
       ->getRepository(Task::class)
       ->findOneByID($id);
 
+        $tasks = $this->getDoctrine()->getRepository(Task::class)->findAll();
+        $meeting = $this->getDoctrine()->getRepository(Meeting::class)->findAll();
+        $contact = $this->getDoctrine()->getRepository(Contact::class)->findAll();
 
+        $account = $this->getDoctrine()->getRepository(Account::class)->findAll();
+        $target = $this->getDoctrine()>getRepository(Target::class)->findAll();
+        $campaign = $this->getDoctrine()>getRepository(Campaigns::class)->findAll();
+        $lead = $em->getRepository(Lead::class)->findAll();
 
         if (!$Task) {
             $this->addFlash('error', 'This task does not exist');
@@ -144,8 +164,10 @@ class TaskController extends AbstractController
             $Task->setPriority($data->getPriority());
             //$Task->setContactName($data->getContactName->getFirstName());
             $Task->setDescription($data->getDescription());
-            //$Task->setAssignedTo($data->getAssignedTo->getUserName());
-            //$Task->setAssignedToId($data->getAssignedTo->getId());
+            if (!is_null($form->get('AssignedTo')->getData())) {
+                $Task->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
+                $Task->setAssignedToId($form->get('AssignedTo')->getData()->getId());
+            }
             //$Task->setRelatedToType($data->getRelatedToType());
             //$Task->setRelatedTo($data->getRelatedTo());
             $Task->setStatus($data->getStatus());
@@ -163,7 +185,7 @@ class TaskController extends AbstractController
         }
 
 
-        return $this->render('Task/edit.html.twig', array('form' => $form->createView()));
+        return $this->render('Task/edit.html.twig', array('form' => $form->createView(), 'tasks' => $tasks,  'lead' => $lead,  'meeting' => $meeting, 'contact' => $contact, 'target' => $target, 'opportunities' => $opportunities, 'campaigns' => $campaign, 'account' => $account));
     }
 
 

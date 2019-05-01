@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Opportunities;
 use App\Form\FormData;
 use App\Entity\Campaigns;
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class OpportunitiesEdit extends AbstractType
@@ -111,7 +112,14 @@ class OpportunitiesEdit extends AbstractType
     ]
             )
 
-            
+            ->add('AssignedTo', EntityType::class, [
+                'label' => 'Assign to',
+                'class' => User::class,
+                'choice_label' => 'FirstName',
+                'choice_value' => 'Id',
+                'mapped' => false,
+        ])
+
             ->add(
                 'LeadSource',
                 ChoiceType::class,

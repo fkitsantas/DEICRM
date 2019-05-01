@@ -51,6 +51,11 @@ class LeadController extends AbstractController
     public function createlead(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('lead');
+        }
         $FormData = new FormData();
         $form = $this->createForm(LeadForm::class, $FormData);
         $form->handleRequest($request);
@@ -86,10 +91,14 @@ class LeadController extends AbstractController
             $Lead->setLeadDescription($data->LeadDescription);
             $Lead->setLeadSourceDescription($data->LeadSourceDescription);
             $Lead->setOpportunityAmount($data->OpportunityAmount);
-            $Lead->setCampaign($data->Campaign->getName());
-            $Lead->setCampaignId($data->Campaign->getId());
-            $Lead->setAssignedTo($data->AssignedTo->getUserName());
-            $Lead->setAssignedToId($data->AssignedTo->getId());
+            if (!is_null($data->Campaign)) {
+                $Lead->setCampaign($data->Campaign->getName());
+                $Lead->setCampaignId($data->Campaign->getId());
+            }
+            if (!is_null($data->AssignedTo)) {
+                $Lead->setAssignedTo($data->AssignedTo->getFirstName());
+                $Lead->setAssignedToId($data->AssignedTo->getId());
+            }
             $Lead->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Lead->setCreatedBy($this->getUser()->getUsername());
             $em->persist($Lead);
@@ -164,6 +173,10 @@ class LeadController extends AbstractController
             $Lead->setLeadSourceDescription($data->getLeadSourceDescription());
             $Lead->setLeadDescription($data->getLeadDescription());
             $Lead->setOpportunityAmount($data->getOpportunityAmount());
+            if (!is_null($form->get('AssignedTo')->getData())) {
+                $Lead->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
+                $Lead->setAssignedToId($form->get('AssignedTo')->getData()->getId());
+            }
             $Lead->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Lead->setDescription($data->getDescription());
             $Lead->setDateModified(date('m/d/Y h:i:s a', time()));

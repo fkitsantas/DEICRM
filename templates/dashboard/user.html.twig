@@ -1,41 +1,45 @@
 <div class="card mb-3">
   <div class="card-header">
-    New Contacts
+    Recent Users
   </div>
 
-{% if contact|length %}
+{% if users is defined %}
+
 
 
   <table class="table">
     <thead class="thead-light">
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Title</th>
-        <th scope="col">First Name</th>
-        <th scope="col">Last Name</th>
+        <th scope="col">Name</th>
         <th scope="col">Email Address</th>
+        <th scope="col">Role</th>
         <th scope="col">Date Created</th>
         <th scope="col">Date Modified</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
-    {% for data in contact %}
 
+    {% for data in users %}
 
     <tr>
       <th scope="row">{{ data.Id}}</th>
-      <td>{{ data.Title}}</td>
       <td>{{ data.FirstName}}</td>
-      <td>{{ data.LastName}}</td>
-      <td>{{ data.EmailAddress}}</td>
+        <td>{{ data.Email}}</td>
+        {% for role in data.Roles %}
+      <td> {{ role }}</td>
+      {% endfor %}
+
       <td>{{ data.DateCreated}}</td>
       <td>{{ data.DateModified}}</td>
-      <td> <a href="/contact/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+      <td> <a href="/user/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
 
- </td>
+
+
+
+</td>
     </tr>
-
 
 
 
@@ -43,14 +47,16 @@
     {% endfor %}
 
   </tbody>
-</table>
+  </table>
+
+
 
 {% else %}
 
 
 
 <div class="alert alert-danger mt-2 mb-2" role="alert">
-No Contact found
+No User found
 </div>
 
 

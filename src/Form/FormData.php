@@ -14,7 +14,15 @@ class FormData extends AbstractType
 
     public $ToTime;
 
+    public $Password;
+
+    public $Email;
+
+    public $Intials;
+
     public $Who;
+
+    public $Level;
 
     public $WhoBy;
 
@@ -25,6 +33,8 @@ class FormData extends AbstractType
     public $LastName;
 
     public $Title;
+
+    public $Roles;
 
     public $Department;
 

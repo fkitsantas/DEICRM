@@ -29,7 +29,7 @@
      </div>
    </div>
 
-
+{{ form_row(form.EmailAddress) }}
 
       <div class="row">
        <div class="col-4">
@@ -112,6 +112,11 @@
      </div>
     </div>
     {{ form_row(form.StatusDescription) }}
+
+    {{ form_row(form.OpportunityAmount) }}
+    {{ form_row(form.Department) }}
+    {{ form_row(form.Description) }}
+{{ form_row(form.AssignedTo) }}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 

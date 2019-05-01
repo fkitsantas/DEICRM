@@ -28,8 +28,7 @@ class CampaignsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->andWhere('c.Name LIKE :val')
             ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('c.id', 'DESC')
             ->getQuery()
             ->getResult()
         ;

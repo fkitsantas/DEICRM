@@ -51,6 +51,14 @@ class CampaignsController extends AbstractController
     public function createcampaigns(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('campaigns');
+        }
+
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $FormData = new FormData();
         $form = $this->createForm(CampaignsForm::class, $FormData);
         $form->handleRequest($request);
@@ -71,8 +79,10 @@ class CampaignsController extends AbstractController
             $Campaigns->setDescription($data->Description);
             $Campaigns->setImpressions($data->Impressions);
             $Campaigns->setDescription($data->Description);
-            $Campaigns->setAssignedTo($data->AssignedTo->getUserName());
-            $Campaigns->setAssignedToId($data->AssignedTo->getId());
+            if (!is_null($data->AssignedTo)) {
+                $Contact->setAssignedTo($data->AssignedTo->getFirstName());
+                $Contact->setAssignedToId($data->AssignedTo->getId());
+            }
             $Campaigns->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Campaigns->setCreatedBy($this->getUser()->getId());
             $em->persist($Campaigns);
@@ -133,7 +143,12 @@ class CampaignsController extends AbstractController
             $Campaigns->setDescription($data->getDescription());
             $Campaigns->setImpressions($data->getImpressions());
             $Campaigns->setDescription($data->getDescription());
-            $Campaigns->setAssignedTo($data->getAssignedTo());
+
+
+            if (!is_null($form->get('AssignedTo')->getData())) {
+                $Campaigns->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
+                $Campaigns->setAssignedToId($form->get('AssignedTo')->getData()->getId());
+            }
             $Campaigns->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Campaigns);
             $em->flush();

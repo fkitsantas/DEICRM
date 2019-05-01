@@ -52,6 +52,12 @@ class MeetingController extends AbstractController
     public function createmeeting(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('meeting');
+        }
         $FormData = new FormData();
         $form = $this->createForm(MeetingForm::class, $FormData);
         $form->handleRequest($request);
@@ -64,13 +70,18 @@ class MeetingController extends AbstractController
             $Meeting->setStartDate($data->StartDate);
             $Meeting->setDueDate($data->DueDate);
             $Meeting->setLocation($data->Location);
-            $Meeting->setContactName($data->ContactName->getFirstName());
-            $Meeting->setDescription($data->Description);
-            $Meeting->setAssignedTo($data->AssignedTo->getUserName());
-            $Meeting->setAssignedToId($data->AssignedTo->getId());
-            $Meeting->setRelatedToType($data->RelatedToType);
-            $Meeting->setRelatedTo($data->RelatedTo);
 
+            $Meeting->setDescription($data->Description);
+
+            if (!is_null($data->AssignedTo)) {
+                $Meeting->setAssignedTo($data->AssignedTo->getFirstName());
+                $Meeting->setAssignedToId($data->AssignedTo->getId());
+            }
+            if (!is_null($data->RelatedToType)) {
+                $Meeting->setRelatedToType($data->RelatedToType);
+                $Meeting->setRelatedTo($data->RelatedTo->getFirstName());
+                $Meeting->setRelatedToId($data->RelatedTo->getId());
+            }
             $Meeting->setStatus($data->Status);
             $Meeting->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Meeting->setCreatedBy($this->getUser()->getId());
@@ -126,8 +137,10 @@ class MeetingController extends AbstractController
             $Meeting->setLocation($data->getLocation());
             $Meeting->setContactName($data->getContactName->getFirstName());
             $Meeting->setDescription($data->getDescription());
-            $Meeting->setAssignedTo($data->getAssignedTo->getUserName());
-            $Meeting->setAssignedToId($data->getAssignedTo->getId());
+            if (!is_null($form->get('AssignedTo')->getData())) {
+                $Meeting->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
+                $Meeting->setAssignedToId($form->get('AssignedTo')->getData()->getId());
+            }
             $Meeting->setRelatedToType($data->getRelatedToType());
             $Meeting->setRelatedTo($data->getRelatedTo());
             $Meeting->setStatus($data->getStatus());

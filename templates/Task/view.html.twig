@@ -6,15 +6,9 @@
 
 
 {% include 'inc/breadcrumb.html.twig' %}
+{% include 'task/inc/flash.html.twig' %}
 
-
-{% for message in app.flashes('notice') %}
-    <div class="flash-notice">
-        {{ message }}
-    </div>
-{% endfor %}
-
-{% include 'inc/messages/flash.html.twig' %}
+{% include 'task/inc/breadcrumb.html.twig' %}
 
 
 

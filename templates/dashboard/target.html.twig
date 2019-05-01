@@ -4,7 +4,7 @@
   </div>
 
 
-{% if target is defined %}
+{% if target|length %}
 
 
   <table class="table">
@@ -42,6 +42,7 @@
     {% endfor %}
   </tbody>
   </table>
+
   {% else %}
   <div class="alert alert-danger mt-2 mb-2" role="alert">
   No Target found

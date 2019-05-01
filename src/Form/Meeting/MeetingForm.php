@@ -69,34 +69,24 @@ class MeetingForm extends AbstractType
 
 
 
-          ->add(
-              'RelatedTo',
-              TextType::class,
-              [
-                'label' => 'Related To',
-                'required' => false,
-              'attr' => [
-                  'placeholder' => 'Related To',
-                  'label' => ' '
-              ]
-              ]
-          )
 
 
 
-          ->add(
-              'ContactName',
-              EntityType::class,
-              [
-              'label' => 'Assign to',
-              'class' => Contact::class,
-              'choice_label' => 'FirstName',
-              'choice_value' => 'Id',
-        ]
-          )
 
 
 
+
+
+                    ->add(
+                        'RelatedTo',
+                        EntityType::class,
+                        [
+                        'label' => 'Related To',
+                        'class' => Contact::class,
+                        'choice_label' => 'FirstName',
+                        'choice_value' => 'Id',
+                  ]
+                    )
 
 
                 ->add(
@@ -116,10 +106,10 @@ class MeetingForm extends AbstractType
               'Location',
               TextType::class,
               [
-                'label' => 'Related To',
+                'label' => 'Location',
                 'required' => false,
               'attr' => [
-                  'placeholder' => 'Related To',
+                  'placeholder' => 'Location',
                   'label' => ' '
               ]
               ]

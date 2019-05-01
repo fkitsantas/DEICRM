@@ -41,6 +41,20 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     *
+     * @return User[]
+     */
+    public function NotAdmin($value): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.level != :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     public function findOneByLastName($value): ?User
     {

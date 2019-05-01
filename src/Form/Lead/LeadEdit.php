@@ -309,6 +309,14 @@ class LeadEdit extends AbstractType
   ]
           )
 
+          ->add('AssignedTo', EntityType::class, [
+              'label' => 'Assign to',
+              'class' => User::class,
+              'choice_label' => 'FirstName',
+              'choice_value' => 'Id',
+              'mapped' => false,
+      ])
+
           ->add(
               'StatusDescription',
               TextareaType::class,

@@ -4,10 +4,12 @@
 
 {% block body %}
 
-{% include 'inc/breadcrumb.html.twig' %}
-{% include 'task/inc/flash.html.twig' %}
 
-{% include 'task/inc/breadcrumb.html.twig' %}
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'user/inc/flash.html.twig' %}
+
+{% include 'user/inc/breadcrumb.html.twig' %}
 
 
 {% for message in app.flashes('success') %}
@@ -32,15 +34,15 @@
 {% endif %}
 
 
-{% if contact is defined %}
+{% if user is defined %}
 
 <div class="card">
   <div class="card-header">
     Search result for {{ searchfor }}
   </div>
   <ul class="list-group list-group-flush">
-    {% for data in contact %}
-    <li class="list-group-item">{{ data.Title}} {{ data.FirstName}} {{ data.LastName}} {{ data.EmailAddress}} <a href="../contact/{{ data.id }}" class="btn btn-primary btn-sm">view</a></li>
+    {% for data in user %}
+    <li class="list-group-item">{{ data.Title}} {{ data.FirstName}} {{ data.LastName}} {{ data.EmailAddress}} <a href="../user/{{ data.id }}" class="btn btn-primary btn-sm">view</a></li>
     {% endfor %}
   </ul>
 </div>

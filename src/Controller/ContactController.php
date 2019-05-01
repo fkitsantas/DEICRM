@@ -53,6 +53,11 @@ class ContactController extends AbstractController
     public function createcontact(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('contact');
+        }
         $FormData = new FormData();
         $form = $this->createForm(ContactForm::class, $FormData);
         $form->handleRequest($request);
@@ -81,10 +86,14 @@ class ContactController extends AbstractController
             $Contact->setEmailAddress($data->EmailAddress);
             $Contact->setDescription($data->Description);
             $Contact->setLeadSource($data->LeadSource);
-            $Contact->setReportsTo($data->ReportsTo->getLastName());
-            $Contact->setReportsToId($data->ReportsTo->getid());
-            $Contact->setAssignedTo($data->AssignedTo->getUserName());
-            $Contact->setAssignedToId($data->AssignedTo->getId());
+            if (!is_null($data->ReportsTo)) {
+                $Contact->setReportsTo($data->ReportsTo->getFirstName());
+                $Contact->setReportsToId($data->ReportsTo->getid());
+            }
+            if (!is_null($data->AssignedTo)) {
+                $Contact->setAssignedTo($data->AssignedTo->getFirstName());
+                $Contact->setAssignedToId($data->AssignedTo->getId());
+            }
             $Contact->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Contact->setCreatedBy($this->getUser()->getId());
             $em->persist($Contact);
@@ -92,7 +101,7 @@ class ContactController extends AbstractController
             $thiscontact = $this->getDoctrine()
            ->getRepository(Contact::class)
            ->findOneByID($Contact->getID());
-            $this->addFlash('success', 'Contact '.$thiscontact->getLastName().' Sucessfully Created');
+            $this->addFlash('success', 'Contact '.$thiscontact->getFirstName().' Sucessfully Created');
             return $this->redirectToRoute('getcontact', ['id' => $thiscontact->getID()]);
         }
         return $this->render('contact/create.html.twig', array('form' => $form->createView()));
@@ -146,7 +155,10 @@ class ContactController extends AbstractController
             $Contact->setDescription($data->getDescription());
             $Contact->setReportsTo($data->getReportsTo());
             $Contact->setLeadSource($data->getLeadSource());
-            $Contact->setAssignedTo($data->getAssignedTo());
+            if (!is_null($form->get('AssignedTo')->getData())) {
+                $Contact->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
+                $Contact->setAssignedToId($form->get('AssignedTo')->getData()->getId());
+            }
             $Contact->setCampaign($data->getCampaign());
             $Contact->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Contact);

@@ -89,7 +89,6 @@ class OpportunitiesForm extends AbstractType
                 'SalesStage',
                 ChoiceType::class,
                 [
-                'required' => false,
       'choices'  => [
           'Prospecting' => 'Prospecting',
           'Qualification' => 'Qualificatio',
@@ -111,7 +110,6 @@ class OpportunitiesForm extends AbstractType
                 'LeadSource',
                 ChoiceType::class,
                 [
-                'required' => false,
           'choices'  => [
           'cold call' => 'cold call',
           'Existing Customer' => 'Existing Customer',
@@ -146,6 +144,8 @@ class OpportunitiesForm extends AbstractType
                 ]
             )
             ->add('Campaign', EntityType::class, [
+              'required' => false,
+              'placeholder' => 'Choose an option',
                 'class' => Campaigns::class,
                 'choice_label' => 'Name',
                 'choice_value' => 'Id'

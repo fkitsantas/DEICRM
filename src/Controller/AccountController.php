@@ -51,6 +51,13 @@ class AccountController extends AbstractController
     public function createaccount(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('account');
+        }
+
         $FormData = new FormData();
         $form = $this->createForm(AccountForm::class, $FormData);
         $form->handleRequest($request);
@@ -76,16 +83,20 @@ class AccountController extends AbstractController
             $Account->setType($data->Type);
             $Account->setAnnualRevenue($data->AnnualRevenue);
             $Account->setSICCode($data->SICCode);
-            $Account->setMemberOf($data->MemberOf->getName());
-            $Account->setMemberOfId($data->MemberOf->getId());
+            if (!is_null($data->MemberOf)) {
+                $Account->setMemberOf($data->MemberOf->getName());
+                $Account->setMemberOfId($data->MemberOf->getId());
+            }
             $Account->setIndustry($data->Industry);
             $Account->setEmployees($data->Employees);
             $Account->setTickerSymbol($data->TickerSymbol);
             $Account->setOwnership($data->Ownership);
             $Account->setRating($data->Rating);
-            $Account->setCampaign($data->Campaign->getName());
-            $Account->setCampaignId($data->Campaign->getId());
-            $Account->setAssignedTo($data->AssignedTo->getUsername());
+            if (!is_null($data->Campaign)) {
+                $Account->setCampaign($data->Campaign->getName());
+                $Account->setCampaignId($data->Campaign->getId());
+            }
+            $Account->setAssignedTo($data->AssignedTo->getFirstName());
             $Account->setAssignedToId($data->AssignedTo->getId());
             $Account->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Account->setCreatedBy($this->getUser()->getId());
@@ -157,6 +168,10 @@ class AccountController extends AbstractController
             $Account->setTickerSymbol($data->getTickerSymbol());
             $Account->setOwnership($data->getOwnership());
             $Account->setRating($data->getRating());
+            if (!is_null($form->get('AssignedTo')->getData())) {
+                $Account->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
+                $Account->setAssignedToId($form->get('AssignedTo')->getData()->getId());
+            }
             $Account->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Account);
             $em->flush();

@@ -244,6 +244,8 @@ class AccountForm extends AbstractType
 
 
           ->add('MemberOf', EntityType::class, [
+            'required' => false,
+            'placeholder' => 'Choose an option',
               'label' => 'Member of',
               'class' => Account::class,
               'choice_label' => 'Name',
@@ -252,6 +254,8 @@ class AccountForm extends AbstractType
 
 
           ->add('Campaign', EntityType::class, [
+            'required' => false,
+            'placeholder' => 'Choose an option',
               'class' => Campaigns::class,
               'choice_label' => 'Name',
               'choice_value' => 'Id'
@@ -321,6 +325,8 @@ class AccountForm extends AbstractType
 
 
           ->add('AssignedTo', EntityType::class, [
+            'required' => false,
+            'placeholder' => 'Choose an option',
               'label' => 'Assign to',
               'class' => User::class,
               'choice_label' => 'Username',

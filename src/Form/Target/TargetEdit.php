@@ -12,6 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Entity\Target;
 use App\Form\FormData;
 use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class TargetEdit extends AbstractType
 {
@@ -221,6 +222,15 @@ class TargetEdit extends AbstractType
                 ]
                 ]
             )
+
+            ->add('AssignedTo', EntityType::class, [
+                'label' => 'Assign to',
+                'class' => User::class,
+                'choice_label' => 'FirstName',
+                'choice_value' => 'Id',
+                'mapped' => false,
+        ])
+
             ->add(
                 'EmailAddress',
                 TextType::class,

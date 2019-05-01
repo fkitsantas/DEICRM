@@ -69,26 +69,12 @@ class TaskForm extends AbstractType
 
 
 
+
           ->add(
               'RelatedTo',
-              TextType::class,
-              [
-                'label' => 'Related To',
-                'required' => false,
-              'attr' => [
-                  'placeholder' => 'Related To',
-                  'label' => ' '
-              ]
-              ]
-          )
-
-
-
-          ->add(
-              'ContactName',
               EntityType::class,
               [
-              'label' => 'Assign to',
+              'label' => 'Related To',
               'class' => Contact::class,
               'choice_label' => 'FirstName',
               'choice_value' => 'Id',
@@ -105,7 +91,7 @@ class TaskForm extends AbstractType
                     [
                     'label' => 'Assign to',
                     'class' => User::class,
-                    'choice_label' => 'Username',
+                    'choice_label' => 'FirstName',
                     'choice_value' => 'Id',
               ]
                 )

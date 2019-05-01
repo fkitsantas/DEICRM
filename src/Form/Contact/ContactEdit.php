@@ -250,11 +250,18 @@ class ContactEdit extends AbstractType
                 ]
             )
 
+            ->add('AssignedTo', EntityType::class, [
+                'label' => 'Assign to',
+                'class' => User::class,
+                'choice_label' => 'FirstName',
+                'choice_value' => 'Id',
+                'mapped' => false,
+        ])
+
             ->add(
                 'LeadSource',
                 ChoiceType::class,
                 [
-                'required' => false,
       'choices'  => [
           'cold call' => 'cold call',
           'Existing Customer' => 'Existing Customer',

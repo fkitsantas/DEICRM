@@ -24,7 +24,7 @@ Would you like to see how DEICRM works? You can try it without installing with t
 Demo URL: <a href="https://demo.deicrm.app/">https://demo.deicrm.app/</a> <br />
 Username: admin<span></span>@<span></span>deicrm.app<br />
 Password: 123<br />
-###### <i>Before using this demo app please notice that this is a <b>public demo</b> installation of DEICRM which is <b>shared with others and resets itself hourly</b> with the use of a cronjob that drops the database and restores the backup.</i>
+###### <i>Before using this demo app please notice that this is a <b>public demo</b> installation of DEICRM which is <b>shared with others and resets itself hourly</b> with the use of a cronjob that drops the database and restores a clean backup.</i>
 
 <hr>
 

@@ -29,9 +29,7 @@ Password: 123<br />
 <hr>
 
 
-## How to Deploy DEICRM Application to Production
-
-Several quick start options are available:
+## How to Deploy DEICRM Application to Production (Apache2)
 
 - [Download the latest release](https://github.com/FrozGR/DEICRM/archive/master.zip) or use Git to clone the repo: `git clone https://github.com/FrozGR/DEICRM.git`
 - Install with [npm](https://www.npmjs.com/): `npm install bootstrap`

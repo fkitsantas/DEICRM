@@ -35,9 +35,10 @@ Password: 123<br />
 - Install with [npm](https://www.npmjs.com/): `npm install bootstrap`
 
 
-## Bugs and Feature requests
+## Bug reports and Feature requests
 
-Do you have a bug or a feature request? Please look for existing and closed issues before making a new post. If however your problem or idea is not already there, let us know by opening a new issue. <a href="https://github.com/FrozGR/DEICRM/issues/new?template=bug_report.md">Report bug</a>  ·  <a href="https://github.com/FrozGR/DEICRM/issues/new?template=feature_request.md&labels=feature">Request feature</a>
+Do you have a bug to report or a feature to request? Please look for existing and closed issues before making a new post. If however your problem or idea is not already there, let us know by opening a new issue. <a href="https://github.com/FrozGR/DEICRM/issues/new?template=bug_report.md">Report bug</a>  ·  <a href="https://github.com/FrozGR/DEICRM/issues/new?template=feature_request.md&labels=feature">Request feature</a> 
+<br /><br />You are more than welcome to evaluate our application by spending some time to fill out our <a href="https://docs.google.com/forms/d/e/1FAIpQLSc4N4UvNl1hiWRLjLor2-Q4JBKNvaPNDSTw7s5Ii7BSbx1-zw/viewform?usp=sf_link">questionnaire</a>. 
 
 
 ## Credits
@@ -49,6 +50,8 @@ This application uses Open Source tools and components. You can find their websi
 - jQuery [https://jquery.com/](https://jquery.com/) && [https://github.com/jquery/jquery](https://github.com/jquery/jquery)
 - UXSolutions (Bootstrap-Datepicker) [https://uxsolutions.github.io/](https://uxsolutions.github.io/) && [https://github.com/uxsolutions/bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
 - Tattali (CalendarBundle) [https://github.com/tattali](https://github.com/tattali) && [https://github.com/tattali/CalendarBundle](https://github.com/tattali/CalendarBundle)
+- Symfony Swiftmailer Bundle  [https://symfony.com/swiftmailer-bundle](https://symfony.com/swiftmailer-bundle) && [https://github.com/symfony/swiftmailer-bundle](https://github.com/symfony/swiftmailer-bundle)
+- CKEditor [https://ckeditor.com](https://ckeditor.com) && [https://github.com/ckeditor/ckeditor5](https://github.com/ckeditor/ckeditor5)
 - Popper.js [https://popper.js.org/](https://popper.js.org/) && [https://github.com/FezVrasta/popper.js/](https://github.com/FezVrasta/popper.js/)
 
 

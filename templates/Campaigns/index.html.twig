@@ -38,15 +38,53 @@
 
 <div class="card">
   <div class="card-header">
-    Search result for {{ searchfor }}
+    Search For Campaigns
   </div>
-  <ul class="list-group list-group-flush">
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Impressions</th>
+        <th scope="col">Type</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
     {% for data in Campaigns %}
-    <li class="list-group-item">{{ data.Title}} {{ data.FirstName}} {{ data.LastName}} {{ data.EmailAddress}} <a href="../Campaigns/{{ data.id }}" class="btn btn-primary btn-sm">view</a></li>
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Name}}</td>
+        <td>{{ data.Status}}</td>
+      <td>{{ data.StartDate|date('Y-m-d')}}</td>
+      <td>{{ data.EndDate|date('Y-m-d')}}</td>
+      <td>{{ data.Currency}}</td>
+      <td>{{ data.Impressions}}</td>
+      <td>{{ data.Type}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+
+    </tr>
+
+
     {% endfor %}
-  </ul>
+  </tbody>
+  </table>
 </div>
 
+
+
+
 {% endif %}
+
 
 {% endblock %}

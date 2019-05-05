@@ -175,6 +175,8 @@ class CampaignsEdit extends AbstractType
               ]
           )
           ->add('AssignedTo', EntityType::class, [
+            'placeholder' => 'Choose an option',
+            'required' => false,
               'label' => 'Assign to',
               'class' => User::class,
               'choice_label' => 'FirstName',

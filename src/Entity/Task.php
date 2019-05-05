@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
- * @ORM\Table(name="dei_task")
+ * @ORM\Table(name="dei_tasks")
  */
 class Task
 {
@@ -52,6 +52,11 @@ class Task
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $ContactName;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ContactId;
 
 
     /**
@@ -109,8 +114,6 @@ class Task
     private $DateModified;
 
 
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -141,7 +144,17 @@ class Task
         return $this;
     }
 
+    public function getContactId(): ?int
+    {
+        return $this->ContactId;
+    }
 
+    public function setContactId(?int $ContactId = null): self
+    {
+        $this->ContactId = $ContactId;
+
+        return $this;
+    }
 
     public function getStartDate(): ?\DateTimeInterface
     {
@@ -204,8 +217,6 @@ class Task
     }
 
 
-
-
     public function getCampaign(): ?string
     {
         return $this->Campaign;
@@ -255,7 +266,6 @@ class Task
 
         return $this;
     }
-
 
 
     public function getRelatedToType(): ?string

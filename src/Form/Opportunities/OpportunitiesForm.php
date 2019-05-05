@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use App\Form\FormData;
 use App\Entity\Campaigns;
 use App\Entity\Account;
+use App\Entity\Contact;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
@@ -26,51 +27,59 @@ class OpportunitiesForm extends AbstractType
                 TextType::class,
                 [
 
-                'attr' => [
-                    'placeholder' => 'Opportunity Name',
-                    'label' => ' '
-                ]
+                    'attr' => [
+                        'placeholder' => 'Opportunity Name',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add('AccountName', EntityType::class, [
+                'required' => false,
+                'placeholder' => 'Choose an option',
                 'label' => 'Account Name',
                 'class' => Account::class,
                 'choice_label' => 'Name',
                 'choice_value' => 'Id',
-        ])
+            ])
             ->add(
                 'Currency',
                 ChoiceType::class,
                 [
-      'choices'  => [
-          'US Dollar' => 'US Dollar $',
-          'Pound' => 'Pound £',
-      ]
-    ]
+                    'choices' => [
+                        'US Dollar' => 'US Dollar $',
+                        'Pound' => 'Pound £',
+                    ]
+                ]
             )
+            ->add('ExpectedCloseDate', DateTimeType::class, array(
+                'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => [
+                    'class' => 'form-control input-inline js-datepicker1',
+                    'data-provide' => 'datetimepicker',
+                    'html5' => false,
 
-
-                ->add('ExpectedCloseDate', DateTimeType::class, array(
-      'required' => true,
-      'widget' => 'single_text',
-      'format' => 'yyyy-MM-dd',
-      'attr' => [
-          'class' => 'form-control input-inline js-datepicker1',
-          'data-provide' => 'datetimepicker',
-          'html5' => false,
-
-      ],
-      ))
+                ],
+            ))
+            ->add('ContactName', EntityType::class, [
+                'required' => false,
+                'placeholder' => 'Choose an option',
+                'label' => 'Contact Name',
+                'class' => Contact::class,
+                'choice_label' => 'FirstName',
+                'choice_value' => 'Id',
+            ])
             ->add(
                 'OpportunityAmount',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Opportunity Amount',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Opportunity Amount',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -78,89 +87,86 @@ class OpportunitiesForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Type',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Type',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
                 'SalesStage',
                 ChoiceType::class,
                 [
-      'choices'  => [
-          'Prospecting' => 'Prospecting',
-          'Qualification' => 'Qualificatio',
-          'NeedsAnalysis' => 'Needs Analysis',
-          'ValueProposition' => 'Value Proposition',
-          'Id.Decision Makers' => 'Id. Decision Makers',
-          'PerceptionAnalysis' => 'Perception Analysis',
-          'Proposal/PriceQuote' => 'Proposal/Price Quote',
-          'Negotiation/Review' => 'Negotiation/Review',
-          'Closed/Won' => 'Closed Won',
-          'Closed/Lost' => 'Closed Lost',
+                    'choices' => [
+                        'Prospecting' => 'Prospecting',
+                        'Qualification' => 'Qualificatio',
+                        'NeedsAnalysis' => 'Needs Analysis',
+                        'ValueProposition' => 'Value Proposition',
+                        'Id.Decision Makers' => 'Id. Decision Makers',
+                        'PerceptionAnalysis' => 'Perception Analysis',
+                        'Proposal/PriceQuote' => 'Proposal/Price Quote',
+                        'Negotiation/Review' => 'Negotiation/Review',
+                        'Closed/Won' => 'Closed Won',
+                        'Closed/Lost' => 'Closed Lost',
 
 
-
-      ]
-    ]
+                    ]
+                ]
             )
             ->add(
                 'LeadSource',
                 ChoiceType::class,
                 [
-          'choices'  => [
-          'cold call' => 'cold call',
-          'Existing Customer' => 'Existing Customer',
-          'Self Generated' => 'Self Generated',
-          'Employee' => 'Employee',
-          'Partner' => 'Partner',
-          'Public Relations' => 'Public Relations',
-          'Direct Mail' => 'Direct Mail',
-          'Conference' => 'Conference',
-          'Trade Show' => 'Trade Show',
-          'Website' => 'Website',
-          'Word of Mouth' => 'Word of Mouth',
-          'Email' => 'Email',
-          'Campaign' => 'Campaign',
-          'Other' => 'Other',
+                    'choices' => [
+                        'cold call' => 'cold call',
+                        'Existing Customer' => 'Existing Customer',
+                        'Self Generated' => 'Self Generated',
+                        'Employee' => 'Employee',
+                        'Partner' => 'Partner',
+                        'Public Relations' => 'Public Relations',
+                        'Direct Mail' => 'Direct Mail',
+                        'Conference' => 'Conference',
+                        'Trade Show' => 'Trade Show',
+                        'Website' => 'Website',
+                        'Word of Mouth' => 'Word of Mouth',
+                        'Email' => 'Email',
+                        'Campaign' => 'Campaign',
+                        'Other' => 'Other',
 
 
-
-          ]
-          ]
+                    ]
+                ]
             )
             ->add(
                 'Probability',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Probability %',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Probability %',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add('Campaign', EntityType::class, [
-              'required' => false,
-              'placeholder' => 'Choose an option',
+                'required' => false,
+                'placeholder' => 'Choose an option',
                 'class' => Campaigns::class,
                 'choice_label' => 'Name',
                 'choice_value' => 'Id'
-    ])
-
+            ])
             ->add(
                 'NextStep',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Next Step',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Next Step',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -168,19 +174,21 @@ class OpportunitiesForm extends AbstractType
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Description',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Description',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add('AssignedTo', EntityType::class, [
+                'required' => false,
+                'placeholder' => 'Choose an option',
                 'label' => 'Assign to',
                 'class' => User::class,
-                'choice_label' => 'Username',
+                'choice_label' => 'FirstName',
                 'choice_value' => 'Id',
-        ])
+            ])
             ->add(
                 'submit',
                 SubmitType::class
@@ -192,7 +200,7 @@ class OpportunitiesForm extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

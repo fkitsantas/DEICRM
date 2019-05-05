@@ -18,10 +18,10 @@ class UserSearchForm extends AbstractType
                 'Search',
                 SearchType::class,
                 [
-                  'required' => true,
-                'attr' => [
-                    'placeholder' => 'Search User',
-                ]
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Search User',
+                    ]
                 ]
             )
             ->add(
@@ -35,7 +35,7 @@ class UserSearchForm extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

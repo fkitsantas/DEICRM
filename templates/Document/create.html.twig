@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'document/inc/breadcrumb.html.twig' %}
+
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    <div class="row">
+      <div class="col">
+        {{ form_row(form.FileName) }}
+      </div>
+     <div class="col">
+       {{ form_row(form.DocumentName) }}
+     </div>
+   </div>
+
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.PublishDate) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.ExpirationDate) }}
+    </div>
+  </div>
+
+
+
+
+
+  <div class="row">
+   <div class="col">
+     {{ form_row(form.Category) }}
+   </div>
+   <div class="col">
+        {{ form_row(form.SubCategory) }}
+   </div>
+  </div>
+
+
+      {{ form_start(form) }}
+      <div class="row">
+        <div class="col">
+          {{ form_row(form.Status) }}
+        </div>
+       <div class="col">
+         {{ form_row(form.Revision) }}
+       </div>
+     </div>
+
+{{ form_row(form.DocumentType) }}
+
+   {{ form_row(form.Description) }}
+
+
+   {{ form_row(form.AssignedTo) }}
+
+
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('date') }}
+    {{ encore_entry_script_tags('bs-custom-file') }}
+    {{ encore_entry_script_tags('custom-file') }}
+
+
+
+
+
+{% endblock %}
+
+{% endblock %}

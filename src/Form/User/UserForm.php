@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form\User;
 
 use Symfony\Component\Form\AbstractType;
@@ -17,29 +18,27 @@ class UserForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add(
-            'Intials',
-            TextType::class,
-            [
+            ->add(
+                'Intials',
+                TextType::class,
+                [
 
-              'required' => false,
-            'attr' => [
-                'placeholder' => 'Intial',
-                'label' => ' '
-            ]
-            ]
-        )
-
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Intial',
+                        'label' => ' '
+                    ]
+                ]
+            )
             ->add(
                 'FirstName',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'First name',
-                    'label' => ' '
-                ]
+                    'attr' => [
+                        'placeholder' => 'First name',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -47,71 +46,63 @@ class UserForm extends AbstractType
                 TextType::class,
                 [
 
-                'attr' => [
-                    'placeholder' => 'Last name',
-                    'label' => ' '
-                ]
+                    'attr' => [
+                        'placeholder' => 'Last name',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add(
                 'Password',
                 TextType::class,
                 [
 
-                'attr' => [
-                    'placeholder' => 'Password',
-                    'label' => ' '
-                ]
+                    'attr' => [
+                        'placeholder' => 'Password',
+                        'label' => ' '
+                    ]
                 ]
             )
-
-
-
-
             ->add(
                 'Email',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Email Address',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Email Address',
+                        'label' => ' '
+                    ]
                 ]
             )
-
-
             ->add(
                 'Roles',
                 ChoiceType::class,
                 [
-      'choices'  => [
-          'Sales Manager' => 'ROLE_SALES_MANAGER',
-          'Admin' => 'ROLE_ADMIN',
-      ]
-    ]
+                    'choices' => [
+                        'Employee' => 'ROLE_EMPLOYEE',
+                        'Manager' => 'ROLE_MANAGER',
+                        'Administrator' => 'ROLE_ADMIN',
+                    ]
+                ]
             )
-
-
-
             ->add(
                 'submit',
                 SubmitType::class,
                 [
-                  'attr' =>
-                  [
-                    'class' => 'btn btn-primary btn-lg btn-block'
-                  ]
+                    'attr' =>
+                        [
+                            'class' => 'btn btn-primary btn-lg btn-block'
+                        ]
                 ]
             );
     }
+
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

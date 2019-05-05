@@ -9,6 +9,9 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\FormData;
+use App\Entity\Task;
+use App\Entity\Note;
+use App\Entity\Meeting;
 use App\Form\Opportunities\OpportunitiesForm;
 use App\Form\Opportunities\OpportunitiesEdit;
 use App\Form\Opportunities\OpportunitiesSearchForm;
@@ -16,17 +19,13 @@ use App\Form\Opportunities\OpportunitiesSearchForm;
 class OpportunitiesController extends AbstractController
 {
     /**
+     * View for OpportunitiesEdit and a searchbox to search opportunities.
      * @Route("/opportunities", name="opportunities")
      */
     public function index(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            $this->addFlash('error', 'You dont have permission to acccess this page');
-
-            return $this->redirectToRoute('task');
-        }
 
         $FormData = new FormData();
         $form = $this->createForm(opportunitiesSearchForm::class, $FormData);
@@ -36,8 +35,8 @@ class OpportunitiesController extends AbstractController
             $data = $form->getData();
 
             $opportunities = $this->getDoctrine()
-    ->getRepository(Opportunities::class)
-    ->findByOpportunityName($data->Search);
+                ->getRepository(Opportunities::class)
+                ->findByOpportunityName($data->Search);
 
             if (!$opportunities) {
                 $this->addFlash('error', 'No opportunities was found, Try Searching Again');
@@ -47,10 +46,11 @@ class OpportunitiesController extends AbstractController
             }
         }
 
-        return $this->render('opportunities/index.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('opportunities/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
+     * Create a new Opportunity.
      * @Route("/opportunities/create", name="createopportunities")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -58,7 +58,7 @@ class OpportunitiesController extends AbstractController
     public function createopportunities(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER')) {
             $this->addFlash('error', 'You dont have permission to acccess this page');
 
             return $this->redirectToRoute('opportunities');
@@ -71,8 +71,10 @@ class OpportunitiesController extends AbstractController
             $data = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $Opportunities = new Opportunities();
-            $Opportunities->setAccountName($data->AccountName->getName());
-            $Opportunities->setAccountId($data->AccountName->getId());
+            if (!is_null($data->AccountName)) {
+                $Opportunities->setAccountName($data->AccountName->getName());
+                $Opportunities->setAccountId($data->AccountName->getId());
+            }
             $Opportunities->setCurrency($data->Currency);
             $Opportunities->setExpectedCloseDate($data->ExpectedCloseDate);
             $Opportunities->setOpportunityName($data->OpportunityName);
@@ -81,6 +83,13 @@ class OpportunitiesController extends AbstractController
             $Opportunities->setSalesStage($data->SalesStage);
             $Opportunities->setLeadSource($data->LeadSource);
             $Opportunities->setProbability($data->Probability);
+
+
+            if (!is_null($data->ContactName)) {
+                $Opportunities->setContactName($data->ContactName->getFirstName());
+            }
+
+
             if (!is_null($data->Campaign)) {
                 $Opportunities->setCampaign($data->Campaign->getName());
                 $Opportunities->setCampaignId($data->Campaign->getId());
@@ -98,10 +107,10 @@ class OpportunitiesController extends AbstractController
             $em->flush();
 
             $thisopportunities = $this->getDoctrine()
-          ->getRepository(Opportunities::class)
-          ->findOneByID($Opportunities->getID());
+                ->getRepository(Opportunities::class)
+                ->findOneByID($Opportunities->getID());
 
-            $this->addFlash('success', 'Opportunities '.$thisopportunities->getOpportunityName().' Sucessfully Created');
+            $this->addFlash('success', 'Opportunities ' . $thisopportunities->getOpportunityName() . ' Sucessfully Created');
             return $this->redirectToRoute('getopportunities', ['id' => $thisopportunities->getID()]);
         }
 
@@ -110,9 +119,8 @@ class OpportunitiesController extends AbstractController
     }
 
 
-
-
     /**
+     * Edit an already exisitng opportunity.
      * @Route("/opportunities/edit/{id}", name="editopportunities")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -121,15 +129,20 @@ class OpportunitiesController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Opportunities = $this->getDoctrine()
-      ->getRepository(Opportunities::class)
-      ->findOneByID($id);
-
+            ->getRepository(Opportunities::class)
+            ->findOneByID($id);
 
 
         if (!$Opportunities) {
             $this->addFlash('error', 'This opportunities does not exist');
 
             return $this->render('opportunities/index.html.twig');
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER') && $this->getUser()->getId() !== $Opportunities->getAssignedToId()) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('opportunities');
         }
 
 
@@ -149,10 +162,24 @@ class OpportunitiesController extends AbstractController
             $Opportunities->setLeadSource($data->getLeadSource());
             $Opportunities->setProbability($data->getProbability());
             $Opportunities->setNextStep($data->getNextStep());
+
+            if (!is_null($form->get('AccountName')->getData())) {
+                $Opportunities->setAccountName($form->get('AccountName')->getData()->getName());
+                $Opportunities->setAccountId($form->get('AccountName')->getData()->getId());
+            }
+
             if (!is_null($form->get('AssignedTo')->getData())) {
                 $Opportunities->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
                 $Opportunities->setAssignedToId($form->get('AssignedTo')->getData()->getId());
             }
+
+
+            if (!is_null($form->get('ContactName')->getData())) {
+                $Opportunities->setContactName($form->get('ContactName')->getData()->getFirstName());
+                $Opportunities->setContactId($form->get('ContactName')->getData()->getId());
+            }
+
+
             $Opportunities->setDescription($data->getDescription());
             $Opportunities->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Opportunities);
@@ -160,10 +187,10 @@ class OpportunitiesController extends AbstractController
 
 
             $thisopportunities = $this->getDoctrine()
-          ->getRepository(Opportunities::class)
-          ->findOneByID($Opportunities->getID());
+                ->getRepository(Opportunities::class)
+                ->findOneByID($Opportunities->getID());
 
-            $this->addFlash('success', 'Opportunities '.$thisopportunities->getOpportunityName().' Sucessfully Edited');
+            $this->addFlash('success', 'Opportunities ' . $thisopportunities->getOpportunityName() . ' Sucessfully Edited');
             return $this->redirectToRoute('getopportunities', ['id' => $thisopportunities->getID()]);
         }
 
@@ -172,9 +199,8 @@ class OpportunitiesController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch all instance of opportunity from the database.
      * @Route("/opportunities/all", name="getAllopportunities")
      * @return                Response
      */
@@ -193,9 +219,8 @@ class OpportunitiesController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch single instance of opportunity from the database.
      * @Route("/opportunities/{id}", name="getopportunities")
      * @param                 $id
      * @return                Response
@@ -204,8 +229,8 @@ class OpportunitiesController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $opportunities = $this->getDoctrine()
-        ->getRepository(Opportunities::class)
-        ->findOneByID($id);
+            ->getRepository(Opportunities::class)
+            ->findOneByID($id);
 
 
         if (!$opportunities) {
@@ -213,14 +238,37 @@ class OpportunitiesController extends AbstractController
             return $this->redirectToRoute('opportunities');
         } else {
             $createdby = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($opportunities->getCreatedBy());
+                ->getRepository(User::class)
+                ->findOneByID($opportunities->getCreatedBy());
 
-            return $this->render('opportunities/view.html.twig', ['opportunities' => $opportunities, 'createdby' => $createdby]);
+            $taskrepository = $this->getDoctrine()->getRepository(Task::class);
+            $task = $taskrepository->findBy(
+                ['RelatedToType' => 'Opportunities',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+            $noterepository = $this->getDoctrine()->getRepository(Note::class);
+            $note = $noterepository->findBy(
+                ['RelatedToType' => 'Opportunities',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+
+            $meetingrepository = $this->getDoctrine()->getRepository(Meeting::class);
+            $meeting = $meetingrepository->findBy(
+                ['RelatedToType' => 'Opportunities',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+            return $this->render('opportunities/view.html.twig', ['opportunities' => $opportunities, 'createdby' => $createdby, 'task' => $task, 'note' => $note, 'meeting' => $meeting]);
         }
     }
 
     /**
+     * Delete opportunity.
      * @Route("/opportunities/del/{id}", name="delopportunities")
      * @param                 $id
      * @return                Response
@@ -229,8 +277,8 @@ class OpportunitiesController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Opportunities = $this->getDoctrine()
-    ->getRepository(Opportunities::class)
-    ->findOneByID($id);
+            ->getRepository(Opportunities::class)
+            ->findOneByID($id);
 
         if (!$Opportunities) {
             $this->addFlash('error', 'Can not find opportunities');

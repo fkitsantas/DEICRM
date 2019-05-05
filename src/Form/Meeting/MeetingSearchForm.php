@@ -19,10 +19,10 @@ class MeetingSearchForm extends AbstractType
                 'Search',
                 SearchType::class,
                 [
-                  'required' => true,
-                'attr' => [
-                    'placeholder' => 'Search Meeting',
-                ]
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Search Meeting',
+                    ]
                 ]
             )
             ->add(
@@ -36,7 +36,7 @@ class MeetingSearchForm extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

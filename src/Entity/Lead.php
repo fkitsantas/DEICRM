@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\LeadRepository")
- * @ORM\Table(name="dei_lead")
+ * @ORM\Table(name="dei_leads")
  */
 class Lead
 {
@@ -162,7 +162,6 @@ class Lead
     private $AssignedToId;
 
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -173,7 +172,6 @@ class Lead
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $OpportunityAmount;
-
 
 
     /**
@@ -333,7 +331,6 @@ class Lead
     }
 
 
-
     public function getMobile(): ?string
     {
         return $this->Mobile;
@@ -351,7 +348,7 @@ class Lead
         return $this->Fax;
     }
 
-    public function setFax(?string $Fax= null): self
+    public function setFax(?string $Fax = null): self
     {
         $this->Fax = $Fax;
 
@@ -516,10 +513,6 @@ class Lead
     }
 
 
-
-
-
-
     public function getDateCreated(): ?string
     {
         return $this->DateCreated;
@@ -557,7 +550,6 @@ class Lead
     }
 
 
-
     public function getCampaign(): ?string
     {
         return $this->Campaign;
@@ -582,7 +574,6 @@ class Lead
 
         return $this;
     }
-
 
 
     public function getAssignedTo(): ?string

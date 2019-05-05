@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    brochures_directory: '%kernel.project_dir%/public/uploads/pdf'
 
 services:
     # default configuration for services in *this* file
@@ -31,3 +32,8 @@ services:
     App\EventListener\CalendarListener:
         tags:
             - { name: 'kernel.event_listener', event: 'calendar.set_data', method: load }
+
+
+    App\Service\FileUploader:
+        arguments:
+            $targetDirectory: '%brochures_directory%'

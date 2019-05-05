@@ -7,7 +7,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
-  * @ORM\Table(name="dei_user")
+ * @ORM\Table(name="dei_users")
  */
 class User implements UserInterface
 {
@@ -22,11 +22,6 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
-
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
-    private $level;
 
 
     /**
@@ -66,7 +61,6 @@ class User implements UserInterface
     private $username;
 
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -88,6 +82,9 @@ class User implements UserInterface
      */
     private $status;
 
+
+    private $roletext;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,11 +102,9 @@ class User implements UserInterface
         return $this;
     }
 
-    public function setUsername(string $username = null): self
+    public function getRolestext(): ?string
     {
-        $this->username = $username;
-
-        return $this;
+        return $this->roletext;
     }
 
     /**
@@ -119,7 +114,14 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
+    }
+
+    public function setUsername(string $username = null): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**
@@ -145,7 +147,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -184,18 +186,6 @@ class User implements UserInterface
         return $this;
     }
 
-
-    public function getLevel(): ?string
-    {
-        return $this->level;
-    }
-
-    public function setLevel(string $level): self
-    {
-        $this->level = $level;
-
-        return $this;
-    }
 
     public function getLastname(): ?string
     {

@@ -1,0 +1,60 @@
+<div class="card mb-3">
+  <div class="card-header">
+    Assigned Accounts
+  </div>
+
+{% if assignedaccount|length %}
+
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email Address</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for data in assignedaccount %}
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Name}}</td>
+
+      <td>{{ data.EmailAddress}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="/account/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+
+</td>
+    </tr>
+
+
+
+
+    {% endfor %}
+
+  </tbody>
+  </table>
+
+
+
+{% else %}
+
+
+
+<div class="alert alert-danger mt-2 mb-2" role="alert">
+No Assigned Account
+</div>
+
+
+  {% endif %}
+</div>

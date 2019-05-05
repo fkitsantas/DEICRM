@@ -74,7 +74,6 @@ class Campaigns
     private $Type;
 
 
-
     /**
      * @ORM\Column(type="integer", length=255, nullable=true)
      */
@@ -296,6 +295,7 @@ class Campaigns
 
         return $this;
     }
+
     public function getDateModified(): ?string
     {
         return $this->DateModified;

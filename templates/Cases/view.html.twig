@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'cases/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if cases is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">Subject {{cases.Subject}}</li>
+  <li class="list-group-item">Status: {{cases.Status}}</li>
+  <li class="list-group-item">Type:{{cases.Type}}</li>
+  <li class="list-group-item">Priority:{{cases.Priority}}</li>
+  <li class="list-group-item">Account: {{cases.AccountName}} </li>
+  <li class="list-group-item">Description: {{cases.Description}} </li>
+  <li class="list-group-item">Resolution: {{cases.Resolution}} </li>
+
+</ul>
+
+
+{% endif %}
+
+{% endblock %}

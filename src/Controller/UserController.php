@@ -11,11 +11,13 @@ use App\Form\FormData;
 use App\Form\User\UserForm;
 use App\Form\User\UserEdit;
 use App\Form\User\UserSearchForm;
+use App\Service\RolesToText;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
     /**
+     * View for users with searchbox to search user.
      * @Route("/users", name="users")
      */
     public function index(Request $request)
@@ -29,8 +31,8 @@ class UserController extends AbstractController
             $data = $form->getData();
 
             $user = $this->getDoctrine()
-    ->getRepository(User::class)
-    ->findByName($data->Search);
+                ->getRepository(User::class)
+                ->findByName($data->Search);
 
             if (!$user) {
                 $this->addFlash('error', 'No user was found, Try Searching Again');
@@ -40,10 +42,11 @@ class UserController extends AbstractController
             }
         }
 
-        return $this->render('user/index.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('user/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
+     * Create new user.
      * @Route("/user/create", name="createuser")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -70,6 +73,8 @@ class UserController extends AbstractController
             $User->setEmail($data->Email);
             $User->setFirstName($data->FirstName);
             $User->setLastName($data->LastName);
+            $username = "" . $data->FirstName . "" . $data->LastName . "";
+            $User->setUserName($username);
             $User->setIntials($data->Intials);
 
             if (empty($data->Password)) {
@@ -83,21 +88,21 @@ class UserController extends AbstractController
                 $password = $this->passwordEncoder->encodePassword($User, $data->Password);
                 $User->setPassword($password);
             }
-            $level = ($data->Roles == "ROLE_ADMIN") ? "admin" : "sales_manager";
+
 
             $roles = explode(' ', $data->Roles);
             $User->setRoles($roles);
-            $User->setLevel($level);
+
             $User->setDateCreated(date('m/d/Y h:i:s a', time()));
             $em->persist($User);
             $em->flush();
 
 
             $thisuser = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($User->getID());
+                ->getRepository(User::class)
+                ->findOneByID($User->getID());
 
-            $this->addFlash('success', 'User '.$thisuser->getFirstName().' Sucessfully Created');
+            $this->addFlash('success', 'User ' . $thisuser->getFirstName() . ' Sucessfully Created');
             return $this->redirectToRoute('getthisuser', ['id' => $thisuser->getID()]);
         }
 
@@ -106,9 +111,8 @@ class UserController extends AbstractController
     }
 
 
-
-
     /**
+     * Edit user.
      * @Route("/user/edit/{id}", name="edituser")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -117,8 +121,8 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $User = $this->getDoctrine()
-      ->getRepository(User::class)
-      ->findOneByID($id);
+            ->getRepository(User::class)
+            ->findOneByID($id);
 
         if (!$this->isGranted('ROLE_ADMIN')) {
             $this->addFlash('error', 'You dont have permission to acccess this page');
@@ -145,20 +149,20 @@ class UserController extends AbstractController
             $User->setFirstName($data->getFirstName());
             $User->setLastName($data->getLastName());
             $User->setIntials($data->getIntials());
-            $level = (implode("|", $data->getRoles()) == "ROLE_ADMIN") ? "admin" : "sales_manager";
+
 
             $User->setRoles($data->getRoles());
-            $User->setLevel($level);
+
 
             $em->persist($User);
             $em->flush();
 
 
             $thisuser = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($User->getID());
+                ->getRepository(User::class)
+                ->findOneByID($User->getID());
 
-            $this->addFlash('success', 'User '.$thisuser->getFirstName().' Sucessfully Edited');
+            $this->addFlash('success', 'User ' . $thisuser->getFirstName() . ' Sucessfully Edited');
             return $this->redirectToRoute('getthisuser', ['id' => $thisuser->getID()]);
         }
 
@@ -167,13 +171,12 @@ class UserController extends AbstractController
     }
 
 
-
-
     /**
+     * View all users.
      * @Route("/user/all", name="getAlluser")
      * @return                Response
      */
-    public function getAlluser()
+    public function getAlluser(RolesToText $rolesToText)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $em = $this->getDoctrine()->getManager();
@@ -183,24 +186,24 @@ class UserController extends AbstractController
             $this->addFlash('success', 'There are no created user');
             return $this->render('user/all.html.twig');
         } else {
+            $result = $rolesToText->rolesToText($result, "all");
             return $this->render('user/all.html.twig', ['user' => $result]);
         }
     }
 
 
-
-
     /**
+     * View one instance of user.
      * @Route("/user/{id}", name="getthisuser")
      * @param                 $id
      * @return                Response
      */
-    public function getthisuser($id)
+    public function getthisuser($id, RolesToText $rolesToText)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = $this->getDoctrine()
-        ->getRepository(User::class)
-        ->findOneByID($id);
+            ->getRepository(User::class)
+            ->findOneByID($id);
 
 
         if (!$user) {
@@ -208,16 +211,17 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user');
         } else {
             $createdby = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($user->getCreatedBy());
+                ->getRepository(User::class)
+                ->findOneByID($user->getCreatedBy());
 
-
+            $user = $rolesToText->rolesToText($user, "one");
 
             return $this->render('user/view.html.twig', ['user' => $user, 'createdby' => $createdby]);
         }
     }
 
     /**
+     * Delete user.
      * @Route("/user/del/{id}", name="deluser")
      * @param                 $id
      * @return                Response
@@ -226,8 +230,8 @@ class UserController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $User = $this->getDoctrine()
-    ->getRepository(User::class)
-    ->findOneByID($id);
+            ->getRepository(User::class)
+            ->findOneByID($id);
 
         if (!$User) {
             $this->addFlash('error', 'Can not find user');

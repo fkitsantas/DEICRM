@@ -9,6 +9,9 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\FormData;
+use App\Entity\Task;
+use App\Entity\Note;
+use App\Entity\Meeting;
 use App\Form\Lead\LeadForm;
 use App\Form\Lead\LeadEdit;
 use App\Form\Lead\LeadSearchForm;
@@ -16,6 +19,7 @@ use App\Form\Lead\LeadSearchForm;
 class LeadController extends AbstractController
 {
     /**
+     * View for leads with a searchbox.
      * @Route("/lead", name="lead")
      */
     public function index(Request $request)
@@ -29,8 +33,8 @@ class LeadController extends AbstractController
             $data = $form->getData();
 
             $lead = $this->getDoctrine()
-            ->getRepository(Lead::class)
-            ->findByLastName($data->Search);
+                ->getRepository(Lead::class)
+                ->findByLastName($data->Search);
 
             if (!$lead) {
                 $this->addFlash('error', 'No lead was found, Try Searching Again');
@@ -40,10 +44,11 @@ class LeadController extends AbstractController
             }
         }
 
-        return $this->render('lead/index.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('lead/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
+     * Allows creation of new lead.
      * @Route("/lead/create", name="createlead")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -51,7 +56,7 @@ class LeadController extends AbstractController
     public function createlead(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER')) {
             $this->addFlash('error', 'You dont have permission to acccess this page');
 
             return $this->redirectToRoute('lead');
@@ -106,10 +111,10 @@ class LeadController extends AbstractController
 
 
             $thislead = $this->getDoctrine()
-          ->getRepository(Lead::class)
-          ->findOneByID($Lead->getID());
+                ->getRepository(Lead::class)
+                ->findOneByID($Lead->getID());
 
-            $this->addFlash('success', 'Lead '.$thislead->getLastName().' Sucessfully Created');
+            $this->addFlash('success', 'Lead ' . $thislead->getLastName() . ' Sucessfully Created');
             return $this->redirectToRoute('getlead', ['id' => $thislead->getID()]);
         }
 
@@ -118,9 +123,8 @@ class LeadController extends AbstractController
     }
 
 
-
-
     /**
+     * Allows previously stored lead to be edited.
      * @Route("/lead/edit/{id}", name="editlead")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -129,15 +133,20 @@ class LeadController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Lead = $this->getDoctrine()
-      ->getRepository(Lead::class)
-      ->findOneByID($id);
-
+            ->getRepository(Lead::class)
+            ->findOneByID($id);
 
 
         if (!$Lead) {
             $this->addFlash('error', 'This lead does not exist');
 
             return $this->render('lead/index.html.twig');
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER') && $this->getUser()->getId() !== $Lead->getAssignedToId()) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('lead');
         }
 
 
@@ -185,10 +194,10 @@ class LeadController extends AbstractController
 
 
             $thislead = $this->getDoctrine()
-          ->getRepository(Lead::class)
-          ->findOneByID($Lead->getID());
+                ->getRepository(Lead::class)
+                ->findOneByID($Lead->getID());
 
-            $this->addFlash('success', 'Lead '.$thislead->getLastName().' Sucessfully Edited');
+            $this->addFlash('success', 'Lead ' . $thislead->getLastName() . ' Sucessfully Edited');
             return $this->redirectToRoute('getlead', ['id' => $thislead->getID()]);
         }
 
@@ -197,9 +206,8 @@ class LeadController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch all leads from leads table.
      * @Route("/lead/all", name="getAlllead")
      * @return                Response
      */
@@ -218,9 +226,8 @@ class LeadController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch lead from table.
      * @Route("/lead/{id}", name="getlead")
      * @param                 $id
      * @return                Response
@@ -229,19 +236,43 @@ class LeadController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $lead = $this->getDoctrine()
-        ->getRepository(Lead::class)
-        ->findOneByID($id);
+            ->getRepository(Lead::class)
+            ->findOneByID($id);
 
 
         if (!$lead) {
             $this->addFlash('error', 'Lead not found');
             return $this->redirectToRoute('lead');
         } else {
-            return $this->render('lead/view.html.twig', ['lead' => $lead ]);
+            $taskrepository = $this->getDoctrine()->getRepository(Task::class);
+            $task = $taskrepository->findBy(
+                ['RelatedToType' => 'Lead',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+
+            $noterepository = $this->getDoctrine()->getRepository(Note::class);
+            $note = $noterepository->findBy(
+                ['RelatedToType' => 'Lead',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+
+            $meetingrepository = $this->getDoctrine()->getRepository(Meeting::class);
+            $meeting = $meetingrepository->findBy(
+                ['RelatedToType' => 'Lead',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+            return $this->render('lead/view.html.twig', ['lead' => $lead, 'task' => $task, 'note' => $note, 'meeting' => $meeting]);
         }
     }
 
     /**
+     * Delete lead from lead table.
      * @Route("/lead/del/{id}", name="dellead")
      * @param                 $id
      * @return                Response
@@ -250,8 +281,8 @@ class LeadController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Lead = $this->getDoctrine()
-    ->getRepository(Lead::class)
-    ->findOneByID($id);
+            ->getRepository(Lead::class)
+            ->findOneByID($id);
 
         if (!$Lead) {
             $this->addFlash('error', 'Can not find lead');

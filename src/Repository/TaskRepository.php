@@ -31,6 +31,20 @@ class TaskRepository extends ServiceEntityRepository
         ;
     }
 
+
+    public function findByName($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.Subject LIKE :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
     public function findOneByID($value): ?Task
     {
         return $this->createQueryBuilder('c')

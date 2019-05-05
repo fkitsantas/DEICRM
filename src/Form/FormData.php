@@ -18,7 +18,31 @@ class FormData extends AbstractType
 
     public $Email;
 
+    public $Resolution;
+
+    public $Message;
+    
+    public $AccountId;
+
+    public $CaseId;
+
+    public $Date;
+
+    public $DateSent;
+
+    public $SentDate;
+
+    public $AddedBy;
+
+    public $AddedById;
+
+    public $Comment;
+
     public $Intials;
+
+    public $Note;
+
+    public $RelatedToValue;
 
     public $Who;
 
@@ -192,9 +216,24 @@ class FormData extends AbstractType
 
     public $RemoteAddress;
 
+    public $PublishDate;
+
+    public $ExpirationDate;
+
+    public $Category;
+
+    public $Revision;
+
+    public $DocumentType;
+
+    public $DocumentName;
+
+    public $SubCategory;
     public $Dnis;
 
     public $LastIc;
+
+    public $FileName;
 
 
     public $FromDate;

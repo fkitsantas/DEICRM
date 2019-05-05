@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\OpportunitiesRepository")
-  * @ORM\Table(name="dei_opportunities")
+ * @ORM\Table(name="dei_opportunities")
  */
 class Opportunities
 {
@@ -55,6 +55,12 @@ class Opportunities
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
+    private $ContactName;
+
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $AccountName;
 
 
@@ -62,8 +68,6 @@ class Opportunities
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $AccountId;
-
-
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -103,6 +107,12 @@ class Opportunities
 
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ContactId;
+
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $AssignedToId;
@@ -117,7 +127,6 @@ class Opportunities
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $DateModified;
-
 
 
     public function getId(): ?int
@@ -148,6 +157,7 @@ class Opportunities
 
         return $this;
     }
+
     public function getCreatedBy(): ?string
     {
         return $this->CreatedBy;
@@ -160,6 +170,17 @@ class Opportunities
         return $this;
     }
 
+    public function getContactId(): ?int
+    {
+        return $this->ContactId;
+    }
+
+    public function setContactId(?int $ContactId = null): self
+    {
+        $this->ContactId = $ContactId;
+
+        return $this;
+    }
 
     public function getOpportunityAmount(): ?string
     {
@@ -196,6 +217,7 @@ class Opportunities
 
         return $this;
     }
+
     public function getDateModified(): ?string
     {
         return $this->DateModified;
@@ -333,7 +355,6 @@ class Opportunities
     }
 
 
-
     public function getAssignedTo(): ?string
     {
         return $this->AssignedTo;
@@ -354,6 +375,18 @@ class Opportunities
     public function setAssignedToId(?string $AssignedToId): self
     {
         $this->AssignedToId = $AssignedToId;
+
+        return $this;
+    }
+
+    public function getContactName(): ?string
+    {
+        return $this->ContactName;
+    }
+
+    public function setContactName(?string $ContactName = null): self
+    {
+        $this->ContactName = $ContactName;
 
         return $this;
     }

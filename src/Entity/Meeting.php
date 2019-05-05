@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MeetingRepository")
- * @ORM\Table(name="dei_meeting")
+ * @ORM\Table(name="dei_meetings")
  */
 class Meeting
 {
@@ -52,6 +52,12 @@ class Meeting
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $ContactName;
+
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ContactId;
 
 
     /**
@@ -109,8 +115,6 @@ class Meeting
     private $DateModified;
 
 
-
-
     public function getId(): ?int
     {
         return $this->id;
@@ -140,7 +144,6 @@ class Meeting
 
         return $this;
     }
-
 
 
     public function getStartDate(): ?\DateTimeInterface
@@ -191,6 +194,18 @@ class Meeting
         return $this;
     }
 
+    public function getContactId(): ?int
+    {
+        return $this->ContactId;
+    }
+
+    public function setContactId(?int $ContactId = null): self
+    {
+        $this->ContactId = $ContactId;
+
+        return $this;
+    }
+
     public function getRelatedTo(): ?string
     {
         return $this->RelatedTo;
@@ -202,8 +217,6 @@ class Meeting
 
         return $this;
     }
-
-
 
 
     public function getCampaign(): ?string
@@ -255,7 +268,6 @@ class Meeting
 
         return $this;
     }
-
 
 
     public function getRelatedToType(): ?string

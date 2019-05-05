@@ -24,11 +24,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'First name',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'First name',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -36,10 +36,10 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                'attr' => [
-                    'placeholder' => 'Last name',
-                    'label' => ' '
-                ]
+                    'attr' => [
+                        'placeholder' => 'Last name',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -47,11 +47,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Title',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Title',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -59,11 +59,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Department',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Department',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -71,11 +71,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Office Phone',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Office Phone',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -83,11 +83,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Mobile',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Mobile',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -95,11 +95,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'fax',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'fax',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -107,11 +107,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address Street',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address Street',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -119,11 +119,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address city',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address city',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -131,11 +131,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address state',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address state',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -143,11 +143,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Postal code',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Postal code',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -155,11 +155,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Primary address country',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Primary address country',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -167,11 +167,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address street',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address street',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -179,11 +179,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address city',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address city',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -191,11 +191,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address state',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address state',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -203,11 +203,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address postal code',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address postal code',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -215,11 +215,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address country',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address country',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -227,11 +227,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Email Address',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Email Address',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -239,110 +239,99 @@ class LeadForm extends AbstractType
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Description',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Description',
+                        'label' => ' '
+                    ]
                 ]
             )
-
-
             ->add(
                 'LeadSource',
                 ChoiceType::class,
                 [
-      'choices'  => [
-          'cold call' => 'cold call',
-          'Existing Customer' => 'Existing Customer',
-          'Self Generated' => 'Self Generated',
-          'Employee' => 'Employee',
-          'Partner' => 'Partner',
-          'Public Relations' => 'Public Relations',
-          'Direct Mail' => 'Direct Mail',
-          'Conference' => 'Conference',
-          'Trade Show' => 'Trade Show',
-          'Website' => 'Website',
-          'Word of Mouth' => 'Word of Mouth',
-          'Email' => 'Email',
-          'Campaign' => 'Campaign',
-          'Other' => 'Other',
+                    'choices' => [
+                        'cold call' => 'cold call',
+                        'Existing Customer' => 'Existing Customer',
+                        'Self Generated' => 'Self Generated',
+                        'Employee' => 'Employee',
+                        'Partner' => 'Partner',
+                        'Public Relations' => 'Public Relations',
+                        'Direct Mail' => 'Direct Mail',
+                        'Conference' => 'Conference',
+                        'Trade Show' => 'Trade Show',
+                        'Website' => 'Website',
+                        'Word of Mouth' => 'Word of Mouth',
+                        'Email' => 'Email',
+                        'Campaign' => 'Campaign',
+                        'Other' => 'Other',
 
 
-
-      ]
-    ]
+                    ]
+                ]
             )
-
             ->add(
                 'LeadSourceDescription',
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Lead Source Description',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Lead Source Description',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add(
                 'Status',
                 ChoiceType::class,
                 [
-      'choices'  => [
-          'New' => 'New',
-          'Assigned' => 'Assigned',
-          'In Process' => 'In Process',
-          'Converted' => 'Converted',
-          'Recycled' => 'Recycled',
-          'Dead' => 'Dead'
+                    'choices' => [
+                        'New' => 'New',
+                        'Assigned' => 'Assigned',
+                        'In Process' => 'In Process',
+                        'Converted' => 'Converted',
+                        'Recycled' => 'Recycled',
+                        'Dead' => 'Dead'
 
 
-
-
-      ]
-    ]
+                    ]
+                ]
             )
-
             ->add(
                 'StatusDescription',
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Status Description',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Status Description',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add('Campaign', EntityType::class, [
-            'required' => false,
-            'placeholder' => 'Choose an option',
+                'required' => false,
+                'placeholder' => 'Choose an option',
                 'class' => Campaigns::class,
                 'choice_label' => 'Name',
-    ])
-
-    ->add('AssignedTo', EntityType::class, [
-        'label' => 'Assign to',
-        'class' => User::class,
-        'choice_label' => 'Username',
-        'choice_value' => 'Id',
-])
-
+            ])
+            ->add('AssignedTo', EntityType::class, [
+                'label' => 'Assign to',
+                'class' => User::class,
+                'choice_label' => 'Username',
+                'choice_value' => 'Id',
+            ])
             ->add(
                 'ReferredBy',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Referred by',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Referred by',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -350,11 +339,11 @@ class LeadForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Opportunity Amount',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Opportunity Amount',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -368,7 +357,7 @@ class LeadForm extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

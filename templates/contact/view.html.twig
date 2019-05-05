@@ -47,10 +47,250 @@
 </div>
 
 
+<div class="card mb-2 mt-2">
+  <div class="card-header">
+    {{contact.FirstName}} Opportunities
+  </div>
+
+
+
+{% if opportunities|length %}
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Opportunity Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Account Name</th>
+        <th scope="col">Sales Stage</th>
+        <th scope="col">Lead Source</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Expected Close date</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+    {% for op in opportunities %}
+
+
+
+    <tr>
+      <th scope="row">{{ op.Id}}</th>
+      <td>{{ op.OpportunityName}}</td>
+        <td>{{ op.OpportunityAmount}}</td>
+      <td>{{ op.AccountName}}</td>
+      <td>{{ op.SalesStage}}</td>
+      <td>{{ op.LeadSource}}</td>
+      <td>{{ op.DateModified}}</td>
+      <td>{{ op.ExpectedCloseDate|date('Y-m-d')}}</td>
+      <td> <a href="/opportunities/{{ op.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+
+
+
+<div class="alert alert-danger mt-2 mb-2" role="alert">
+No Opportunities found
+</div>
+
+
+  {% endif %}
+</div>
+
+
+<div class="card mb-3">
+  <div class="card-header">
+    {{contact.FirstName}} Tasks
+  </div>
+
+
+{% if task|length %}
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Type</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for datatask in task %}
+
+    <tr>
+      <th scope="row">{{ datatask.Id}}</th>
+      <td>{{ datatask.Subject}}</td>
+        <td>{{ datatask.Status}}</td>
+      <td>{{ datatask.StartDate|date('Y-m-d')}}</td>
+      <td>{{ datatask.DueDate|date('Y-m-d')}}</td>
+      <td>{{ datatask.RelatedToType}}</td>
+      <td>{{ datatask.Priority}}</td>
+      <td>{{ datatask.DateCreated}}</td>
+      <td>{{ datatask.DateModified}}</td>
+      <td> <a href="/task/{{ datatask.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+
+    {% endfor %}
+  </tbody>
+  </table>
+
+{% else %}
+  <div class="alert alert-danger mt-2 mb-2" role="alert">
+  No Task found
+  </div>
+
+
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      {{contact.FirstName}} Meeting
+    </div>
+
+  {% if meeting|length %}
+
+
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Status</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Type</th>
+          <th scope="col">Location</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Date Modified</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for data in meeting %}
+
+      <tr>
+        <th scope="row">{{ data.Id}}</th>
+        <td>{{ data.Subject}}</td>
+          <td>{{ data.Status}}</td>
+        <td>{{ data.StartDate|date('Y-m-d')}}</td>
+        <td>{{ data.DueDate|date('Y-m-d')}}</td>
+        <td>{{ data.RelatedToType}}</td>
+        <td>{{ data.Location}}</td>
+        <td>{{ data.DateCreated}}</td>
+        <td>{{ data.DateModified}}</td>
+        <td> <a href="/meeting/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+  </td>
+      </tr>
+
+
+
+
+
+      {% endfor %}
+    </tbody>
+    </table>
+    {% else %}
+      <div class="alert alert-danger mt-2 mb-2" role="alert">
+      No Meeting For this Contact
+      </div>
+
+
+        {% endif %}
+      </div>
+
+
+      <div class="card">
+        <div class="card-header">
+          {{contact.FirstName}} Notes
+        </div>
+      {% if note|length %}
+
+
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Related Type</th>
+              <th scope="col">Related To</th>
+              <th scope="col">Date Created</th>
+              <th scope="col">Date Modified</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          {% for data in note %}
+
+          <tr>
+            <th scope="row">{{ data.Id}}</th>
+            <td>{{ data.Subject}}</td>
+            <td>{{ data.RelatedToType}}</td>
+            <td>{{ data.RelatedTo}}</td>
+            <td>{{ data.DateCreated}}</td>
+            <td>{{ data.DateModified}}</td>
+            <td> <a href="/note/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+      </td>
+          </tr>
+
+
+
+
+          {% endfor %}
+        </tbody>
+        </table>
+        {% else %}
+          <div class="alert alert-danger mt-2 mb-2" role="alert">
+          No Notes for this contact
+          </div>
+
+
+            {% endif %}
+          </div>
+
 
 <br/><div class="alert alert-primary" role="alert">Contact Interactions</div>
 
-{% if interaction is defined %}
+
+{% if interaction |length %}
 
 {% if interaction is empty %}
 <div class="alert alert-danger" role="alert">This Contact has no interaction</div>

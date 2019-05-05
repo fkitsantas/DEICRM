@@ -21,17 +21,16 @@ class ContactEdit extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add(
                 'FirstName',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'First name',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'First name',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -39,10 +38,10 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                'attr' => [
-                    'placeholder' => 'Last name',
-                    'label' => ' '
-                ]
+                    'attr' => [
+                        'placeholder' => 'Last name',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -50,11 +49,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Title',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Title',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -62,11 +61,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Department',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Department',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -74,11 +73,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Office Phone',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Office Phone',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -86,11 +85,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Mobile',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Mobile',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -98,23 +97,32 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'fax',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'fax',
+                        'label' => ' '
+                    ]
                 ]
             )
+            ->add('ContactName', EntityType::class, [
+                'required' => false,
+                'placeholder' => 'Choose an option',
+                'label' => 'Contact Name',
+                'class' => Contact::class,
+                'choice_label' => 'FirstName',
+                'choice_value' => 'Id',
+                'mapped' => false,
+            ])
             ->add(
                 'PrimaryAddressStreet',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address Street',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address Street',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -122,11 +130,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address city',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address city',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -134,11 +142,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address state',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address state',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -146,11 +154,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Postal code',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Postal code',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -158,11 +166,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Primary address country',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Primary address country',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -170,11 +178,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address street',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address street',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -182,11 +190,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address city',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address city',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -194,11 +202,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address state',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address state',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -206,11 +214,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address postal code',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address postal code',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -218,11 +226,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address country',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address country',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -230,11 +238,11 @@ class ContactEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Email Address',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Email Address',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -242,50 +250,46 @@ class ContactEdit extends AbstractType
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Description',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Description',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add('AssignedTo', EntityType::class, [
+                'required' => false,
+                'placeholder' => 'Choose an option',
                 'label' => 'Assign to',
                 'class' => User::class,
                 'choice_label' => 'FirstName',
                 'choice_value' => 'Id',
                 'mapped' => false,
-        ])
-
+            ])
             ->add(
                 'LeadSource',
                 ChoiceType::class,
                 [
-      'choices'  => [
-          'cold call' => 'cold call',
-          'Existing Customer' => 'Existing Customer',
-          'Self Generated' => 'Self Generated',
-          'Employee' => 'Employee',
-          'Partner' => 'Partner',
-          'Public Relations' => 'Public Relations',
-          'Direct Mail' => 'Direct Mail',
-          'Conference' => 'Conference',
-          'Trade Show' => 'Trade Show',
-          'Website' => 'Website',
-          'Word of Mouth' => 'Word of Mouth',
-          'Email' => 'Email',
-          'Campaign' => 'Campaign',
-          'Other' => 'Other',
+                    'choices' => [
+                        'cold call' => 'cold call',
+                        'Existing Customer' => 'Existing Customer',
+                        'Self Generated' => 'Self Generated',
+                        'Employee' => 'Employee',
+                        'Partner' => 'Partner',
+                        'Public Relations' => 'Public Relations',
+                        'Direct Mail' => 'Direct Mail',
+                        'Conference' => 'Conference',
+                        'Trade Show' => 'Trade Show',
+                        'Website' => 'Website',
+                        'Word of Mouth' => 'Word of Mouth',
+                        'Email' => 'Email',
+                        'Campaign' => 'Campaign',
+                        'Other' => 'Other',
 
 
-
-      ]
-    ]
+                    ]
+                ]
             )
-
-
-
             ->add(
                 'submit',
                 SubmitType::class
@@ -297,7 +301,7 @@ class ContactEdit extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => Contact::class
+                'data_class' => Contact::class
             ]
         );
     }

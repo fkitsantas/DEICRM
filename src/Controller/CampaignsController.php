@@ -16,6 +16,7 @@ use App\Form\Campaigns\CampaignsSearchForm;
 class CampaignsController extends AbstractController
 {
     /**
+     * Index page for campaign with search box
      * @Route("/campaigns", name="campaigns")
      */
     public function index(Request $request)
@@ -29,8 +30,8 @@ class CampaignsController extends AbstractController
             $data = $form->getData();
 
             $campaigns = $this->getDoctrine()
-    ->getRepository(Campaigns::class)
-    ->findByName($data->Search);
+                ->getRepository(Campaigns::class)
+                ->findByName($data->Search);
 
             if (!$campaigns) {
                 $this->addFlash('error', 'No campaigns was found, Try Searching Again');
@@ -40,10 +41,11 @@ class CampaignsController extends AbstractController
             }
         }
 
-        return $this->render('campaigns/index.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('campaigns/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
+     * Handles storing of campaigns into the database
      * @Route("/campaigns/create", name="createcampaigns")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -52,7 +54,7 @@ class CampaignsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER')) {
             $this->addFlash('error', 'You dont have permission to acccess this page');
 
             return $this->redirectToRoute('campaigns');
@@ -80,8 +82,8 @@ class CampaignsController extends AbstractController
             $Campaigns->setImpressions($data->Impressions);
             $Campaigns->setDescription($data->Description);
             if (!is_null($data->AssignedTo)) {
-                $Contact->setAssignedTo($data->AssignedTo->getFirstName());
-                $Contact->setAssignedToId($data->AssignedTo->getId());
+                $Campaigns->setAssignedTo($data->AssignedTo->getFirstName());
+                $Campaigns->setAssignedToId($data->AssignedTo->getId());
             }
             $Campaigns->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Campaigns->setCreatedBy($this->getUser()->getId());
@@ -90,10 +92,10 @@ class CampaignsController extends AbstractController
 
 
             $thiscampaigns = $this->getDoctrine()
-          ->getRepository(Campaigns::class)
-          ->findOneByID($Campaigns->getID());
+                ->getRepository(Campaigns::class)
+                ->findOneByID($Campaigns->getID());
 
-            $this->addFlash('success', 'Campaigns '.$thiscampaigns->getName().' Sucessfully Created');
+            $this->addFlash('success', 'Campaigns ' . $thiscampaigns->getName() . ' Sucessfully Created');
             return $this->redirectToRoute('getcampaigns', ['id' => $thiscampaigns->getID()]);
         }
 
@@ -102,9 +104,8 @@ class CampaignsController extends AbstractController
     }
 
 
-
-
     /**
+     * Allows editing of stored campaigns
      * @Route("/campaigns/edit/{id}", name="editcampaigns")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -113,15 +114,20 @@ class CampaignsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Campaigns = $this->getDoctrine()
-      ->getRepository(Campaigns::class)
-      ->findOneByID($id);
-
+            ->getRepository(Campaigns::class)
+            ->findOneByID($id);
 
 
         if (!$Campaigns) {
             $this->addFlash('error', 'This campaigns does not exist');
 
             return $this->render('campaigns/index.html.twig');
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER') && $this->getUser()->getId() !== $Campaign->getAssignedToId()) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('campaign');
         }
 
 
@@ -149,15 +155,16 @@ class CampaignsController extends AbstractController
                 $Campaigns->setAssignedTo($form->get('AssignedTo')->getData()->getFirstName());
                 $Campaigns->setAssignedToId($form->get('AssignedTo')->getData()->getId());
             }
+
             $Campaigns->setDateModified(date('m/d/Y h:i:s a', time()));
             $em->persist($Campaigns);
             $em->flush();
 
             $thiscampaigns = $this->getDoctrine()
-          ->getRepository(Campaigns::class)
-          ->findOneByID($Campaigns->getID());
+                ->getRepository(Campaigns::class)
+                ->findOneByID($Campaigns->getID());
 
-            $this->addFlash('success', 'Campaigns '.$thiscampaigns->getName().' Sucessfully Edited');
+            $this->addFlash('success', 'Campaigns ' . $thiscampaigns->getName() . ' Sucessfully Edited');
             return $this->redirectToRoute('getcampaigns', ['id' => $thiscampaigns->getID()]);
         }
 
@@ -166,9 +173,8 @@ class CampaignsController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetches all stored campaigns from the database
      * @Route("/campaigns/all", name="getAllcampaigns")
      * @return                Response
      */
@@ -187,9 +193,8 @@ class CampaignsController extends AbstractController
     }
 
 
-
-
     /**
+     * Get specific campaign by id from the database
      * @Route("/campaigns/{id}", name="getcampaigns")
      * @param                 $id
      * @return                Response
@@ -198,8 +203,8 @@ class CampaignsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $campaigns = $this->getDoctrine()
-        ->getRepository(Campaigns::class)
-        ->findOneByID($id);
+            ->getRepository(Campaigns::class)
+            ->findOneByID($id);
 
 
         if (!$campaigns) {
@@ -207,14 +212,15 @@ class CampaignsController extends AbstractController
             return $this->redirectToRoute('campaigns');
         } else {
             $createdby = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($campaigns->getCreatedBy());
+                ->getRepository(User::class)
+                ->findOneByID($campaigns->getCreatedBy());
 
             return $this->render('campaigns/view.html.twig', ['campaigns' => $campaigns, 'createdby' => $createdby]);
         }
     }
 
     /**
+     * Delete camapign from the database
      * @Route("/campaigns/del/{id}", name="delcampaigns")
      * @param                 $id
      * @return                Response
@@ -223,8 +229,8 @@ class CampaignsController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Campaigns = $this->getDoctrine()
-    ->getRepository(Campaigns::class)
-    ->findOneByID($id);
+            ->getRepository(Campaigns::class)
+            ->findOneByID($id);
 
         if (!$Campaigns) {
             $this->addFlash('error', 'Can not find campaigns');

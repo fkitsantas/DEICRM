@@ -15,17 +15,48 @@
 {% if is_granted('ROLE_ADMIN') %}
 
 {% include 'dashboard/user.html.twig' %}
+
 {% endif %}
+
+{% if not is_granted('ROLE_ADMIN') %}
+
+
+
+{% include 'dashboard/assigned/accounts.html.twig' %}
+
+{% include 'dashboard/assigned/contact.html.twig' %}
+
+{% include 'dashboard/assigned/campaigns.html.twig' %}
+
+{% include 'dashboard/assigned/lead.html.twig' %}
+
+
+{% include 'dashboard/assigned/opportunities.html.twig' %}
+
+{% include 'dashboard/assigned/target.html.twig' %}
+
+{% include 'dashboard/assigned/task.html.twig' %}
+
+{% include 'dashboard/assigned/meeting.html.twig' %}
+
+{% include 'dashboard/assigned/note.html.twig' %}
+
+{% include 'dashboard/assigned/document.html.twig' %}
+
+
+{% include 'dashboard/assigned/cases.html.twig' %}
+
+{% endif %}
+
+
 
 {% include 'dashboard/accounts.html.twig' %}
 
-{% include 'dashboard/campaigns.html.twig' %}
-
 {% include 'dashboard/contact.html.twig' %}
 
-{% include 'dashboard/lead.html.twig' %}
+{% include 'dashboard/campaigns.html.twig' %}
 
-{% include 'dashboard/meeting.html.twig' %}
+{% include 'dashboard/lead.html.twig' %}
 
 {% include 'dashboard/opportunities.html.twig' %}
 
@@ -33,6 +64,13 @@
 
 {% include 'dashboard/task.html.twig' %}
 
+{% include 'dashboard/meeting.html.twig' %}
+
+{% include 'dashboard/note.html.twig' %}
+
+{% include 'dashboard/document.html.twig' %}
+
+{% include 'dashboard/cases.html.twig' %}
 
 
 {% endblock %}

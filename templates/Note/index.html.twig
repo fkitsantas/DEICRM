@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'note/inc/breadcrumb.html.twig' %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+{% if note is defined %}
+
+<div class="card">
+  <div class="card-header">
+  Search for {{note}}
+  </div>
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Related Type</th>
+      <th scope="col">Related To</th>
+      <th scope="col">Date Created</th>
+      <th scope="col">Date Modified</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for data in note %}
+
+  <tr>
+    <th scope="row">{{ data.Id}}</th>
+    <td>{{ data.Subject}}</td>
+    <td>{{ data.RelatedToType}}</td>
+    <td>{{ data.RelatedTo}}</td>
+    <td>{{ data.DateCreated}}</td>
+    <td>{{ data.DateModified}}</td>
+    <td> <a href="/note/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+</td>
+  </tr>
+
+
+
+
+  {% endfor %}
+</tbody>
+</table>
+</div>
+
+{% endif %}
+
+{% endblock %}

@@ -31,6 +31,18 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByName($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.LastName LIKE :val OR c.FirstName LIKE :val OR c.EmailAddress LIKE :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     public function findOneByID($value): ?User
     {
         return $this->createQueryBuilder('c')

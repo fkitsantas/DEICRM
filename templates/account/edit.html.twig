@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}DEICRM{% endblock %}
+{% block title %}DEICRM - Edit Account{% endblock %}
 
 {% block body %}
 
@@ -108,9 +108,21 @@
         </div>
        </div>
 
+       <div class="row">
+        <div class="col">
+          {{ form_row(form.Ownership) }}
+        </div>
+        <div class="col">
+             {{ form_row(form.Rating) }}
+        </div>
+       </div>
 
 
+
+
+{{ form_row(form.AssignedTo) }}
     {{ form_widget(form) }}
+
     {{ form_end(form) }}
 
 {% endif %}

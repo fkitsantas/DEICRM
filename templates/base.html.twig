@@ -13,16 +13,13 @@
     </head>
     <body>
       {% include 'inc/navbar.html.twig' %}
-      <div class="container-fluid">
+      <div class="container">
         {% block body %}{% endblock %}
-
-      
 
 </div>
 
-{% include 'inc/footer.html.twig' %}
 
-
+  {% include 'inc/footer.html.twig' %}
 
 
 {% block javascripts %}
@@ -31,6 +28,8 @@
 
                <script src="/build/runtime.js"></script>
                <script src="/build/app.js"></script>
+
+
        {% endblock %}
 
 

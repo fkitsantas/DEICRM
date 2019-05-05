@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'email/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if email is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">Subject: {{email.Subject}}</li>
+  <li class="list-group-item">Tye: {{email.Type}}</li>
+  <li class="list-group-item">Message: {{email.Message}}</li>
+  <li class="list-group-item">SentDate: {{email.SENTdATE}}</li>
+
+</ul>
+
+{% endif %}
+
+{% endblock %}

@@ -11,11 +11,14 @@ use Seo\AuditBundle\Form\FormData;
 class SecurityController extends AbstractController
 {
     /**
+     * View for login with a login form.
      * @Route("/", name="login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-
+        if ($this->getUser()) {
+            return $this->redirectToRoute('dashboard');
+        }
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -27,8 +30,9 @@ class SecurityController extends AbstractController
 
 
     /**
-    * @Route("/logout", name="app_logout", methods={"GET"})
-    */
+     * Logs user out of the website.
+     * @Route("/logout", name="app_logout", methods={"GET"})
+     */
     public function logout()
     {
         // controller can be blank: it will never be executed!

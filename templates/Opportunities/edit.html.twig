@@ -55,6 +55,16 @@
 
 {{ form_row(form.NextStep) }}
 {{ form_row(form.Description) }}
+{{ form_row(form.ContactName) }}
+
+{% if (is_granted('ROLE_ADMIN')) %}
+        {{ form_row(form.AssignedTo) }}
+
+        {% else %}
+
+        {% do form.AssignedTo.setRendered() %}
+    {% endif %}
+
 {{ form_widget(form) }}
 {{ form_end(form) }}
 
@@ -64,9 +74,12 @@
 
 
 
-<script>
-       jQuery(document).ready(function() {
-           $('.js-datepicker').datepicker();
-       });
-   </script>
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('date') }}
+
+
+{% endblock %}
+
 {% endblock %}

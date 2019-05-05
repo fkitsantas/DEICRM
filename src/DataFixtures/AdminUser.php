@@ -15,6 +15,10 @@ class AdminUser extends Fixture
     {
         $this->passwordEncoder = $passwordEncoder;
     }
+
+    /**
+     * Autoload user to the database
+     */
     public function load(ObjectManager $manager)
     {
         $user = new User();

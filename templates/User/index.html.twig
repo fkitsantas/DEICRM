@@ -38,14 +38,56 @@
 
 <div class="card">
   <div class="card-header">
-    Search result for {{ searchfor }}
+  Search For {{user}}
   </div>
-  <ul class="list-group list-group-flush">
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Intial</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email Address</th>
+        <th scope="col">Role</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
     {% for data in user %}
-    <li class="list-group-item">{{ data.Title}} {{ data.FirstName}} {{ data.LastName}} {{ data.EmailAddress}} <a href="../user/{{ data.id }}" class="btn btn-primary btn-sm">view</a></li>
+
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Intials}}</td>
+      <td>{{ data.FirstName}}</td>
+      <td>{{ data.LastName}}</td>
+      <td>{{ data.Email}}</td>
+      {% for role in data.Roles %}
+    <td> {{ role }}</td>
     {% endfor %}
-  </ul>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="/user/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+ </td>
+    </tr>
+
+
+
+
+
+    {% endfor %}
+
+  </tbody>
+</table>
+
 </div>
+
+
+
 
 {% endif %}
 

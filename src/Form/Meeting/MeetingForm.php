@@ -21,156 +21,110 @@ class MeetingForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(
+                'Subject',
+                TextType::class,
+                [
 
-          ->add(
-              'Subject',
-              TextType::class,
-              [
-
-                'required' => false,
-              'attr' => [
-                  'placeholder' => 'Subject',
-                  'label' => ' '
-              ]
-              ]
-          )
-
-
-          ->add(
-              'Status',
-              ChoiceType::class,
-              [
-    'choices'  => [
-        'Not Started' => 'Not Started',
-        'In Progress' => 'In Progress',
-        'Completed' => 'Completed',
-        'Pending Input' => 'Pending Input',
-        'Deferred' => 'Deferred',
-    ]
-  ]
-          )
-
-          ->add(
-              'RelatedToType',
-              ChoiceType::class,
-              [
-                'label' => 'Type',
-    'choices'  => [
-        'Account' => 'Account',
-        'Contact' => 'Contact',
-        'Lead' => 'Lead',
-        'Opportunity' => 'Opportunity',
-        'Case' => 'Case',
-        'Target' => 'Target',
-        'Meeting' => 'Meeting',
-    ]
-  ]
-          )
-
-
-
-
-
-
-
-
-
-
-
-                    ->add(
-                        'RelatedTo',
-                        EntityType::class,
-                        [
-                        'label' => 'Related To',
-                        'class' => Contact::class,
-                        'choice_label' => 'FirstName',
-                        'choice_value' => 'Id',
-                  ]
-                    )
-
-
-                ->add(
-                    'AssignedTo',
-                    EntityType::class,
-                    [
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Subject',
+                        'label' => ' '
+                    ]
+                ]
+            )
+            ->add(
+                'Status',
+                ChoiceType::class,
+                [
+                    'choices' => [
+                        'Not Started' => 'Not Started',
+                        'In Progress' => 'In Progress',
+                        'Completed' => 'Completed',
+                        'Pending Input' => 'Pending Input',
+                        'Deferred' => 'Deferred',
+                    ]
+                ]
+            )
+            ->add(
+                'AssignedTo',
+                EntityType::class,
+                [
+                    'required' => false,
+                    'placeholder' => 'Choose an option',
                     'label' => 'Assign to',
                     'class' => User::class,
-                    'choice_label' => 'Username',
+                    'choice_label' => 'FirstName',
                     'choice_value' => 'Id',
-              ]
-                )
-
-
-
-          ->add(
-              'Location',
-              TextType::class,
-              [
-                'label' => 'Location',
+                ]
+            )
+            ->add('ContactName', EntityType::class, [
                 'required' => false,
-              'attr' => [
-                  'placeholder' => 'Location',
-                  'label' => ' '
-              ]
-              ]
-          )
+                'placeholder' => 'Choose an option',
+                'label' => 'Contact Name',
+                'class' => Contact::class,
+                'choice_label' => 'FirstName',
+                'choice_value' => 'Id',
+            ])
+            ->add(
+                'Location',
+                TextType::class,
+                [
+                    'label' => 'Location',
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Location',
+                        'label' => ' '
+                    ]
+                ]
+            )
+            ->add('StartDate', DateTimeType::class, array(
+                'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => [
+                    'class' => 'form-control input-inline js-datepicker1',
+                    'data-provide' => 'datetimepicker',
+                    'html5' => false,
 
-
-        ->add('StartDate', DateTimeType::class, array(
-                  'required' => true,
-                  'widget' => 'single_text',
-                  'format' => 'yyyy-MM-dd',
-                  'attr' => [
-                      'class' => 'form-control input-inline js-datepicker1',
-                      'data-provide' => 'datetimepicker',
-                      'html5' => false,
-
-                  ],
-                  ))
-
-
-                  ->add('DueDate', DateTimeType::class, array(
-            'required' => true,
-            'widget' => 'single_text',
-            'format' => 'yyyy-MM-dd',
-            'attr' => [
-            'class' => 'form-control input-inline js-datepicker2',
-            'data-provide' => 'datetimepicker',
-            'html5' => false,
-
-            ],
+                ],
             ))
+            ->add('DueDate', DateTimeType::class, array(
+                'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => [
+                    'class' => 'form-control input-inline js-datepicker2',
+                    'data-provide' => 'datetimepicker',
+                    'html5' => false,
 
+                ],
+            ))
+            ->add(
+                'Description',
+                TextareaType::class,
+                [
 
-          ->add(
-              'Description',
-              TextareaType::class,
-              [
-
-                'required' => false,
-              'attr' => [
-                  'placeholder' => 'Description',
-                  'label' => ' '
-              ]
-              ]
-          )
-
-
-
-          ->add(
-              'submit',
-              SubmitType::class
-          );
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Description',
+                        'label' => ' '
+                    ]
+                ]
+            )
+            ->add(
+                'submit',
+                SubmitType::class
+            );
     }
-
-
 
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class,
+                'allow_extra_fields' => true,
             ]
         );
     }

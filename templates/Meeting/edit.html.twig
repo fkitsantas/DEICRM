@@ -38,15 +38,17 @@
 
 
 <div class="row">
-  <div class="col-4">
+  <div class="col-10">
     {{ form_row(form.Location) }}
   </div>
+  {#
  <div class="col-4">
    {{ form_row(form.RelatedToType) }}
  </div>
  <div class="col-4">
    {{ form_row(form.RelatedTo) }}
  </div>
+ #}
 </div>
 
 
@@ -54,7 +56,15 @@
 
    {{ form_row(form.Description) }}
 
-   {{ form_row(form.AssignedTo) }}
+   {{ form_row(form.ContactName) }}
+
+   {% if (is_granted('ROLE_ADMIN')) %}
+           {{ form_row(form.AssignedTo) }}
+
+           {% else %}
+
+           {% do form.AssignedTo.setRendered() %}
+       {% endif %}
 
 
 

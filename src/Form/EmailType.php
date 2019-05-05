@@ -14,8 +14,7 @@ class EmailType extends AbstractType
         $builder
             ->add('Name')
             ->add('AssignedTo')
-            ->add('AssignedToId')
-        ;
+            ->add('AssignedToId');
     }
 
     public function configureOptions(OptionsResolver $resolver)

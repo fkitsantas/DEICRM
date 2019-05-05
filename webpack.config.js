@@ -35,7 +35,10 @@ Encore
     .addEntry('app', './assets/js/app.js')
     .addEntry('datepicker', './assets/js/datepicker.js')
     .addEntry('date', './assets/js/date.js')
-    .addEntry('oneate', './assets/js/onedate.js')
+    .addEntry('relatedto', './assets/js/relatedto.js')
+    .addEntry('bs-custom-file', './assets/js/bs-custom-file.js')
+    .addEntry('custom-file', './assets/js/custom-file.js')
+
     //.addEntry('page1', './assets/js/page1.js')
     //.addEntry('page2', './assets/js/page2.js')
 

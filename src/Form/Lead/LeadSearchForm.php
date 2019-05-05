@@ -18,10 +18,10 @@ class LeadSearchForm extends AbstractType
                 'Search',
                 SearchType::class,
                 [
-                  'required' => true,
-                'attr' => [
-                    'placeholder' => 'Search Lead',
-                ]
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Search Lead',
+                    ]
                 ]
             )
             ->add(
@@ -35,7 +35,7 @@ class LeadSearchForm extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

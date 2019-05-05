@@ -20,30 +20,28 @@ class UserEdit extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(
+                'Intials',
+                TextType::class,
+                [
 
-        ->add(
-            'Intials',
-            TextType::class,
-            [
-
-              'required' => false,
-            'attr' => [
-                'placeholder' => 'Intial',
-                'label' => ' '
-            ]
-            ]
-        )
-
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Intial',
+                        'label' => ' '
+                    ]
+                ]
+            )
             ->add(
                 'FirstName',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'First name',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'First name',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -51,46 +49,35 @@ class UserEdit extends AbstractType
                 TextType::class,
                 [
 
-                'attr' => [
-                    'placeholder' => 'Last name',
-                    'label' => ' '
-                ]
+                    'attr' => [
+                        'placeholder' => 'Last name',
+                        'label' => ' '
+                    ]
                 ]
             )
-
-
-
-
             ->add(
                 'Email',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Email Address',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Email Address',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add(
                 'Roles',
                 ChoiceType::class,
                 [
-              'choices'  => [
-          'Sales Manager' => 'ROLE_SALES_MANAGER',
-          'Admin' => 'ROLE_ADMIN',
-      ]
-    ]
+                    'choices' => [
+                        'Employee' => 'ROLE_EMPLOYEE',
+                        'Manager' => 'ROLE_MANAGER',
+                        'Administrator' => 'ROLE_ADMIN',
+                    ]
+                ]
             )
-
-
-
-
-
-
-
             ->add(
                 'submit',
                 SubmitType::class
@@ -107,15 +94,14 @@ class UserEdit extends AbstractType
                     // transform the string back to an array
                     return explode(', ', $tagsAsString);
                 }
-            ))
-        ;
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(
             [
-            'data_class' => User::class
+                'data_class' => User::class
             ]
         );
     }

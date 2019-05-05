@@ -9,6 +9,9 @@ use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\FormData;
+use App\Entity\Task;
+use App\Entity\Note;
+use App\Entity\Meeting;
 use App\Form\Target\TargetForm;
 use App\Form\Target\TargetEdit;
 use App\Form\Target\TargetSearchForm;
@@ -16,12 +19,12 @@ use App\Form\Target\TargetSearchForm;
 class TargetController extends AbstractController
 {
     /**
+     * View for target with a searchbox to search on targets from  target table.
      * @Route("/target", name="target")
      */
     public function index(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
 
 
         $FormData = new FormData();
@@ -32,8 +35,8 @@ class TargetController extends AbstractController
             $data = $form->getData();
 
             $target = $this->getDoctrine()
-    ->getRepository(Target::class)
-    ->findByLastName($data->Search);
+                ->getRepository(Target::class)
+                ->findByLastName($data->Search);
 
             if (!$target) {
                 $this->addFlash('error', 'No target was found, Try Searching Again');
@@ -43,10 +46,11 @@ class TargetController extends AbstractController
             }
         }
 
-        return $this->render('target/index.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('target/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
+     * Create a new instance of target.
      * @Route("/target/create", name="createtarget")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -55,7 +59,7 @@ class TargetController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER')) {
             $this->addFlash('error', 'You dont have permission to acccess this page');
 
             return $this->redirectToRoute('target');
@@ -101,10 +105,10 @@ class TargetController extends AbstractController
 
 
             $thistarget = $this->getDoctrine()
-          ->getRepository(Target::class)
-          ->findOneByID($Target->getID());
+                ->getRepository(Target::class)
+                ->findOneByID($Target->getID());
 
-            $this->addFlash('success', 'Target '.$thistarget->getID().' Sucessfully Created');
+            $this->addFlash('success', 'Target ' . $thistarget->getID() . ' Sucessfully Created');
 
             return $this->redirectToRoute('gettarget', ['id' => $thistarget->getID()]);
         }
@@ -114,9 +118,8 @@ class TargetController extends AbstractController
     }
 
 
-
-
     /**
+     * Edit instance of target.
      * @Route("/target/edit/{id}", name="edittarget")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -125,15 +128,20 @@ class TargetController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Target = $this->getDoctrine()
-      ->getRepository(Target::class)
-      ->findOneByID($id);
-
+            ->getRepository(Target::class)
+            ->findOneByID($id);
 
 
         if (!$Target) {
             $this->addFlash('error', 'This target does not exist');
 
             return $this->render('target/index.html.twig');
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER') && $this->getUser()->getId() !== $Target->getAssignedToId()) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('target');
         }
 
 
@@ -172,12 +180,11 @@ class TargetController extends AbstractController
             $em->flush();
 
 
-
             $thistarget = $this->getDoctrine()
-          ->getRepository(Target::class)
-          ->findOneByID($Target->getID());
+                ->getRepository(Target::class)
+                ->findOneByID($Target->getID());
 
-            $this->addFlash('success', 'Target '.$thistarget->getLastName().' Sucessfully Edited');
+            $this->addFlash('success', 'Target ' . $thistarget->getLastName() . ' Sucessfully Edited');
             return $this->redirectToRoute('gettarget', ['id' => $thistarget->getID()]);
         }
 
@@ -186,9 +193,8 @@ class TargetController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch all instances from table.
      * @Route("/target/all", name="getAlltarget")
      * @return                Response
      */
@@ -207,9 +213,8 @@ class TargetController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch single instance of target.
      * @Route("/target/{id}", name="gettarget")
      * @param                 $id
      * @return                Response
@@ -218,8 +223,8 @@ class TargetController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $target = $this->getDoctrine()
-        ->getRepository(Target::class)
-        ->findOneByID($id);
+            ->getRepository(Target::class)
+            ->findOneByID($id);
 
 
         if (!$target) {
@@ -227,14 +232,36 @@ class TargetController extends AbstractController
             return $this->redirectToRoute('target');
         } else {
             $createdby = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($target->getCreatedBy());
+                ->getRepository(User::class)
+                ->findOneByID($target->getCreatedBy());
+            $taskrepository = $this->getDoctrine()->getRepository(Task::class);
+            $task = $taskrepository->findBy(
+                ['RelatedToType' => 'Target',
+                    'RelatedToId' => $id,
+                ]
+            );
 
-            return $this->render('target/view.html.twig', ['target' => $target, 'createdby' => $createdby]);
+
+            $noterepository = $this->getDoctrine()->getRepository(Note::class);
+            $note = $noterepository->findBy(
+                ['RelatedToType' => 'Target',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+
+            $meetingrepository = $this->getDoctrine()->getRepository(Meeting::class);
+            $meeting = $meetingrepository->findBy(
+                ['RelatedToType' => 'Target',
+                    'RelatedToId' => $id,
+                ]
+            );
+            return $this->render('target/view.html.twig', ['target' => $target, 'task' => $task, 'createdby' => $createdby, 'note' => $note, 'meeting' => $meeting]);
         }
     }
 
     /**
+     * Delete simgle instance of target.
      * @Route("/target/del/{id}", name="deltarget")
      * @param                 $id
      * @return                Response
@@ -243,8 +270,8 @@ class TargetController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Target = $this->getDoctrine()
-    ->getRepository(Target::class)
-    ->findOneByID($id);
+            ->getRepository(Target::class)
+            ->findOneByID($id);
 
         if (!$Target) {
             $this->addFlash('error', 'Can not find target');

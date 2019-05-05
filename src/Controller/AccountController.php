@@ -6,18 +6,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Account;
 use App\Entity\User;
+use App\Entity\Contact;
+use App\Entity\Task;
+use App\Entity\Cases;
+use App\Entity\Note;
+use App\Entity\Meeting;
+use App\Entity\CasesComment;
+use App\Entity\Opportunities;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\FormData;
 use App\Form\Account\AccountForm;
 use App\Form\Account\AccountEdit;
 use App\Form\Account\AccountSearchForm;
+use App\Form\Cases\CasesCommentForm;
+use App\Service\RolesToText;
 
 class AccountController extends AbstractController
 {
     /**
+     * Show index page with a search bar to search account.
      * @Route("/account", name="account")
      */
+
+
     public function index(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -29,8 +41,8 @@ class AccountController extends AbstractController
             $data = $form->getData();
 
             $account = $this->getDoctrine()
-    ->getRepository(Account::class)
-    ->findByName($data->Search);
+                ->getRepository(Account::class)
+                ->findByName($data->Search);
 
             if (!$account) {
                 $this->addFlash('error', 'No account was found, Try Searching Again');
@@ -40,10 +52,11 @@ class AccountController extends AbstractController
             }
         }
 
-        return $this->render('account/index.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('account/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
+     * Handles storing of account to the database.
      * @Route("/account/create", name="createaccount")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -52,7 +65,7 @@ class AccountController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER')) {
             $this->addFlash('error', 'You dont have permission to acccess this page');
 
             return $this->redirectToRoute('account');
@@ -96,8 +109,11 @@ class AccountController extends AbstractController
                 $Account->setCampaign($data->Campaign->getName());
                 $Account->setCampaignId($data->Campaign->getId());
             }
-            $Account->setAssignedTo($data->AssignedTo->getFirstName());
-            $Account->setAssignedToId($data->AssignedTo->getId());
+            if (!is_null($data->AssignedTo)) {
+                $Account->setAssignedTo($data->AssignedTo->getFirstName());
+
+                $Account->setAssignedToId($data->AssignedTo->getId());
+            }
             $Account->setDateCreated(date('m/d/Y h:i:s a', time()));
             $Account->setCreatedBy($this->getUser()->getId());
             $em->persist($Account);
@@ -105,10 +121,10 @@ class AccountController extends AbstractController
 
 
             $thisaccount = $this->getDoctrine()
-          ->getRepository(Account::class)
-          ->findOneByID($Account->getID());
+                ->getRepository(Account::class)
+                ->findOneByID($Account->getID());
 
-            $this->addFlash('success', 'Account '.$thisaccount->getName().' Sucessfully Created');
+            $this->addFlash('success', 'Account ' . $thisaccount->getName() . ' Sucessfully Created');
             return $this->redirectToRoute('getaccount', ['id' => $thisaccount->getID()]);
         }
 
@@ -117,10 +133,9 @@ class AccountController extends AbstractController
     }
 
 
-
-
     /**
      * @Route("/account/edit/{id}", name="editaccount")
+     * Allow editing of account details  by administrator and manager.
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -128,9 +143,8 @@ class AccountController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Account = $this->getDoctrine()
-      ->getRepository(Account::class)
-      ->findOneByID($id);
-
+            ->getRepository(Account::class)
+            ->findOneByID($id);
 
 
         if (!$Account) {
@@ -139,6 +153,11 @@ class AccountController extends AbstractController
             return $this->render('account/index.html.twig');
         }
 
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER') && $this->getUser()->getId() !== $Account->getAssignedToId()) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('account');
+        }
 
         $form = $this->createForm(AccountEdit::class, $Account);
         $form->handleRequest($request);
@@ -178,10 +197,10 @@ class AccountController extends AbstractController
 
 
             $thisaccount = $this->getDoctrine()
-          ->getRepository(Account::class)
-          ->findOneByID($Account->getID());
+                ->getRepository(Account::class)
+                ->findOneByID($Account->getID());
 
-            $this->addFlash('success', 'Account '.$thisaccount->getName().' Sucessfully Edited');
+            $this->addFlash('success', 'Account ' . $thisaccount->getName() . ' Sucessfully Edited');
             return $this->redirectToRoute('getaccount', ['id' => $thisaccount->getID()]);
         }
 
@@ -190,9 +209,8 @@ class AccountController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch all account details from the account table in the database.
      * @Route("/account/all", name="getAllaccount")
      * @return                Response
      */
@@ -211,9 +229,8 @@ class AccountController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch account details from the database.
      * @Route("/account/{id}", name="getaccount")
      * @param                 $id
      * @return                Response
@@ -222,25 +239,79 @@ class AccountController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $account = $this->getDoctrine()
-        ->getRepository(Account::class)
-        ->findOneByID($id);
+            ->getRepository(Account::class)
+            ->findOneByID($id);
 
 
         if (!$account) {
             $this->addFlash('error', 'Account not found');
             return $this->redirectToRoute('account');
         } else {
+            $oprepository = $this->getDoctrine()->getRepository(Opportunities::class);
+            $opportunities = $oprepository->findBy(
+                ['AccountId' => $id]
+            );
+
+            $taskrepository = $this->getDoctrine()->getRepository(Task::class);
+            $task = $taskrepository->findBy(
+                ['RelatedToType' => 'Account',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+
+            $noterepository = $this->getDoctrine()->getRepository(Note::class);
+            $note = $noterepository->findBy(
+                ['RelatedToType' => 'Account',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+
+            $meetingrepository = $this->getDoctrine()->getRepository(Meeting::class);
+            $meeting = $meetingrepository->findBy(
+                ['RelatedToType' => 'Account',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+
+            $casesrepository = $this->getDoctrine()->getRepository(Cases::class);
+            $cases = $casesrepository->findOneBy(
+                ['AccountId' => $id,
+                ]
+            );
+
             $createdby = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($account->getCreatedBy());
+                ->getRepository(User::class)
+                ->findOneByID($account->getCreatedBy());
 
+            if (is_null($account->getName())) {
+                $accountid = $account->getId();
+                $accountname = $account->getName();
+            } else {
+                $accountid = $account->getId();
+                $accountname = $account->getName();
+            }
+            $FormData = new FormData();
+            if ($cases) {
+                $form = $this->createForm(CasesCommentForm::class, $FormData, array(
+                    'caseid' => $cases->getId(), 'addedbyid' => $this->getUser()->getId(), 'addedby' => $this->getUser()->getFirstName(), 'accountname' => $accountname, 'accountid' => $accountid));
 
+                $casescomment = $this->getDoctrine()->getManager()->getRepository(CasesComment::class)->findBy(
+                    array('CaseId' => $cases->getId()),
+                    array('id' => 'ASC')
+                );
 
-            return $this->render('account/view.html.twig', ['account' => $account, 'createdby' => $createdby]);
+                return $this->render('account/view.html.twig', ['account' => $account, 'opportunities' => $opportunities, 'task' => $task, 'note' => $note, 'createdby' => $createdby, 'meeting' => $meeting, 'cases' => $cases, 'casescomment' => $casescomment, 'form' => $form->createView()]);
+            } else {
+                return $this->render('account/view.html.twig', ['account' => $account, 'opportunities' => $opportunities, 'task' => $task, 'note' => $note, 'createdby' => $createdby, 'meeting' => $meeting, 'cases' => '', 'casescomment' => '']);
+            }
         }
     }
 
     /**
+     * Delete account from the database
      * @Route("/account/del/{id}", name="delaccount")
      * @param                 $id
      * @return                Response
@@ -249,8 +320,8 @@ class AccountController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Account = $this->getDoctrine()
-    ->getRepository(Account::class)
-    ->findOneByID($id);
+            ->getRepository(Account::class)
+            ->findOneByID($id);
 
         if (!$Account) {
             $this->addFlash('error', 'Can not find account');

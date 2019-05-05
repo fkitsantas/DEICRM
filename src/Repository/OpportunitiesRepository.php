@@ -35,10 +35,42 @@ class OpportunitiesRepository extends ServiceEntityRepository
         ;
     }
 
+    public function findByName($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.OpportunityName LIKE :val')
+            ->setParameter('val', $value)
+            ->orderBy('c.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     public function findOneByID($value): ?Opportunities
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.id = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+
+    public function findByContact($value): ?Opportunities
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.ContactId = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+           ->getResult();
+        ;
+    }
+
+    public function findByAccount($value): ?Opportunities
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.AccountId = :val')
             ->setParameter('val', $value)
             ->getQuery()
             ->getOneOrNullResult()

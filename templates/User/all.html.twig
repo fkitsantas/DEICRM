@@ -47,9 +47,7 @@
       <td>{{ data.FirstName}}</td>
       <td>{{ data.LastName}}</td>
       <td>{{ data.Email}}</td>
-      {% for role in data.Roles %}
-    <td> {{ role }}</td>
-    {% endfor %}
+      <td>{{ data.rolestext}}</td>
       <td>{{ data.DateCreated}}</td>
       <td>{{ data.DateModified}}</td>
       <td> <a href="/user/{{ data.id }}" class="btn btn-primary btn-sm">view</a>

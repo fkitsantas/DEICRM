@@ -17,11 +17,11 @@ class LoginForm extends AbstractType
                 'url',
                 TextType::class,
                 [
-                  'label' => false,
-                'attr' => [
-                    'placeholder' => 'Username',
-                    'label' => ' '
-                ]
+                    'label' => false,
+                    'attr' => [
+                        'placeholder' => 'Username',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -35,7 +35,7 @@ class LoginForm extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

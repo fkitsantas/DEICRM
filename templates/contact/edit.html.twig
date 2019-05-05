@@ -28,6 +28,8 @@
      </div>
    </div>
 
+{{ form_row(form.EmailAddress) }}
+
    <div class="row">
     <div class="col-4">
       {{ form_row(form.OfficePhone) }}
@@ -85,6 +87,22 @@
   </div>
  </div>
 
+{{ form_row(form.Department) }}
+
+{{ form_row(form.LeadSource) }}
+
+{{ form_row(form.Description) }}
+
+
+{{ form_row(form.ContactName) }}
+
+{% if (is_granted('ROLE_ADMIN')) %}
+        {{ form_row(form.AssignedTo) }}
+
+        {% else %}
+
+        {% do form.AssignedTo.setRendered() %}
+    {% endif %}
 
 
 

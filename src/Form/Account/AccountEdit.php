@@ -25,52 +25,47 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Name',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Name',
+                        'label' => ' '
+                    ]
                 ]
             )
-
-
-
             ->add(
                 'OfficePhone',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Office Phone',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Office Phone',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add(
                 'Website',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Website',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Website',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add(
                 'Fax',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'fax',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'fax',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -78,11 +73,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address Street',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address Street',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -90,11 +85,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address city',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address city',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -102,11 +97,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Address state',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Address state',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -114,11 +109,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Postal code',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Postal code',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -126,11 +121,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Billing address country',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Billing address country',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -138,11 +133,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address street',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address street',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -150,11 +145,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address city',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address city',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -162,11 +157,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address state',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address state',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -174,11 +169,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address postal code',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address postal code',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -186,32 +181,32 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Alternative address country',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Alternative address country',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add('AssignedTo', EntityType::class, [
+                'placeholder' => 'Choose an option',
+                'required' => false,
                 'label' => 'Assign to',
                 'class' => User::class,
                 'choice_label' => 'FirstName',
                 'choice_value' => 'Id',
                 'mapped' => false,
-        ])
-
+            ])
             ->add(
                 'EmailAddress',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Email Address',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Email Address',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -219,11 +214,11 @@ class AccountEdit extends AbstractType
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Type',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Type',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -231,11 +226,11 @@ class AccountEdit extends AbstractType
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Annual Revenue',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Annual Revenue',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -243,25 +238,23 @@ class AccountEdit extends AbstractType
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'SIC Code',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'SIC Code',
+                        'label' => ' '
+                    ]
                 ]
             )
-
-
             ->add(
                 'Industry',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Industry',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Industry',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -269,24 +262,23 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Employees',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Employees',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add(
                 'TickerSymbol',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'TickerSymbol',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'TickerSymbol',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -294,11 +286,11 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Ownership',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Ownership',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -306,15 +298,13 @@ class AccountEdit extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Rating',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Rating',
+                        'label' => ' '
+                    ]
                 ]
             )
-
-
             ->add(
                 'submit',
                 SubmitType::class
@@ -326,7 +316,7 @@ class AccountEdit extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => Account::class
+                'data_class' => Account::class
             ]
         );
     }

@@ -1,0 +1,55 @@
+<div class="card mb-3">
+  <div class="card-header">
+    Assigned Documents
+  </div>
+
+{% if assigneddocument|length %}
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Document Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">Publish Date</th>
+      <th scope="col">Expiration Date</th>
+      <th scope="col">Category</th>
+      <th scope="col">Sub Category</th>
+      <th scope="col">Date Created</th>
+      <th scope="col">Date Modified</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for data in assigneddocument %}
+
+  <tr>
+    <th scope="row">{{ data.Id}}</th>
+    <td>{{ data.DocumentName}}</td>
+      <td>{{ data.Status}}</td>
+    <td>{{ data.PublishDate|date('Y-m-d')}}</td>
+    <td>{{ data.ExpirationDate|date('Y-m-d')}}</td>
+    <td>{{ data.Category}}</td>
+    <td>{{ data.SubCategory}}</td>
+    <td>{{ data.DateCreated}}</td>
+    <td>{{ data.DateModified}}</td>
+    <td> <a href="{{ asset('uploads/pdf/' ~ data.FileName) }}" class="btn btn-primary btn-sm mb-1">View Pdf</a>
+      <a href="/document/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+</td>
+  </tr>
+  {% endfor %}
+</tbody>
+</table>
+  {% else %}
+
+
+
+  <div class="alert alert-danger mt-2 mb-2" role="alert">
+  No Assigned Documents 
+  </div>
+
+
+    {% endif %}
+  </div>

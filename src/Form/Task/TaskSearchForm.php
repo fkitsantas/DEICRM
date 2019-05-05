@@ -19,10 +19,10 @@ class TaskSearchForm extends AbstractType
                 'Search',
                 SearchType::class,
                 [
-                  'required' => true,
-                'attr' => [
-                    'placeholder' => 'Search Task',
-                ]
+                    'required' => true,
+                    'attr' => [
+                        'placeholder' => 'Search Task',
+                    ]
                 ]
             )
             ->add(
@@ -36,7 +36,7 @@ class TaskSearchForm extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

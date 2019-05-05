@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}DEICRM{% endblock %}
+{% block title %}DEICRM - All Accounts{% endblock %}
 
 {% block body %}
 
@@ -42,13 +42,13 @@
       <td>{{ data.EmailAddress}}</td>
       <td>{{ data.DateCreated}}</td>
       <td>{{ data.DateModified}}</td>
-      <td> <a href="../account/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+      <td> <a href="/account/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
 
 
 
       {% if  (is_granted('ROLE_ADMIN')) or (app.user.id) is same as (data.AssignedToId) %}
 
-        <a href="../account/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
+        <a href="/account/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal">remove
   </button>
 

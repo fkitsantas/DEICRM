@@ -7,6 +7,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Contact;
 use App\Entity\User;
 use App\Entity\Interaction;
+use App\Entity\Opportunities;
+use App\Entity\Task;
+use App\Entity\Note;
+
+use App\Entity\Meeting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Form\FormData;
@@ -18,6 +23,7 @@ use App\Form\Contact\ContactSearchForm;
 class ContactController extends AbstractController
 {
     /**
+     * Contact view with a searchbox.
      * @Route("/contact", name="contact")
      */
     public function index(Request $request)
@@ -31,8 +37,8 @@ class ContactController extends AbstractController
             $data = $form->getData();
 
             $contact = $this->getDoctrine()
-            ->getRepository(Contact::class)
-            ->findByLastName($data->Search);
+                ->getRepository(Contact::class)
+                ->findByLastName($data->Search);
 
             if (!$contact) {
                 $this->addFlash('error', 'No contact was found, Try Searching Again');
@@ -42,10 +48,11 @@ class ContactController extends AbstractController
             }
         }
 
-        return $this->render('contact/index.html.twig', [ 'form' => $form->createView()]);
+        return $this->render('contact/index.html.twig', ['form' => $form->createView()]);
     }
 
     /**
+     * Allows creating of contact.
      * @Route("/contact/create", name="createcontact")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -53,7 +60,7 @@ class ContactController extends AbstractController
     public function createcontact(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        if (!$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER')) {
             $this->addFlash('error', 'You dont have permission to acccess this page');
 
             return $this->redirectToRoute('contact');
@@ -99,9 +106,9 @@ class ContactController extends AbstractController
             $em->persist($Contact);
             $em->flush();
             $thiscontact = $this->getDoctrine()
-           ->getRepository(Contact::class)
-           ->findOneByID($Contact->getID());
-            $this->addFlash('success', 'Contact '.$thiscontact->getFirstName().' Sucessfully Created');
+                ->getRepository(Contact::class)
+                ->findOneByID($Contact->getID());
+            $this->addFlash('success', 'Contact ' . $thiscontact->getFirstName() . ' Sucessfully Created');
             return $this->redirectToRoute('getcontact', ['id' => $thiscontact->getID()]);
         }
         return $this->render('contact/create.html.twig', array('form' => $form->createView()));
@@ -109,6 +116,7 @@ class ContactController extends AbstractController
 
 
     /**
+     * Allows editing of  contact.
      * @Route("/contact/edit/{id}", name="editcontact")
      * @param           Request $request
      * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -117,13 +125,19 @@ class ContactController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Contact = $this->getDoctrine()
-      ->getRepository(Contact::class)
-      ->findOneByID($id);
+            ->getRepository(Contact::class)
+            ->findOneByID($id);
 
         if (!$Contact) {
             $this->addFlash('error', 'This contact does not exist');
 
             return $this->render('contact/index.html.twig');
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && !$this->isGranted('ROLE_MANAGER') && $this->getUser()->getId() !== $Contact->getAssignedToId()) {
+            $this->addFlash('error', 'You dont have permission to acccess this page');
+
+            return $this->redirectToRoute('contact');
         }
 
 
@@ -166,10 +180,10 @@ class ContactController extends AbstractController
 
 
             $thiscontact = $this->getDoctrine()
-          ->getRepository(Contact::class)
-          ->findOneByID($Contact->getID());
+                ->getRepository(Contact::class)
+                ->findOneByID($Contact->getID());
 
-            $this->addFlash('success', 'Contact '.$thiscontact->getLastName().' Sucessfully Edited');
+            $this->addFlash('success', 'Contact ' . $thiscontact->getLastName() . ' Sucessfully Edited');
             return $this->redirectToRoute('getcontact', ['id' => $thiscontact->getID()]);
         }
 
@@ -178,9 +192,8 @@ class ContactController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch lists of contacts.
      * @Route("/contact/all", name="getAllcontact")
      * @return                Response
      */
@@ -199,9 +212,8 @@ class ContactController extends AbstractController
     }
 
 
-
-
     /**
+     * Fetch just one record of contact from the contact table.
      * @Route("/contact/{id}", name="getcontact")
      * @param                 $id
      * @return                Response
@@ -210,31 +222,61 @@ class ContactController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $contact = $this->getDoctrine()
-        ->getRepository(Contact::class)
-        ->findOneByID($id);
+            ->getRepository(Contact::class)
+            ->findOneByID($id);
+
 
         if (!$contact) {
             $this->addFlash('error', 'Contact not found');
             return $this->redirectToRoute('contact');
         } else {
+            $oprepository = $this->getDoctrine()->getRepository(Opportunities::class);
+            $opportunities = $oprepository->findBy(
+                ['ContactId' => $id]
+            );
+
+            $taskrepository = $this->getDoctrine()->getRepository(Task::class);
+            $task = $taskrepository->findBy(
+                ['RelatedToType' => 'Contact',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+            $noterepository = $this->getDoctrine()->getRepository(Note::class);
+            $note = $noterepository->findBy(
+                ['RelatedToType' => 'Contact',
+                    'RelatedToId' => $id,
+                ]
+            );
+
+
+            $meetingrepository = $this->getDoctrine()->getRepository(Meeting::class);
+            $meeting = $meetingrepository->findBy(
+                ['RelatedToType' => 'Contact',
+                    'RelatedToId' => $id,
+                ]
+            );
+
             $FormData = new FormData();
             $form = $this->createForm(InteractionForm::class, $FormData, array(
-            'id' => $contact->getId(), 'whoby' => $this->getUser()->getLastName(), 'type' => 'contact'));
+                'id' => $contact->getId(), 'whoby' => $this->getUser()->getFirstName(), 'type' => 'contact'));
 
             $createdby = $this->getDoctrine()
-          ->getRepository(User::class)
-          ->findOneByID($contact->getCreatedBy());
+                ->getRepository(User::class)
+                ->findOneByID($contact->getCreatedBy());
 
             $repository = $this->getDoctrine()->getRepository(Interaction::class);
             $interaction = $repository->findBy(
                 ['WhoTo' => $contact->getId()]
-          );
+            );
 
-            return $this->render('Contact/view.html.twig', ['contact' => $contact, 'createdby' => $createdby, 'interaction' => $interaction, 'form' => $form->createView()]);
+
+            return $this->render('Contact/view.html.twig', ['contact' => $contact, 'note' => $note, 'createdby' => $createdby, 'meeting' => $meeting, 'interaction' => $interaction, 'task' => $task, 'opportunities' => $opportunities, 'form' => $form->createView()]);
         }
     }
 
     /**
+     * Delete contact.
      * @Route("/contact/del/{id}", name="delcontact")
      * @param                 $id
      * @return                Response
@@ -243,8 +285,8 @@ class ContactController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $Contact = $this->getDoctrine()
-    ->getRepository(Contact::class)
-    ->findOneByID($id);
+            ->getRepository(Contact::class)
+            ->findOneByID($id);
 
         if (!$Contact) {
             $this->addFlash('error', 'Can not find contact');

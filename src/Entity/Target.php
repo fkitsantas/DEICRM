@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\TargetRepository")
- * @ORM\Table(name="dei_target")
+ * @ORM\Table(name="dei_targets")
  */
 class Target
 {
@@ -256,7 +256,7 @@ class Target
         return $this->Fax;
     }
 
-    public function setFax(?string $Fax= null): self
+    public function setFax(?string $Fax = null): self
     {
         $this->Fax = $Fax;
 
@@ -406,9 +406,6 @@ class Target
 
         return $this;
     }
-
-
-
 
 
     public function getDateCreated(): ?string

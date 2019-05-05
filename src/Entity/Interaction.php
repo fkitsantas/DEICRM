@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InteractionRepository")
- * @ORM\Table(name="dei_interaction")
+ * @ORM\Table(name="dei_interactions")
  */
 class Interaction
 {
@@ -22,7 +22,6 @@ class Interaction
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $MediaType;
-
 
 
     /**
@@ -114,9 +113,6 @@ class Interaction
 
         return $this;
     }
-
-
-
 
 
     public function getLineDurationL(): ?string

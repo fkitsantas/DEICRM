@@ -91,6 +91,13 @@
 
 {{ form_row(form.Description) }}
 
+{% if (is_granted('ROLE_ADMIN')) %}
+        {{ form_row(form.AssignedTo) }}
+
+        {% else %}
+
+        {% do form.AssignedTo.setRendered() %}
+    {% endif %}
     {{ form_widget(form) }}
     {{ form_end(form) }}
 

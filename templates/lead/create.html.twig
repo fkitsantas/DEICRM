@@ -29,6 +29,7 @@
      </div>
    </div>
 
+{{ form_row(form.EmailAddress) }}
 
 
       <div class="row">
@@ -93,14 +94,7 @@
 
 
 
-    <div class="row">
-     <div class="col">
-       {{ form_row(form.AssignedTo) }}
-     </div>
-     <div class="col">
-          {{ form_row(form.ReferredBy) }}
-     </div>
-    </div>
+
 
     <div class="row">
      <div class="col">
@@ -119,6 +113,28 @@
           {{ form_row(form.StatusDescription) }}
      </div>
     </div>
+
+{{ form_row(form.Campaign) }}
+
+
+
+
+    {{ form_row(form.OpportunityAmount) }}
+
+      {{ form_row(form.Department) }}
+
+      {{ form_row(form.Department) }}
+
+    <div class="row">
+     <div class="col">
+       {{ form_row(form.Description) }}
+     </div>
+     <div class="col">
+          {{ form_row(form.ReferredBy) }}
+     </div>
+    </div>
+
+
     {{ form_widget(form) }}
     {{ form_end(form) }}
 

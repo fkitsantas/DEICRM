@@ -24,120 +24,112 @@ class CampaignsForm extends AbstractType
                 TextType::class,
                 [
 
-                'attr' => [
-                    'placeholder' => 'Campaign Name',
-                    'label' => ' '
-                ]
+                    'attr' => [
+                        'placeholder' => 'Campaign Name',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
                 'Status',
                 ChoiceType::class,
                 [
-      'choices'  => [
-          'Planning' => 'Planning',
-          'Active' => 'Active',
-          'Active' => 'Active',
-          'Inactive' => 'Inactive',
-          'Complete' => 'Complete',
-          'InQueue' => 'In Queue',
-          'Sending' => 'Sending',
+                    'choices' => [
+                        'Planning' => 'Planning',
+                        'Active' => 'Active',
+                        'Active' => 'Active',
+                        'Inactive' => 'Inactive',
+                        'Complete' => 'Complete',
+                        'InQueue' => 'In Queue',
+                        'Sending' => 'Sending',
 
-      ]
-    ]
+                    ]
+                ]
             )
             ->add(
                 'Type',
                 ChoiceType::class,
                 [
-      'choices'  => [
-          'Telesales' => 'Telesales',
-          'Mail' => 'Mail',
-          'Email' => 'Email',
-          'Print' => 'Print',
-          'Web' => 'Web',
-          'Radio' => 'Radio',
-          'Television' => 'Television',
-          'Newsletter' => 'Newsletter',
+                    'choices' => [
+                        'Telesales' => 'Telesales',
+                        'Mail' => 'Mail',
+                        'Email' => 'Email',
+                        'Print' => 'Print',
+                        'Web' => 'Web',
+                        'Radio' => 'Radio',
+                        'Television' => 'Television',
+                        'Newsletter' => 'Newsletter',
 
-      ]
-    ]
+                    ]
+                ]
             )
+            ->add('StartDate', DateTimeType::class, array(
+                'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => [
+                    'class' => 'form-control input-inline js-datepicker1',
+                    'data-provide' => 'datetimepicker',
+                    'html5' => false,
 
+                ],
+            ))
+            ->add('EndDate', DateTimeType::class, array(
+                'required' => true,
+                'widget' => 'single_text',
+                'format' => 'yyyy-MM-dd',
+                'attr' => [
+                    'class' => 'form-control input-inline js-datepicker2',
+                    'data-provide' => 'datetimepicker',
+                    'html5' => false,
 
-                ->add('StartDate', DateTimeType::class, array(
-      'required' => true,
-      'widget' => 'single_text',
-      'format' => 'yyyy-MM-dd',
-      'attr' => [
-          'class' => 'form-control input-inline js-datepicker1',
-          'data-provide' => 'datetimepicker',
-          'html5' => false,
-
-      ],
-      ))
-      ->add('EndDate', DateTimeType::class, array(
-'required' => true,
-'widget' => 'single_text',
-'format' => 'yyyy-MM-dd',
-'attr' => [
-'class' => 'form-control input-inline js-datepicker2',
-'data-provide' => 'datetimepicker',
-'html5' => false,
-
-],
-))
-
-
-->add(
-    'Currency',
-    ChoiceType::class,
-    [
-'choices'  => [
-'US Dollar' => 'US Dollar $',
-'Pound' => 'Pound £',
-]
-]
-)
-
+                ],
+            ))
+            ->add(
+                'Currency',
+                ChoiceType::class,
+                [
+                    'choices' => [
+                        'US Dollar' => 'US Dollar $',
+                        'Pound' => 'Pound £',
+                    ]
+                ]
+            )
             ->add(
                 'Impressions',
                 TextType::class,
                 [
-                  'data' => 0,
+                    'data' => 0,
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Impressions',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Impressions',
+                        'label' => ' '
+                    ]
                 ]
             )
-
-
             ->add(
                 'ActualCost',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Actual Cost',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Actual Cost',
+                        'label' => ' '
+                    ]
                 ]
             )
-
             ->add(
                 'ExpectedCost',
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Expected Cost',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Expected Cost',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -145,11 +137,11 @@ class CampaignsForm extends AbstractType
                 TextType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Expected Revenue',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Expected Revenue',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -157,11 +149,11 @@ class CampaignsForm extends AbstractType
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Objective',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Objective',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add(
@@ -169,19 +161,21 @@ class CampaignsForm extends AbstractType
                 TextareaType::class,
                 [
 
-                  'required' => false,
-                'attr' => [
-                    'placeholder' => 'Description',
-                    'label' => ' '
-                ]
+                    'required' => false,
+                    'attr' => [
+                        'placeholder' => 'Description',
+                        'label' => ' '
+                    ]
                 ]
             )
             ->add('AssignedTo', EntityType::class, [
+                'placeholder' => 'Choose an option',
+                'required' => false,
                 'label' => 'Assign to',
                 'class' => User::class,
-                'choice_label' => 'Username',
+                'choice_label' => 'FirstName',
                 'choice_value' => 'Id',
-          ])
+            ])
             ->add(
                 'submit',
                 SubmitType::class
@@ -193,7 +187,7 @@ class CampaignsForm extends AbstractType
     {
         $resolver->setDefaults(
             [
-            'data_class' => FormData::class
+                'data_class' => FormData::class
             ]
         );
     }

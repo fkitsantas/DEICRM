@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\AccountRepository")
-* @ORM\Table(name="dei_account")
+ * @ORM\Table(name="dei_accounts")
  */
 class Account
 {
@@ -104,7 +104,6 @@ class Account
     private $CreatedBy;
 
 
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -129,7 +128,6 @@ class Account
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Industry;
-
 
 
     /**
@@ -225,8 +223,6 @@ class Account
 
         return $this;
     }
-
-
 
 
     public function getWebsite(): ?string
@@ -495,7 +491,6 @@ class Account
     }
 
 
-
     public function getDateCreated(): ?string
     {
         return $this->DateCreated;
@@ -520,7 +515,6 @@ class Account
 
         return $this;
     }
-
 
 
     public function getDateModified(): ?string
@@ -559,7 +553,6 @@ class Account
 
         return $this;
     }
-
 
 
     public function getAssignedTo(): ?string

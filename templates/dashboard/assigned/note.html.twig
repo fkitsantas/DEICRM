@@ -1,0 +1,48 @@
+<div class="card mb-3">
+  <div class="card-header">
+    Assigned Notes
+  </div>
+
+{% if assignednote|length %}
+
+<table class="table">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Related Type</th>
+      <th scope="col">Related To</th>
+      <th scope="col">Date Created</th>
+      <th scope="col">Date Modified</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for data in assignednote %}
+
+  <tr>
+    <th scope="row">{{ data.Id}}</th>
+    <td>{{ data.Subject}}</td>
+    <td>{{ data.RelatedToType}}</td>
+    <td>{{ data.RelatedTo}}</td>
+    <td>{{ data.DateCreated}}</td>
+    <td>{{ data.DateModified}}</td>
+    <td> <a href="/note/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+</td>
+  </tr>
+
+    {% endfor %}
+  </tbody>
+  </table>
+  {% else %}
+
+
+
+  <div class="alert alert-danger mt-2 mb-2" role="alert">
+  No Assigned Notes
+  </div>
+
+
+    {% endif %}
+  </div>

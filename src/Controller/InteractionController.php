@@ -15,11 +15,13 @@ class InteractionController extends AbstractController
 {
 
 
-/**
- * @Route("/interaction", name="interaction")
- * @param           Request $request
- * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
- */
+    /**
+     * Allows interaction of administrators, managers, employee with contacts.
+     *
+     * @Route("/interaction", name="interaction")
+     * @param           Request $request
+     * @return          \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
     public function interaction(Request $request)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
@@ -73,15 +75,8 @@ class InteractionController extends AbstractController
 
                 $this->addFlash('success', 'Sucessfully Added');
 
-                if ($data->Type == "contact") {
-                    return $this->redirectToRoute('getcontact', ['id' => $data->WhoTo]);
-                } elseif ($data->Type == "account") {
-                    return $this->redirectToRoute('getaccount', ['id' => $data->WhoTo]);
-                } elseif ($data->Type == "lead") {
-                    return $this->redirectToRoute('getlead', ['id' => $data->WhoTo]);
-                } else {
-                    return $this->redirectToRoute('dashboard');
-                }
+
+                return $this->redirectToRoute('getcontact', ['id' => $data->WhoTo]);
             }
         }
 

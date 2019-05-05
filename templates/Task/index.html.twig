@@ -32,19 +32,62 @@
 {% endif %}
 
 
-{% if contact is defined %}
+{% if task is defined %}
 
 <div class="card">
   <div class="card-header">
-    Search result for {{ searchfor }}
+    Search For {{task}}
   </div>
-  <ul class="list-group list-group-flush">
-    {% for data in contact %}
-    <li class="list-group-item">{{ data.Title}} {{ data.FirstName}} {{ data.LastName}} {{ data.EmailAddress}} <a href="../contact/{{ data.id }}" class="btn btn-primary btn-sm">view</a></li>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Type</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for data in task %}
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Subject}}</td>
+        <td>{{ data.Status}}</td>
+      <td>{{ data.StartDate|date('Y-m-d')}}</td>
+      <td>{{ data.DueDate|date('Y-m-d')}}</td>
+      <td>{{ data.RelatedToType}}</td>
+      <td>{{ data.Priority}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="/task/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+
     {% endfor %}
-  </ul>
+  </tbody>
+  </table>
 </div>
 
+
+
+
 {% endif %}
+
 
 {% endblock %}

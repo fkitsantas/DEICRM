@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'inc/messages/flash.html.twig' %}
+
+
+
+{% include 'note/inc/breadcrumb.html.twig' %}
+
+
+<div class="card">
+  <div class="card-header">
+    Recent Notes
+  </div>
+{% if note|length %}
+
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Related Type</th>
+        <th scope="col">Related To</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for data in note %}
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Subject}}</td>
+      <td>{{ data.RelatedToType}}</td>
+      <td>{{ data.RelatedTo}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="/note/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+</td>
+    </tr>
+
+
+
+
+    {% endfor %}
+  </tbody>
+  </table>
+  {% else %}
+    <div class="alert alert-danger mt-2 mb-2" role="alert">
+    No No
+    </div>
+
+
+      {% endif %}
+    </div>
+
+
+
+
+{% endblock %}

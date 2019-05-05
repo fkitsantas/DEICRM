@@ -15,6 +15,7 @@ class CalendarController extends AbstractController
 
 
     /**
+     * Display the calendar on the frontend
      * @Route("/calendar", name="calendar", methods={"GET"})
      */
     public function calendar(): Response
@@ -23,6 +24,7 @@ class CalendarController extends AbstractController
     }
 
     /**
+     * Shows specific days in the calendar
      * @Route("/calendar/{id}", name="calendar_show", methods={"GET"})
      */
     public function show(Task $task): Response

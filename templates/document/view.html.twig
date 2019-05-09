@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - View Document {% endblock %}
+
+{% block body %}
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'document/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if document is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">Document Name {{document.DocumentName}}</li>
+  <li class="list-group-item">Status: {{document.Status}}</li>
+  <li class="list-group-item">Start Date:{{document.PublishDate|date('Y-m-d')}}</li>
+  <li class="list-group-item">Due Date: {{document.ExpirationDate|date('Y-m-d')}} </li>
+  <li class="list-group-item">Description: {{document.Description}} </li>
+  <li class="list-group-item">Status: {{document.Status}} </li>
+  <li class="list-group-item">Document Type: {{document.DocumentType}} </li>
+
+  <li class="list-group-item">Category: {{document.Category}} </li>
+
+  <li class="list-group-item">SubCategory: {{document.SuBCategory}} </li>
+
+  <li class="list-group-item">Revision: {{document.Revision}} </li>
+
+  <li class="list-group-item">Assigned To: {{document.AssignedTo}} </li>
+  <li class="list-group-item">Date Created: {{document.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{document.DateModified}} </li>
+
+<a href="{{ asset('uploads/pdf/' ~ document.FileName) }}" class="btn btn-primary btn-lg btn-block mt-2">View Pdf</a>
+
+</ul>
+
+
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

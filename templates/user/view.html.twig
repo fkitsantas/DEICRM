@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+
+{% include 'user/inc/flash.html.twig' %}
+
+{% include 'user/inc/breadcrumb.html.twig' %}
+
+
+
+{% if user is defined %}
+
+
+<div class="card">
+  <div class="card-header alert-primary">
+{{ user.FirstName}}
+  </div>
+<ul class="list-group">
+  <li class="list-group-item">Intial: {{user.Intials}}</li>
+  <li class="list-group-item">First: {{user.FirstName}}</li>
+  <li class="list-group-item">Last: {{user.LastName}}</li>
+  <li class="list-group-item">Email Address: {{user.Email}} </li>
+    <li class="list-group-item">Role: {{user.rolestext}}
+</li>
+
+
+  <li class="list-group-item">Date Created: {{user.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{user.DateModified}} </li>
+  <li class="list-group-item">Created By: {{user.CreatedBy}} </li>
+</ul>
+
+</div>
+
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

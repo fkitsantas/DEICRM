@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+
+
+<br/><br/><p class="text-center">Welcome to <b>Deicrm</b>, Customer Relationship Manager</p><br/><br/>
+<form method="post">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" name="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email" value="{{ last_username }}" required autofocus>
+
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input name="password" type="password" class="form-control" id="inputPassword" placeholder="Password">
+  </div>
+
+  <input type="hidden" name="_csrf_token"
+         value="{{ csrf_token('authenticate') }}">
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+
+{% endblock %}

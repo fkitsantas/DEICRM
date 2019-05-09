@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - Send Email{% endblock %}
+
+{% block body %}
+
+
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'email/inc/breadcrumb.html.twig' %}
+
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_row(form.Subject) }}
+
+        {{ form_row(form.Type) }}
+
+
+   {{ form_row(form.Message) }}
+
+
+
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+
+{% endblock %}

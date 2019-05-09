@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - All Documents{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'inc/messages/flash.html.twig' %}
+
+
+
+{% include 'document/inc/breadcrumb.html.twig' %}
+
+
+{% if document is defined %}
+
+<div class="card">
+  <div class="card-header">
+    All  Documents ( {{ document | length }} )
+  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Document Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Publish Date</th>
+        <th scope="col">Expiration Date</th>
+        <th scope="col">Category</th>
+        <th scope="col">Sub Category</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for data in document %}
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.DocumentName}}</td>
+        <td>{{ data.Status}}</td>
+      <td>{{ data.PublishDate|date('Y-m-d')}}</td>
+      <td>{{ data.ExpirationDate|date('Y-m-d')}}</td>
+      <td>{{ data.Category}}</td>
+      <td>{{ data.SubCategory}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="{{ asset('uploads/pdf/' ~ data.FileName) }}" class="btn btn-primary btn-sm mb-1">View Pdf</a>
+        <a href="/document/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+      {% if  (is_granted('ROLE_ADMIN')) or (app.user.id) is same as (data.AssignedToId) %}
+        <a href="/document/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
+
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal">remove
+  </button>
+{% endif %}
+</td>
+    </tr>
+
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLongTitle">Remove {{ data.DocumentName}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove this document ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <a href="{{ path('deldocument', {'id': data.id} ) }}" class="btn btn-primary">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+
+
+
+
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

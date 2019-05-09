@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - Search Campaign{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'campaigns/inc/flash.html.twig' %}
+
+{% include 'campaigns/inc/breadcrumb.html.twig' %}
+
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+{% if Campaigns is defined %}
+
+<div class="card">
+  <div class="card-header">
+    Search For Campaigns
+  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Impressions</th>
+        <th scope="col">Type</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for data in Campaigns %}
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Name}}</td>
+        <td>{{ data.Status}}</td>
+      <td>{{ data.StartDate|date('Y-m-d')}}</td>
+      <td>{{ data.EndDate|date('Y-m-d')}}</td>
+      <td>{{ data.Currency}}</td>
+      <td>{{ data.Impressions}}</td>
+      <td>{{ data.Type}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+
+    </tr>
+
+
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+
+
+
+
+{% endif %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

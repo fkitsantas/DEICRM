@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'meeting/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if meeting is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">Subject {{meeting.Subject}}</li>
+  <li class="list-group-item">Status: {{meeting.Status}}</li>
+  <li class="list-group-item">Start Date:{{meeting.StartDate|date('Y-m-d')}}</li>
+  <li class="list-group-item">Due Date: {{meeting.DueDate|date('Y-m-d')}} </li>
+  <li class="list-group-item">Type: {{meeting.RelatedToType}} </li>
+  <li class="list-group-item">Related To: {{meeting.RelatedTo}} </li>
+  <li class="list-group-item">Location: {{meeting.Location}} </li>
+
+  <li class="list-group-item">Contact Name: {{meeting.ContactName}} </li>
+  <li class="list-group-item">Description: {{meeting.Description}} </li>
+  <li class="list-group-item">Assigned To: {{meeting.AssignedTo}} </li>
+  <li class="list-group-item">Date Created: {{meeting.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{meeting.DateModified}} </li>
+
+</ul>
+
+
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'opportunities/inc/flash.html.twig' %}
+
+{% include 'opportunities/inc/breadcrumb.html.twig' %}
+
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+
+
+
+{% if Opportunities is defined %}
+
+<div class="card">
+  <div class="card-header">
+  Search for {{Opportunities}}
+  </div>
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Opportunity Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Account Name</th>
+        <th scope="col">Sales Stage</th>
+        <th scope="col">Lead Source</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Expected Close date</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+    {% for data in Opportunities %}
+
+
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.OpportunityName}}</td>
+        <td>{{ data.OpportunityAmount}}</td>
+      <td>{{ data.AccountName}}</td>
+      <td>{{ data.SalesStage}}</td>
+      <td>{{ data.LeadSource}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td>{{ data.ExpectedCloseDate|date('Y-m-d')}}</td>
+      <td> <a href="../opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+</td>
+    </tr>
+
+
+
+
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+{% endif %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

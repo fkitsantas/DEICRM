@@ -1,0 +1,55 @@
+<div class="card mb-3">
+  <div class="card-header">
+    Assigned Leads
+  </div>
+
+{% if assignedlead|length %}
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Lead Source</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Created By</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for data in assignedlead %}
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Title}}</td>
+        <td>{{ data.FirstName}}</td>
+      <td>{{ data.LastName}}</td>
+      <td>{{ data.LeadSource}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td>{{ data.CreatedBy}}</td>
+      <td> <a href="/lead/{{ data.id }}" class="btn btn-primary btn-sm">view</a> </td>
+    </tr>
+
+
+
+    {% endfor %}
+  </tbody>
+  </table>
+  {% else %}
+
+
+
+  <div class="alert alert-danger mt-2 mb-2" role="alert">
+  No Assigned Lead
+  </div>
+
+
+    {% endif %}
+  </div>

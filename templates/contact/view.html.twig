@@ -1,0 +1,416 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - View Contact{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% include 'contact/inc/flash.html.twig' %}
+
+{% include 'contact/inc/breadcrumb.html.twig' %}
+
+
+
+{% if contact is defined %}
+
+
+<div class="card">
+  <div class="card-header alert-primary">
+{{ contact.FirstName}}
+  </div>
+<ul class="list-group">
+  <li class="list-group-item">First: {{contact.FirstName}}</li>
+  <li class="list-group-item">Last: {{contact.LastName}}</li>
+  <li class="list-group-item">Office Phone:{{contact.OfficePhone}}</li>
+  <li class="list-group-item">Fax: {{contact.Fax}} </li>
+  <li class="list-group-item">Primary Address: {{contact.PrimaryAddressStreet}} </li>
+  <li class="list-group-item">Email Address: {{contact.EmailAddress}} </li>
+  <li class="list-group-item">Description: {{contact.Description}} </li>
+  <li class="list-group-item">Report To: {{contact.ReportsTo}} </li>
+  <li class="list-group-item">Lead Source: {{contact.LeadSource}} </li>
+  <li class="list-group-item">Campaign: {{contact.Campaign}} </li>
+  <li class="list-group-item">Assigned To: {{contact.AssignedTo}} </li>
+  <li class="list-group-item">Date Created: {{contact.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{contact.DateModified}} </li>
+  <li class="list-group-item">Created By: {{createdby.FirstName}}  {{createdby.LastName}}</li>
+</ul>
+
+</div>
+
+
+<div class="card mb-2 mt-2">
+  <div class="card-header">
+    {{contact.FirstName}} Opportunities
+  </div>
+
+
+
+{% if opportunities|length %}
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Opportunity Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Account Name</th>
+        <th scope="col">Sales Stage</th>
+        <th scope="col">Lead Source</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Expected Close date</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+    {% for op in opportunities %}
+
+
+
+    <tr>
+      <th scope="row">{{ op.Id}}</th>
+      <td>{{ op.OpportunityName}}</td>
+        <td>{{ op.OpportunityAmount}}</td>
+      <td>{{ op.AccountName}}</td>
+      <td>{{ op.SalesStage}}</td>
+      <td>{{ op.LeadSource}}</td>
+      <td>{{ op.DateModified}}</td>
+      <td>{{ op.ExpectedCloseDate|date('Y-m-d')}}</td>
+      <td> <a href="/opportunities/{{ op.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+
+
+
+<div class="alert alert-danger mt-2 mb-2" role="alert">
+No Opportunities found
+</div>
+
+
+  {% endif %}
+</div>
+
+
+<div class="card mb-3">
+  <div class="card-header">
+    {{contact.FirstName}} Tasks
+  </div>
+
+
+{% if task|length %}
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Type</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for datatask in task %}
+
+    <tr>
+      <th scope="row">{{ datatask.Id}}</th>
+      <td>{{ datatask.Subject}}</td>
+        <td>{{ datatask.Status}}</td>
+      <td>{{ datatask.StartDate|date('Y-m-d')}}</td>
+      <td>{{ datatask.DueDate|date('Y-m-d')}}</td>
+      <td>{{ datatask.RelatedToType}}</td>
+      <td>{{ datatask.Priority}}</td>
+      <td>{{ datatask.DateCreated}}</td>
+      <td>{{ datatask.DateModified}}</td>
+      <td> <a href="/task/{{ datatask.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+
+    {% endfor %}
+  </tbody>
+  </table>
+
+{% else %}
+  <div class="alert alert-danger mt-2 mb-2" role="alert">
+  No Task found
+  </div>
+
+
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      {{contact.FirstName}} Meeting
+    </div>
+
+  {% if meeting|length %}
+
+
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Status</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Type</th>
+          <th scope="col">Location</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Date Modified</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for data in meeting %}
+
+      <tr>
+        <th scope="row">{{ data.Id}}</th>
+        <td>{{ data.Subject}}</td>
+          <td>{{ data.Status}}</td>
+        <td>{{ data.StartDate|date('Y-m-d')}}</td>
+        <td>{{ data.DueDate|date('Y-m-d')}}</td>
+        <td>{{ data.RelatedToType}}</td>
+        <td>{{ data.Location}}</td>
+        <td>{{ data.DateCreated}}</td>
+        <td>{{ data.DateModified}}</td>
+        <td> <a href="/meeting/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+  </td>
+      </tr>
+
+
+
+
+
+      {% endfor %}
+    </tbody>
+    </table>
+    {% else %}
+      <div class="alert alert-danger mt-2 mb-2" role="alert">
+      No Meeting For this Contact
+      </div>
+
+
+        {% endif %}
+      </div>
+
+
+      <div class="card">
+        <div class="card-header">
+          {{contact.FirstName}} Notes
+        </div>
+      {% if note|length %}
+
+
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Related Type</th>
+              <th scope="col">Related To</th>
+              <th scope="col">Date Created</th>
+              <th scope="col">Date Modified</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          {% for data in note %}
+
+          <tr>
+            <th scope="row">{{ data.Id}}</th>
+            <td>{{ data.Subject}}</td>
+            <td>{{ data.RelatedToType}}</td>
+            <td>{{ data.RelatedTo}}</td>
+            <td>{{ data.DateCreated}}</td>
+            <td>{{ data.DateModified}}</td>
+            <td> <a href="/note/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+      </td>
+          </tr>
+
+
+
+
+          {% endfor %}
+        </tbody>
+        </table>
+        {% else %}
+          <div class="alert alert-danger mt-2 mb-2" role="alert">
+          No Notes for this contact
+          </div>
+
+
+            {% endif %}
+          </div>
+
+
+<br/><div class="alert alert-primary" role="alert">Contact Interactions</div>
+
+
+{% if interaction |length %}
+
+{% if interaction is empty %}
+<div class="alert alert-danger" role="alert">This Contact has no interaction</div>
+
+{% else %}
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Interaction ID</th>
+      <th scope="col">From Date</th>
+      <th scope="col">To Date</th>
+      <th scope="col">From Time</th>
+      <th scope="col">To Time</th>
+      <th scope="col">Type</th>
+      <th scope="col">Direction</th>
+      <th scope="col">Address</th>
+      <th scope="col">Dnis</th>
+      <th scope="col">LastIc</th>
+      <th scope="col">By</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+
+
+  {% for data in interaction %}
+    <tr>
+      <th scope="row"> {{data.id}}</th>
+      <td>{{data.FromDate|date('Y-m-d')}} </td>
+      <td>{{data.ToDate|date('Y-m-d')}} </td>
+      <td>{{data.FromTime}} </td>
+      <td>{{data.ToTime}} </td>
+      <td>{{data.MediaType}} </td>
+      <td>{{data.Direction}}</td>
+      <td>{{data.RemoteAddress}} </td>
+      <td>{{data.Dnis}} </td>
+      <td>{{data.LastIc}} </td>
+      <td>{{data.WhoBy}} </td>
+
+
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
+
+{% endif %}
+{% endif %}
+
+<div class="alert alert-primary" role="alert">Add Interaction</div>
+{% if form is defined %}
+
+  {{ form_start(form, {'action': path('interaction')}) }}
+  {{ form_row(form.MediaType) }}
+  <div class="row">
+   <div class="col">
+     {{ form_row(form.FromDate) }}
+   </div>
+   <div class="col">
+        {{ form_row(form.ToDate) }}
+   </div>
+ </div>
+ <div class="row">
+  <div class="col">
+    {{ form_row(form.FromTime) }}
+  </div>
+  <div class="col">
+       {{ form_row(form.ToTime) }}
+  </div>
+</div>
+
+<div class="row">
+ <div class="col">
+   {{ form_row(form.LineDurationL) }}
+ </div>
+ <div class="col">
+      {{ form_row(form.LineDurationS) }}
+ </div>
+</div>
+<div class="row">
+ <div class="col">
+   {{ form_row(form.LineDurationL) }}
+ </div>
+ <div class="col">
+      {{ form_row(form.LineDurationS) }}
+ </div>
+</div>
+
+<div class="row">
+ <div class="col">
+   {{ form_row(form.Direction) }}
+ </div>
+ <div class="col">
+      {{ form_row(form.RemoteAddress) }}
+ </div>
+</div>
+
+<div class="row">
+ <div class="col">
+   {{ form_row(form.Dnis) }}
+ </div>
+ <div class="col">
+      {{ form_row(form.LastIc) }}
+ </div>
+</div>
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+{% endif %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('date') }}
+
+
+{% endblock %}
+{% endblock %}

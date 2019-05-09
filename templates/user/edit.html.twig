@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+{% include 'user/inc/flash.html.twig' %}
+
+{% include 'user/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if form is defined %}
+
+
+{{ form_start(form) }}
+<div class="row">
+  <div class="col-2">
+    {{ form_row(form.Intials) }}
+  </div>
+ <div class="col-5">
+   {{ form_row(form.FirstName) }}
+ </div>
+ <div class="col-5">
+      {{ form_row(form.LastName) }}
+ </div>
+</div>
+
+
+<div class="row">
+<div class="col-8">
+{{ form_row(form.Email) }}
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-8">
+{{ form_row(form.Roles) }}
+</div>
+</div>
+
+
+
+{{ form_widget(form) }}
+{{ form_end(form) }}
+
+{% endif %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

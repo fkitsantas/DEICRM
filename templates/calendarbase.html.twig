@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+
+        {% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('build/app.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
+      {% endblock %}
+
+
+    </head>
+    <body>
+      {% include 'inc/navbar.html.twig' %}
+      <div class="container-fluid">
+        {% block body %}{% endblock %}
+
+
+
+</div>
+{% include 'inc/footer.html.twig' %}
+
+
+
+
+{% block javascripts %}
+
+
+           {{ encore_entry_script_tags('app') }}
+               <script src="/build/runtime.js"></script>
+               <script src="/build/app.js"></script>
+
+
+
+       {% endblock %}
+
+
+    </body>
+</html>

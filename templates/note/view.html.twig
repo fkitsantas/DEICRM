@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'note/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if note is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">Subject {{note.Subject}}</li>
+  <li class="list-group-item">Type: {{note.RelatedToType}} </li>
+  <li class="list-group-item">Related To: {{note.RelatedTo}} </li>
+
+  <li class="list-group-item">Contact Name: {{note.ContactName}} </li>
+  <li class="list-group-item">Note: {{note.Note}} </li>
+  <li class="list-group-item">Assigned To: {{note.AssignedTo}} </li>
+  <li class="list-group-item">Date Created: {{note.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{note.DateModified}} </li>
+
+</ul>
+
+
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+{% include 'task/inc/flash.html.twig' %}
+
+{% include 'task/inc/breadcrumb.html.twig' %}
+
+
+
+
+
+{% if task is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">Subject {{task.Subject}}</li>
+  <li class="list-group-item">Status: {{task.Status}}</li>
+  <li class="list-group-item">Start Date:{{task.StartDate|date('Y-m-d')}}</li>
+  <li class="list-group-item">Due Date: {{task.DueDate|date('Y-m-d')}} </li>
+  <li class="list-group-item">Type: {{task.RelatedToType}} </li>
+  <li class="list-group-item">Related To: {{task.RelatedTo}} </li>
+  <li class="list-group-item">Priority: {{task.Priority}} </li>
+
+  <li class="list-group-item">Contact Name: {{task.ContactName}} </li>
+  <li class="list-group-item">Description: {{task.Description}} </li>
+  <li class="list-group-item">Assigned To: {{task.AssignedTo}} </li>
+  <li class="list-group-item">Date Created: {{task.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{task.DateModified}} </li>
+
+</ul>
+
+
+
+{% endif %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

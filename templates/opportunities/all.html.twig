@@ -1,0 +1,108 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'opportunities/inc/flash.html.twig' %}
+
+{% include 'opportunities/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if opportunities is defined %}
+
+
+<div class="card">
+  <div class="card-header">
+    All Opportunities ( {{ opportunities | length }} )
+  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Opportunity Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Account Name</th>
+        <th scope="col">Sales Stage</th>
+        <th scope="col">Lead Source</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Expected Close date</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+    {% for data in opportunities %}
+
+
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.OpportunityName}}</td>
+        <td>{{ data.OpportunityAmount}}</td>
+      <td>{{ data.AccountName}}</td>
+      <td>{{ data.SalesStage}}</td>
+      <td>{{ data.LeadSource}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td>{{ data.ExpectedCloseDate|date('Y-m-d')}}</td>
+      <td> <a href="../opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+        {% if  (is_granted('ROLE_ADMIN')) or (app.user.id) is same as (data.AssignedToId) %}
+        <a href="../opportunities/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#deleteModal">remove
+  </button>
+{% endif %}
+</td>
+    </tr>
+
+
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLongTitle">Remove {{ data.opportunityName}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove this opportunities ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <a href="{{ path('delopportunities', {'id': data.id} ) }}" class="btn btn-primary">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endfor %}
+</tbody>
+</table>
+</div>
+
+
+
+
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

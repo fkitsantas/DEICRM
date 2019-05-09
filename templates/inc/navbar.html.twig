@@ -1,0 +1,114 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#"><img src="{{ asset('build/logo.png') }}"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <ul class="navbar-nav mr-auto">
+
+
+{% if app.user %}
+
+<li class="nav-item active">
+  <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+</li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Sales
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+          <a class="dropdown-item" href="/account">Accounts</a>
+          <a class="dropdown-item" href="/contact">Contacts</a>
+          <a class="dropdown-item" href="/lead">Lead</a>
+          <a class="dropdown-item" href="/campaigns">Campaigns</a>
+
+          <a class="dropdown-item" href="/email">Emails</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Marketing
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/account">Accounts</a>
+          <a class="dropdown-item" href="/contact">Contacts</a>
+          <a class="dropdown-item" href="/lead">Lead</a>
+          <a class="dropdown-item" href="/campaigns">Campaigns</a>
+          <a class="dropdown-item" href="/target">Targets</a>
+          <a class="dropdown-item" href="/email">Emails</a>
+        </div>
+      </li>
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Support
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+          <a class="dropdown-item" href="/account">Accounts</a>
+          <a class="dropdown-item" href="/contact">Contacts</a>
+          <a class="dropdown-item" href="/cases">Cases</a>
+          <a class="dropdown-item" href="/email">Emails</a>
+        </div>
+      </li>
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Activities
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+
+          <a class="dropdown-item" href="/calendar">Calendar</a>
+          <a class="dropdown-item" href="/meeting">Meeting</a>
+          <a class="dropdown-item" href="/email">Emails</a>
+          <a class="dropdown-item" href="/task">Tasks</a>
+          <a class="dropdown-item" href="/note">Notes</a>
+        </div>
+      </li>
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Collaboration
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
+          <a class="dropdown-item" href="/email">Emails</a>
+          <a class="dropdown-item" href="/document">Documents</a>
+
+        </div>
+      </li>
+
+  {% endif %}
+    </ul>
+
+
+    {% if app.user %}
+<ul class="navbar-nav ml-auto">
+
+<li class="nav-item dropdown"> <a id="navbarDropdown5" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+  Hi  {{ app.user.firstname }} <span class="caret"></span>
+</a>
+
+<div class="dropdown-menu" aria-labelledby="navbarDropdown5">
+<a class="dropdown-item" href="/">Dashboard</a>
+  <a class="dropdown-item" href="/logout">Logout</a>
+
+</div>
+</li>
+  </ul>
+  {% else %}
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item active">
+      <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+    </li>
+  <li class="nav-item active">
+    <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+  </li>
+    </ul>
+  {% endif %}
+  </div>
+</nav>

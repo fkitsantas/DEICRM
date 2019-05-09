@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - All Campaigns{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'campaigns/inc/flash.html.twig' %}
+
+{% include 'campaigns/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if campaigns is defined %}
+
+<div class="card">
+  <div class="card-header">
+    All campaigns ( {{ campaigns | length }} )
+  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col">Currency</th>
+        <th scope="col">Impressions</th>
+        <th scope="col">Type</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for data in campaigns %}
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Name}}</td>
+        <td>{{ data.Status}}</td>
+      <td>{{ data.StartDate|date('Y-m-d')}}</td>
+      <td>{{ data.EndDate|date('Y-m-d')}}</td>
+      <td>{{ data.Currency}}</td>
+      <td>{{ data.Impressions}}</td>
+      <td>{{ data.Type}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="../campaigns/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+{% if  (is_granted('ROLE_ADMIN')) or (app.user.id) is same as (data.AssignedToId) %}
+
+        <a href="../campaigns/edit/{{ data.id }}" class="btn btn-primary btn-sm">edit</a>
+
+        <button type="button" class="btn btn-primary btn-sm mt-2" data-toggle="modal" data-target="#deleteModal">remove
+  </button>
+{% endif %}
+</td>
+    </tr>
+
+
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLongTitle">Remove {{ data.Name}} </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove this campaigns ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+        <a href="{{ path('delcampaigns', {'id': data.id} ) }}" class="btn btn-primary">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+    {% endfor %}
+  </tbody>
+  </table>
+</div>
+
+
+
+
+{% endif %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

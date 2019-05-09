@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'meeting/inc/breadcrumb.html.twig' %}
+
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    <div class="row">
+      <div class="col">
+        {{ form_row(form.Subject) }}
+      </div>
+     <div class="col">
+       {{ form_row(form.Status) }}
+     </div>
+   </div>
+
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.StartDate) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.DueDate) }}
+    </div>
+  </div>
+
+
+
+<div class="row">
+  <div class="col-10">
+    {{ form_row(form.Location) }}
+  </div>
+  {#
+ <div class="col-4">
+   {{ form_row(form.RelatedToType) }}
+ </div>
+ <div class="col-4">
+   {{ form_row(form.RelatedTo) }}
+ </div>
+ #}
+</div>
+
+
+
+
+   {{ form_row(form.Description) }}
+
+   {{ form_row(form.ContactName) }}
+
+   {% if (is_granted('ROLE_ADMIN')) %}
+           {{ form_row(form.AssignedTo) }}
+
+           {% else %}
+
+           {% do form.AssignedTo.setRendered() %}
+       {% endif %}
+
+
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('date') }}
+
+
+{% endblock %}
+
+
+{% endblock %}

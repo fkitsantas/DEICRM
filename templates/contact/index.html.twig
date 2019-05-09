@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - Search Contact{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'contact/inc/flash.html.twig' %}
+
+{% include 'contact/inc/breadcrumb.html.twig' %}
+
+
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+{% if contact is defined %}
+
+<div class="card">
+  <div class="card-header">
+Search For {{contact}}
+  </div>
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Email Address</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for data in contact %}
+
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.Title}}</td>
+      <td>{{ data.FirstName}}</td>
+      <td>{{ data.LastName}}</td>
+      <td>{{ data.EmailAddress}}</td>
+      <td>{{ data.DateCreated}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td> <a href="/contact/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+ </td>
+    </tr>
+
+
+    {% endfor %}
+
+  </tbody>
+</table>
+
+</div>
+
+
+
+
+{% endif %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

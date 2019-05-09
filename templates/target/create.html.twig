@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+{% include 'target/inc/flash.html.twig' %}
+
+{% include 'target/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if form is defined %}
+
+
+
+    {{ form_start(form) }}
+    <div class="row">
+      <div class="col-2">
+        {{ form_row(form.Title) }}
+      </div>
+     <div class="col-5">
+       {{ form_row(form.FirstName) }}
+     </div>
+     <div class="col-5">
+          {{ form_row(form.LastName) }}
+     </div>
+   </div>
+
+   <div class="row">
+    <div class="col-4">
+      {{ form_row(form.OfficePhone) }}
+    </div>
+    <div class="col-4">
+         {{ form_row(form.Mobile) }}
+    </div>
+    <div class="col-4">
+         {{ form_row(form.Fax) }}
+    </div>
+  </div>
+
+{{ form_row(form.EmailAddress) }}
+
+ <div class="row">
+   <div class="col-4">
+     {{ form_row(form.PrimaryAddressCity) }}
+   </div>
+  <div class="col-4">
+    {{ form_row(form.PrimaryAddressStreet) }}
+  </div>
+  <div class="col-4">
+       {{ form_row(form.PrimaryAddressPostalCode) }}
+  </div>
+</div>
+
+<div class="row">
+ <div class="col">
+   {{ form_row(form.PrimaryAddressCountry) }}
+ </div>
+ <div class="col">
+      {{ form_row(form.PrimaryAddressState) }}
+ </div>
+</div>
+
+
+
+ <div class="row">
+   <div class="col-4">
+     {{ form_row(form.AlternateAddressCity) }}
+   </div>
+  <div class="col-4">
+    {{ form_row(form.AlternateAddressStreet) }}
+  </div>
+  <div class="col-4">
+       {{ form_row(form.AlternateAddressPostalCode) }}
+  </div>
+</div>
+
+
+<div class="row">
+ <div class="col">
+   {{ form_row(form.AlternateAddressCountry) }}
+ </div>
+ <div class="col">
+      {{ form_row(form.AlternateAddressState) }}
+ </div>
+</div>
+
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

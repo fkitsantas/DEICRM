@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% include 'target/inc/flash.html.twig' %}
+
+{% include 'target/inc/breadcrumb.html.twig' %}
+
+
+
+{% if target is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">First: {{target.FirstName}}</li>
+  <li class="list-group-item">Last: {{target.LastName}}</li>
+  <li class="list-group-item">Office Phone:{{target.OfficePhone}}</li>
+  <li class="list-group-item">Fax: {{target.Fax}} </li>
+  <li class="list-group-item">Primary Address: {{target.PrimaryAddressStreet}} </li>
+  <li class="list-group-item">Email Address: {{target.EmailAddress}} </li>
+  <li class="list-group-item">Description: {{target.Description}} </li>
+  <li class="list-group-item">Assigned To: {{target.AssignedTo}} </li>
+  <li class="list-group-item">Date Created: {{target.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{target.DateModified}} </li>
+  <li class="list-group-item">CreatedBy: {{createdby.FirstName}}  {{createdby.LastName}}</li>
+</ul>
+
+
+<div class="card mb-3">
+  <div class="card-header">
+    {{target.FirstName}} Tasks
+  </div>
+
+
+{% if task|length %}
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Type</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for datatask in task %}
+
+    <tr>
+      <th scope="row">{{ datatask.Id}}</th>
+      <td>{{ datatask.Subject}}</td>
+        <td>{{ datatask.Status}}</td>
+      <td>{{ datatask.StartDate|date('Y-m-d')}}</td>
+      <td>{{ datatask.DueDate|date('Y-m-d')}}</td>
+      <td>{{ datatask.RelatedToType}}</td>
+      <td>{{ datatask.Priority}}</td>
+      <td>{{ datatask.DateCreated}}</td>
+      <td>{{ datatask.DateModified}}</td>
+      <td> <a href="/task/{{ datatask.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+
+    {% endfor %}
+  </tbody>
+  </table>
+
+{% else %}
+  <div class="alert alert-danger mt-2 mb-2" role="alert">
+  No Task found
+  </div>
+
+
+    {% endif %}
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      {{target.FirstName}} Meeting
+    </div>
+
+  {% if meeting|length %}
+
+
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Status</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Type</th>
+          <th scope="col">Location</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Date Modified</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for data in meeting %}
+
+      <tr>
+        <th scope="row">{{ data.Id}}</th>
+        <td>{{ data.Subject}}</td>
+          <td>{{ data.Status}}</td>
+        <td>{{ data.StartDate|date('Y-m-d')}}</td>
+        <td>{{ data.DueDate|date('Y-m-d')}}</td>
+        <td>{{ data.RelatedToType}}</td>
+        <td>{{ data.Location}}</td>
+        <td>{{ data.DateCreated}}</td>
+        <td>{{ data.DateModified}}</td>
+        <td> <a href="/meeting/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+  </td>
+      </tr>
+
+
+
+
+
+      {% endfor %}
+    </tbody>
+    </table>
+    {% else %}
+      <div class="alert alert-danger mt-2 mb-2" role="alert">
+      No Meeting For this Target
+      </div>
+
+
+        {% endif %}
+      </div>
+
+
+
+      <div class="card">
+        <div class="card-header">
+        {{target.FirstName}} Notes
+        </div>
+      {% if note|length %}
+
+
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Related Type</th>
+              <th scope="col">Related To</th>
+              <th scope="col">Date Created</th>
+              <th scope="col">Date Modified</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          {% for data in note %}
+
+          <tr>
+            <th scope="row">{{ data.Id}}</th>
+            <td>{{ data.Subject}}</td>
+            <td>{{ data.RelatedToType}}</td>
+            <td>{{ data.RelatedTo}}</td>
+            <td>{{ data.DateCreated}}</td>
+            <td>{{ data.DateModified}}</td>
+            <td> <a href="/note/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+      </td>
+          </tr>
+
+
+
+
+          {% endfor %}
+        </tbody>
+        </table>
+        {% else %}
+          <div class="alert alert-danger mt-2 mb-2" role="alert">
+          No Notes for this Target
+          </div>
+
+
+            {% endif %}
+          </div>
+
+
+{% endif %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

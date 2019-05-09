@@ -1,0 +1,65 @@
+<div class="card mb-3">
+  <div class="card-header">
+    Assigned Opportunities
+  </div>
+
+
+
+{% if assignedopportunities|length %}
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Opportunity Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Account Name</th>
+        <th scope="col">Sales Stage</th>
+        <th scope="col">Lead Source</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Expected Close date</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+    {% for data in assignedopportunities %}
+
+
+
+    <tr>
+      <th scope="row">{{ data.Id}}</th>
+      <td>{{ data.OpportunityName}}</td>
+        <td>{{ data.OpportunityAmount}}</td>
+      <td>{{ data.AccountName}}</td>
+      <td>{{ data.SalesStage}}</td>
+      <td>{{ data.LeadSource}}</td>
+      <td>{{ data.DateModified}}</td>
+      <td>{{ data.ExpectedCloseDate|date('Y-m-d')}}</td>
+      <td> <a href="/opportunities/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+
+
+
+<div class="alert alert-danger mt-2 mb-2" role="alert">
+No Assigned Opportunities 
+</div>
+
+
+  {% endif %}
+</div>

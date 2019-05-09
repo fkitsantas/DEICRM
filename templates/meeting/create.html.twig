@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM{% endblock %}
+
+{% block body %}
+
+
+
+{% include 'inc/messages/flash.html.twig' %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+
+{% include 'meeting/inc/breadcrumb.html.twig' %}
+
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    <div class="row">
+      <div class="col">
+        {{ form_row(form.Subject) }}
+      </div>
+     <div class="col">
+       {{ form_row(form.Status) }}
+     </div>
+   </div>
+
+
+   <div class="row">
+    <div class="col">
+      {{ form_row(form.StartDate) }}
+    </div>
+    <div class="col">
+         {{ form_row(form.DueDate) }}
+    </div>
+  </div>
+
+
+
+
+  <input name="RelatedToValue" type="hidden" id="RelatedToValue" value="">
+  <div class="row">
+    <div class="col-4">
+      {{ form_row(form.Location) }}
+    </div>
+    <div class="col-4">
+       <div class="form-group">
+         <label class="required" for="task_form_RelatedToType">Type</label>
+         <select id="task_form_RelatedToType" name="RelatedToType" class="form-control">
+           <option value="">Select Option</option>
+           <option value="Account">Account</option>
+           <option value="Contact">Contact</option>
+           <option value="Lead">Lead</option>
+           <option value="Opportunity">Opportunity</option>
+           <option value="Target">Target</option>
+           <option value="Task">Task</option></select></div>
+     </div>
+     <div class="col-4">
+       <div class="form-group"><label class="required" for="task_form_RelatedTo">Related To</label>
+
+
+         <select id="option" name="" class="form-control showclass">
+
+           <option value="">Select Option</option>
+
+         </select>
+
+         <select id="tasks" name="" class="form-control hideclass">
+   {% for datatask in tasks %}
+           <option value="{{datatask.Id}}">{{datatask.Subject}}</option>
+  {% endfor %}
+         </select>
+
+         <select id="account" name="" class="form-control hideclass">
+      {% for dataaccount in account %}
+           <option value="{{dataaccount.Id}}">{{dataaccount.Name}}</option>
+      {% endfor %}
+         </select>
+
+         <select id="contact" name="" class="form-control hideclass">
+      {% for datacontact in contact %}
+           <option value="{{datacontact.Id}}">{{datacontact.FirstName}}</option>
+      {% endfor %}
+         </select>
+
+         <select id="leads" name="" class="form-control hideclass">
+      {% for datalead in leads %}
+           <option value="{{datalead.Id}}">{{datalead.FirstName}}</option>
+      {% endfor %}
+         </select>
+
+         <select id="target" name="" class="form-control hideclass">
+      {% for datatarget in target %}
+           <option value="{{datatarget.Id}}">{{datatarget.FirstName}}</option>
+      {% endfor %}
+         </select>
+
+         <select id="opportunities" name="" class="form-control hideclass">
+      {% for dataopportunities in opportunities %}
+           <option value="{{dataopportunities.Id}}">{{dataopportunities.OpportunityName}}</option>
+      {% endfor %}
+         </select>
+
+
+
+         </div>
+     </div>
+  </div>
+
+
+
+
+
+   {{ form_row(form.Description) }}
+
+   {{ form_row(form.ContactName) }}
+
+   {{ form_row(form.AssignedTo) }}
+
+
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('date') }}
+        {{ encore_entry_script_tags('relatedto') }}
+
+
+{% endblock %}
+
+{% endblock %}

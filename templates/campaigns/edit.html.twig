@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - Edit Campaign{% endblock %}
+
+{% block body %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+{% include 'campaigns/inc/flash.html.twig' %}
+
+{% include 'campaigns/inc/breadcrumb.html.twig' %}
+
+
+
+
+{% if form is defined %}
+
+
+    {{ form_start(form) }}
+    {{ form_row(form.Name) }}
+    <div class="row">
+      <div class="col">
+        {{ form_row(form.Status) }}
+      </div>
+     <div class="col">
+       {{ form_row(form.Type) }}
+     </div>
+
+   </div>
+   <div class="row">
+     <div class="col">
+       {{ form_row(form.StartDate) }}
+     </div>
+    <div class="col">
+      {{ form_row(form.EndDate) }}
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col">
+      {{ form_row(form.Currency) }}
+    </div>
+   <div class="col">
+     {{ form_row(form.Impressions) }}
+   </div>
+
+ </div>
+ <div class="row">
+   <div class="col-4">
+     {{ form_row(form.ActualCost) }}
+   </div>
+  <div class="col-4">
+    {{ form_row(form.ExpectedCost) }}
+  </div>
+  <div class="col-4">
+    {{ form_row(form.ExpectedRevenue) }}
+  </div>
+</div>
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+
+<script>
+
+$(document).ready(function() {
+
+  $('.js-datepicker1').datepicker({
+  format: 'yyyy-MM-dd',
+    setDate: new Date(),
+    startDate:new Date(),
+    autoclose: true
+
+  });
+$('.js-datepicker1').datepicker('setDate', 'now');
+
+
+$('.js-datepicker2').datepicker({
+format: 'yyyy-MM-dd',
+  setDate: new Date(),
+  startDate:new Date(),
+  autoclose: true
+
+});
+$('.js-datepicker2').datepicker('setDate', 'now');
+
+
+
+});
+   </script>
+
+   {% block javascripts %}
+       {{ parent() }}
+
+
+
+   {% endblock %}
+{% endblock %}

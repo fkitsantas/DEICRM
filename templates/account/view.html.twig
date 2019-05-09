@@ -1,0 +1,413 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - View Account{% endblock %}
+
+{% block body %}
+
+
+{% include 'inc/breadcrumb.html.twig' %}
+
+{% include 'account/inc/flash.html.twig' %}
+
+{% include 'account/inc/breadcrumb.html.twig' %}
+
+
+{% if account is defined %}
+
+
+<ul class="list-group">
+
+
+
+<li class="list-group-item">Name: {{account.Name}}</li>
+<li class="list-group-item">Office Phone: {{account.OfficePhone}}</li>
+<li class="list-group-item">Website: {{account.Website}}</li>
+<li class="list-group-item">Fax: {{account.Fax}}</li>
+<li class="list-group-item">BillingAddress Street: {{account.BillingAddressStreet}}</li>
+<li class="list-group-item">BillingAddress City:  {{account.BillingAddressCity}}</li>
+<li class="list-group-item">BillingAddress State: {{account.BillingAddressState}}</li>
+<li class="list-group-item">BillingAddress PostalCode: {{account.BillingAddressPostalCode}}</li>
+<li class="list-group-item">BillingAddress Country: {{account.BillingAddressCountry}}</li>
+<li class="list-group-item">ShippingAddress Street: {{account.ShippingAddressStreet}}</li>
+<li class="list-group-item">ShippingAddress City: {{account.ShippingAddressCity}}</li>
+<li class="list-group-item">ShippingAddress State: {{account.ShippingAddressState}}</li>
+<li class="list-group-item">ShippingAddress PostalCode: {{account.ShippingAddressPostalCode}}</li>
+<li class="list-group-item">ShippingAddress Country: {{account.ShippingAddressCountry}}</li>
+<li class="list-group-item">Type: {{account.Type}}</li>
+<li class="list-group-item">Annual Revenue: {{account.AnnualRevenue}}</li>
+<li class="list-group-item">SIC Code: {{account.SICCode}}</li>
+<li class="list-group-item">Member of: {{account.MemberOf}}</li>
+<li class="list-group-item">Campaign:  {{account.Campaign}} </li>
+<li class="list-group-item">Industry: {{account.Industry}}</li>
+<li class="list-group-item">Employees: {{account.Employees}}</li>
+<li class="list-group-item">Ticker Symbol: {{account.TickerSymbol}}</li>
+<li class="list-group-item">Ownership: {{account.Ownership}}</li>
+<li class="list-group-item">Rating: {{account.Rating}}</li>
+<li class="list-group-item">Assigned To: {{account.AssignedTo}}</li>
+<li class="list-group-item">Date Created: {{account.DateCreated}}</li>
+<li class="list-group-item">Date Modified: {{account.DateModified}} </li>
+
+
+</ul>
+
+
+
+
+<div class="card mb-2 mt-2">
+  <div class="card-header">
+    {{account.Name}} Opportunities
+  </div>
+
+
+
+{% if opportunities|length %}
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Opportunity Name</th>
+        <th scope="col">Amount</th>
+        <th scope="col">Contact Name</th>
+        <th scope="col">Sales Stage</th>
+        <th scope="col">Lead Source</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Expected Close date</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+    {% for op in opportunities %}
+
+
+
+    <tr>
+      <th scope="row">{{ op.Id}}</th>
+      <td>{{ op.OpportunityName}}</td>
+        <td>{{ op.OpportunityAmount}}</td>
+      <td>{{ op.ContactName}}</td>
+      <td>{{ op.SalesStage}}</td>
+      <td>{{ op.LeadSource}}</td>
+      <td>{{ op.DateModified}}</td>
+      <td>{{ op.ExpectedCloseDate|date('Y-m-d')}}</td>
+      <td> <a href="/opportunities/{{ op.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+{% endfor %}
+</tbody>
+</table>
+{% else %}
+
+
+
+<div class="alert alert-danger mt-2 mb-2" role="alert">
+No Opportunities found
+</div>
+
+
+  {% endif %}
+</div>
+
+
+<div class="card mb-3">
+  <div class="card-header">
+    {{account.Name}} Tasks
+  </div>
+
+
+{% if task|length %}
+
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Type</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+
+    {% for datatask in task %}
+
+    <tr>
+      <th scope="row">{{ datatask.Id}}</th>
+      <td>{{ datatask.Subject}}</td>
+        <td>{{ datatask.Status}}</td>
+      <td>{{ datatask.StartDate|date('Y-m-d')}}</td>
+      <td>{{ datatask.DueDate|date('Y-m-d')}}</td>
+      <td>{{ datatask.RelatedToType}}</td>
+      <td>{{ datatask.Priority}}</td>
+      <td>{{ datatask.DateCreated}}</td>
+      <td>{{ datatask.DateModified}}</td>
+      <td> <a href="/task/{{ datatask.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+
+    {% endfor %}
+  </tbody>
+  </table>
+
+{% else %}
+  <div class="alert alert-danger mt-2 mb-2" role="alert">
+  No Task found
+  </div>
+
+
+    {% endif %}
+  </div>
+
+
+
+  <div class="card">
+    <div class="card-header">
+      {{account.Name}} Meeting
+    </div>
+
+  {% if meeting|length %}
+
+
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Status</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">Due Date</th>
+          <th scope="col">Type</th>
+          <th scope="col">Location</th>
+          <th scope="col">Date Created</th>
+          <th scope="col">Date Modified</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+
+      {% for data in meeting %}
+
+      <tr>
+        <th scope="row">{{ data.Id}}</th>
+        <td>{{ data.Subject}}</td>
+          <td>{{ data.Status}}</td>
+        <td>{{ data.StartDate|date('Y-m-d')}}</td>
+        <td>{{ data.DueDate|date('Y-m-d')}}</td>
+        <td>{{ data.RelatedToType}}</td>
+        <td>{{ data.Location}}</td>
+        <td>{{ data.DateCreated}}</td>
+        <td>{{ data.DateModified}}</td>
+        <td> <a href="/meeting/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+
+  </td>
+      </tr>
+
+
+
+
+
+      {% endfor %}
+    </tbody>
+    </table>
+    {% else %}
+      <div class="alert alert-danger mt-2 mb-2" role="alert">
+      No Meeting For this Account found
+      </div>
+
+
+        {% endif %}
+      </div>
+
+
+
+
+      <div class="card">
+        <div class="card-header">
+          {{account.Name}} Notes
+        </div>
+      {% if note|length %}
+
+
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Related Type</th>
+              <th scope="col">Related To</th>
+              <th scope="col">Date Created</th>
+              <th scope="col">Date Modified</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          {% for data in note %}
+
+          <tr>
+            <th scope="row">{{ data.Id}}</th>
+            <td>{{ data.Subject}}</td>
+            <td>{{ data.RelatedToType}}</td>
+            <td>{{ data.RelatedTo}}</td>
+            <td>{{ data.DateCreated}}</td>
+            <td>{{ data.DateModified}}</td>
+            <td> <a href="/note/{{ data.id }}" class="btn btn-primary btn-sm">view</a>
+      </td>
+          </tr>
+
+
+
+
+          {% endfor %}
+        </tbody>
+        </table>
+        {% else %}
+          <div class="alert alert-danger mt-2 mb-2" role="alert">
+          No Notes for this Account
+          </div>
+
+
+            {% endif %}
+          </div>
+
+
+{% endif %}
+
+
+<div class="card mb-2 mt-2">
+  <div class="card-header">
+    {{account.Name}} Cases
+  </div>
+{% if cases|length %}
+
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Status</th>
+        <th scope="col">Type</th>
+        <th scope="col">Priority</th>
+        <th scope="col">Resolution</th>
+        <th scope="col">Date Created</th>
+        <th scope="col">Date Modified</th>
+        <th scope="col">Action</th>
+
+      </tr>
+    </thead>
+    <tbody>
+
+
+
+
+
+
+    <tr>
+      <th scope="row">{{ cases.Id}}</th>
+      <td>{{ cases.Subject}}</td>
+        <td>{{ cases.Status}}</td>
+      <td>{{ cases.Type}}</td>
+      <td>{{ cases.Priority}}</td>
+      <td>{{ cases.Resolution}}</td>
+      <td>{{ cases.DateCreated|date('Y-m-d')}}</td>
+      <td>{{ cases.DateModified|date('Y-m-d')}}</td>
+      <td> <a href="/cases/{{ cases.id }}" class="btn btn-primary btn-sm">view</a>
+
+
+
+</td>
+    </tr>
+
+
+
+
+
+</tbody>
+</table>
+
+{% if casescomment is defined %}
+
+  {% for csc in casescomment %}
+
+
+{% if csc.Type is same as ('ADMINISTRATOR') %}
+    <div class="alert alert-dark pull-left" role="alert">
+      <p>{{csc.AddedBy}} |  {{csc.Type}} |{{ csc.Date|date('Y-m-d')}}</p>
+    <hr>
+    <p class="mb-0">{{csc.Message}}</p>
+  </div>
+    {% else %}
+
+    <div class="alert alert-secondary pull-right" role="alert">
+      <p>{{csc.AddedBy}} | {{csc.Type}} | {{ csc.Date|date('Y-m-d')}}</p>
+    <hr>
+    <p class="mb-0">{{csc.Message}}</p>
+  </div>
+
+    {% endif %}
+
+
+  {% endfor %}
+
+
+{% endif %}
+
+<div class="alert alert-primary" role="alert">Add Comment</div>
+
+{% if form is defined %}
+
+  {{ form_start(form, {'action': path('casescomment')}) }}
+
+       {{ form_row(form.Comment) }}
+
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+{% endif %}
+
+
+{% else %}
+
+
+<div class="alert alert-danger mt-2 mb-2" role="alert">
+No Cases for this Account
+</div>
+
+
+  {% endif %}
+</div>
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

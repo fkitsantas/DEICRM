@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DEICRM - View Campaign{% endblock %}
+
+{% block body %}
+
+{% include 'inc/breadcrumb.html.twig' %}
+{% for message in app.flashes('notice') %}
+    <div class="flash-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{% include 'campaigns/inc/flash.html.twig' %}
+
+{% include 'campaigns/inc/breadcrumb.html.twig' %}
+
+
+
+{% if campaigns is defined %}
+
+
+<ul class="list-group">
+  <li class="list-group-item">Campaigns Name: {{campaigns.Name}}</li>
+  <li class="list-group-item">Status: {{campaigns.Status}}</li>
+
+  <li class="list-group-item">Campaigns Start Date: {{campaigns.StartDate|date('Y-m-d')}} </li>
+
+  <li class="list-group-item">Campaigns End Date: {{campaigns.EndDate|date('Y-m-d')}} </li>
+  <li class="list-group-item">Currency: {{campaigns.Currency}} </li>
+  <li class="list-group-item">Actual Cost: {{campaigns.ActualCost}} </li>
+  <li class="list-group-item">Expected Cost: {{campaigns.ExpectedCost}} </li>
+  <li class="list-group-item">Expected Revenue: {{campaigns.ExpectedRevenue}} </li>
+  <li class="list-group-item">Objective: {{campaigns.Objective}} </li>
+  <li class="list-group-item">Description: {{campaigns.Description}} </li>
+    <li class="list-group-item">Impressions: {{campaigns.Impressions}} </li>
+  <li class="list-group-item">Date Created: {{campaigns.DateCreated}} </li>
+  <li class="list-group-item">Date Modified: {{campaigns.DateModified}} </li>
+  <li class="list-group-item">Assigned to: {{campaigns.AssignedTo}} </li>
+</ul>
+
+
+{% endif %}
+
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+
+{% endblock %}
+{% endblock %}

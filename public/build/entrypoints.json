@@ -1,0 +1,51 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.1ba6bf05.js",
+        "/build/0.c425943b.js",
+        "/build/2.ed72f5ac.js",
+        "/build/app.9550662c.js"
+      ],
+      "css": [
+        "/build/app.f4f3a1ce.css"
+      ]
+    },
+    "datepicker": {
+      "js": [
+        "/build/runtime.1ba6bf05.js",
+        "/build/0.c425943b.js",
+        "/build/1.3ca733f3.js",
+        "/build/datepicker.1bb9ad51.js"
+      ]
+    },
+    "date": {
+      "js": [
+        "/build/runtime.1ba6bf05.js",
+        "/build/0.c425943b.js",
+        "/build/date.64c3400f.js"
+      ]
+    },
+    "relatedto": {
+      "js": [
+        "/build/runtime.1ba6bf05.js",
+        "/build/0.c425943b.js",
+        "/build/relatedto.b5ffe2dc.js"
+      ]
+    },
+    "bs-custom-file": {
+      "js": [
+        "/build/runtime.1ba6bf05.js",
+        "/build/1.3ca733f3.js",
+        "/build/bs-custom-file.bd6b321d.js"
+      ]
+    },
+    "custom-file": {
+      "js": [
+        "/build/runtime.1ba6bf05.js",
+        "/build/0.c425943b.js",
+        "/build/custom-file.99cfa654.js"
+      ]
+    }
+  }
+}

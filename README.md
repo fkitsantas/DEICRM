@@ -55,7 +55,6 @@ This application uses Open Source tools and components. You can find their websi
 - UXSolutions (Bootstrap-Datepicker) [https://uxsolutions.github.io/](https://uxsolutions.github.io/) && [https://github.com/uxsolutions/bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
 - Tattali (CalendarBundle) [https://github.com/tattali](https://github.com/tattali) && [https://github.com/tattali/CalendarBundle](https://github.com/tattali/CalendarBundle)
 - Symfony Swiftmailer Bundle  [https://symfony.com/swiftmailer-bundle](https://symfony.com/swiftmailer-bundle) && [https://github.com/symfony/swiftmailer-bundle](https://github.com/symfony/swiftmailer-bundle)
-- CKEditor [https://ckeditor.com](https://ckeditor.com) && [https://github.com/ckeditor/ckeditor5](https://github.com/ckeditor/ckeditor5)
 - Popper.js [https://popper.js.org/](https://popper.js.org/) && [https://github.com/FezVrasta/popper.js/](https://github.com/FezVrasta/popper.js/)
 
 
